@@ -1,2 +1,1 @@
-# SZDCommons
 # SZDFavourites
