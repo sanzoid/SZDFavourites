@@ -1,5 +1,5 @@
 //
-//  FavouriteListTableView.swift
+//  ListTableView.swift
 //  SZDFavourites
 //
 //  Created by Sandy House on 2020-09-25.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class FavouriteListTableView: UITableView {
+class ListTableView: UITableView {
     
-    let reuseIdentifier = "FavouriteListTableView" 
+    let reuseIdentifier = "ListTableView" 
     
     init() {
         super.init(frame: .zero, style: .plain)

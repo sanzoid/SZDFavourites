@@ -1,5 +1,5 @@
 //
-//  FavouriteListController.swift
+//  ListController.swift
 //  SZDFavourites
 //
 //  Created by Sandy House on 2020-09-25.
@@ -19,9 +19,9 @@
 import Foundation
 import UIKit
 
-class FavouriteListController: UIViewController {
+class ListController: UIViewController {
     
-    var tableView = FavouriteListTableView()
+    var tableView = ListTableView()
     var viewModel = ListViewModel()
     
     override func viewDidLoad() {
@@ -72,9 +72,20 @@ class FavouriteListController: UIViewController {
         
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    func presentThingController(index: ThingIndex) {
+        let thing = self.viewModel.thing(at: index)
+        
+        let controller = ThingController(thing: thing)
+        
+        self.addChild(controller)
+        controller.view.frame = self.view.frame
+        self.view.addSubview(controller.view)
+        controller.didMove(toParent: self)
+    }
 }
 
-extension FavouriteListController: UITableViewDataSource {
+extension ListController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.tableView.reuseIdentifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: self.tableView.reuseIdentifier)
@@ -99,7 +110,10 @@ extension FavouriteListController: UITableViewDataSource {
     }
 }
 
-extension FavouriteListController: UITableViewDelegate {
+extension ListController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.presentThingController(index: ThingIndex(indexPath.section, indexPath.row))
+    }
 }
 

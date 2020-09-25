@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
 
         // root view controller
-        let viewController = FavouriteListController()
+        let viewController = ListController()
         let navigationController = UINavigationController(rootViewController: viewController)
         window.rootViewController = navigationController
         
