@@ -14,6 +14,10 @@
 		5A2FC623251E4B2A00002DBC /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC622251E4B2A00002DBC /* Color.swift */; };
 		5A2FC625251E4B3800002DBC /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC624251E4B3800002DBC /* Style.swift */; };
 		5A2FC627251E4B4A00002DBC /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC626251E4B4A00002DBC /* Asset.swift */; };
+		5A2FC62A251E4DBB00002DBC /* FavouriteListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC629251E4DBB00002DBC /* FavouriteListTableView.swift */; };
+		5A2FC62C251E4E4800002DBC /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC62B251E4E4800002DBC /* ListViewModel.swift */; };
+		5A2FC62E251E4E9900002DBC /* GroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC62D251E4E9900002DBC /* GroupList.swift */; };
+		5A2FC630251E50E500002DBC /* ThingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC62F251E50E500002DBC /* ThingViewModel.swift */; };
 		5AA479B1251BDE76004415DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B0251BDE76004415DC /* AppDelegate.swift */; };
 		5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B2251BDE76004415DC /* SceneDelegate.swift */; };
 		5AA479B8251BDE76004415DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AA479B6251BDE76004415DC /* Main.storyboard */; };
@@ -44,6 +48,10 @@
 		5A2FC622251E4B2A00002DBC /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		5A2FC624251E4B3800002DBC /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		5A2FC626251E4B4A00002DBC /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+		5A2FC629251E4DBB00002DBC /* FavouriteListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteListTableView.swift; sourceTree = "<group>"; };
+		5A2FC62B251E4E4800002DBC /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		5A2FC62D251E4E9900002DBC /* GroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupList.swift; sourceTree = "<group>"; };
+		5A2FC62F251E50E500002DBC /* ThingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingViewModel.swift; sourceTree = "<group>"; };
 		5AA479AD251BDE76004415DC /* SZDFavourites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SZDFavourites.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AA479B0251BDE76004415DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5AA479B2251BDE76004415DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +94,7 @@
 				5A2FC617251E432B00002DBC /* Thing.swift */,
 				5A2FC619251E434A00002DBC /* Group.swift */,
 				5A2FC61B251E436C00002DBC /* Item.swift */,
+				5A2FC62D251E4E9900002DBC /* GroupList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -124,8 +133,18 @@
 		5A2FC628251E4BA700002DBC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5A2FC629251E4DBB00002DBC /* FavouriteListTableView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		5A2FC631251E510400002DBC /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				5A2FC62B251E4E4800002DBC /* ListViewModel.swift */,
+				5A2FC62F251E50E500002DBC /* ThingViewModel.swift */,
+			);
+			path = "View Model";
 			sourceTree = "<group>";
 		};
 		5A77EC43C233556EB6A5E653 /* Frameworks */ = {
@@ -164,6 +183,7 @@
 				5A2FC621251E4B1500002DBC /* Constant */,
 				5A2FC616251E3FF900002DBC /* Model */,
 				5A2FC628251E4BA700002DBC /* View */,
+				5A2FC631251E510400002DBC /* View Model */,
 				5A2FC61E251E499E00002DBC /* Controller */,
 			);
 			path = SZDFavourites;
@@ -359,9 +379,13 @@
 			files = (
 				5A2FC627251E4B4A00002DBC /* Asset.swift in Sources */,
 				5A2FC618251E432B00002DBC /* Thing.swift in Sources */,
+				5A2FC62C251E4E4800002DBC /* ListViewModel.swift in Sources */,
 				5A2FC620251E49C400002DBC /* FavouriteListController.swift in Sources */,
+				5A2FC62A251E4DBB00002DBC /* FavouriteListTableView.swift in Sources */,
 				5A2FC623251E4B2A00002DBC /* Color.swift in Sources */,
 				5AA479B1251BDE76004415DC /* AppDelegate.swift in Sources */,
+				5A2FC630251E50E500002DBC /* ThingViewModel.swift in Sources */,
+				5A2FC62E251E4E9900002DBC /* GroupList.swift in Sources */,
 				5A2FC61A251E434A00002DBC /* Group.swift in Sources */,
 				5A2FC61C251E436C00002DBC /* Item.swift in Sources */,
 				5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */,

@@ -14,8 +14,16 @@ class Group {
     var name: String
     var things = [Thing]()
     
+    var count: Int {
+        return things.count
+    }
+    
     init(name: String, things: [Thing] = [Thing]()) {
         self.name = name
         self.things = things
+    }
+    
+    func add(thing: Thing) {
+        self.things.append(thing)
     }
 }

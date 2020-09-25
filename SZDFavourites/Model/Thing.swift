@@ -13,7 +13,7 @@ import UIKit
 
 class Thing {
     
-    weak var group: Group? 
+    weak var group: Group?
     var name: String
     private var items: [Item]
     
@@ -23,15 +23,16 @@ class Thing {
     }
     
     /// add a new item to the end of the list
-    func addItem(name: String, image: UIImage? = nil) -> Item? {
+    @discardableResult
+    func addItem(name: String, image: UIImage? = nil) -> Bool {
         // check if item already exists
         if self.indexOfItem(with: name) != nil {
-            return nil
+            return false
         }
         
         let item = Item(thing: self, name: name, image: image)
         self.items.append(item)
-        return item
+        return true
     }
     
     /// remove item at index
@@ -41,5 +42,16 @@ class Thing {
     
     func indexOfItem(with name: String) -> Int? {
         return self.items.firstIndex{$0.name == name}
+    }
+    
+    func topItem() -> Item? {
+        guard self.items.count > 0 else {
+            return nil
+        }
+        return self.items[0]
+    }
+    
+    subscript(index: Int) -> Item {
+        return self.items[index]
     }
 }
