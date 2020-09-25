@@ -11,7 +11,7 @@ import UIKit
 
 typealias ThingIndex = (groupIndex: Int, thingIndex: Int)
 
-class GroupList {
+class GroupList: Codable {
     var groups: [Group]
     
     var count: Int {

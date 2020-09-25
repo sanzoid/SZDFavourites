@@ -9,7 +9,7 @@
 
 import Foundation
 
-class Group {
+class Group: Codable {
     
     var name: String
     var things = [Thing]()

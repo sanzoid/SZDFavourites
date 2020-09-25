@@ -28,13 +28,49 @@ class FavouriteListController: UIViewController {
         self.title = "Favorites"
         self.view.backgroundColor = Color.Base.background
         
+        self.setupTable()
+        self.addBarButtonItems()
+    }
+    
+    // MARK: Setup
+    
+    func addBarButtonItems() {
+        let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addThing))
+        self.navigationItem.setRightBarButton(addBarButtonItem, animated: true)
+    }
+    
+    func setupTable() {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
         self.view.addSubview(self.tableView)
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
-        
         self.tableView.constrainTo(view: self.view, on: .all)
+    }
+    
+    // MARK: Action
+    
+    @objc func addThing() {
+        // alert controller dialog for adding thing name + item name
+        let alertController = UIAlertController(title: "Add Thing", message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let addAction = UIAlertAction(title: "Add", style: .default) { action in
+            guard let thingText = alertController.textFields?[0].text,
+                let itemText = alertController.textFields?[1].text else { return }
+            
+            // add thing with item
+            let thing = Thing(name: thingText)
+            thing.addItem(name: itemText)
+            self.viewModel.addThing(thing)
+            
+            // TODO: consider having the view model tell it when it should reload
+            self.tableView.reloadData()
+        }
+        
+        alertController.addTextFields("Name", "Favourite")
+        alertController.addActions(cancelAction, addAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -43,6 +79,7 @@ extension FavouriteListController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.tableView.reuseIdentifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: self.tableView.reuseIdentifier)
         
+        // retrieve thing and item
         let index = ThingIndex(indexPath.section, indexPath.row)
         let thing = self.viewModel.thing(at: index)
         let item = thing.topItem()

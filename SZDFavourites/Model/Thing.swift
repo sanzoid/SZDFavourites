@@ -6,14 +6,12 @@
 //  Copyright © 2020 sandzapps. All rights reserved.
 //
 //  A Thing has a name and an ordered list of items
-//  It keeps a reference to its Group.
 
 import Foundation
 import UIKit
 
-class Thing {
+class Thing: Codable {
     
-    weak var group: Group?
     var name: String
     private var items: [Item]
     
@@ -30,7 +28,7 @@ class Thing {
             return false
         }
         
-        let item = Item(thing: self, name: name, image: image)
+        let item = Item(name: name, image: image)
         self.items.append(item)
         return true
     }

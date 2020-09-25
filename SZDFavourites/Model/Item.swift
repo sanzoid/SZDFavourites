@@ -6,21 +6,17 @@
 //  Copyright © 2020 sandzapps. All rights reserved.
 //
 //  An Item has a name and an optional image.
-//  It keeps a reference to its Thing as it only exists under it.
 
 import Foundation
 import UIKit
 
-class Item {
+class Item: Codable {
     
-    /// reference to Thing as it only exists under the Thing.
-    weak var thing: Thing?
     var name: String
-    var image: UIImage?
+//    var image: UIImage?
     
-    init(thing: Thing, name: String, image: UIImage? = nil) {
-        self.thing = thing
+    init(name: String, image: UIImage? = nil) {
         self.name = name
-        self.image = image
+//        self.image = image
     }
 }
