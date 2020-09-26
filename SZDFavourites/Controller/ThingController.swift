@@ -10,7 +10,14 @@
 
 import UIKit
 
+protocol ThingControllerDelegate: class {
+    func shouldEdit(thing: Thing)
+    func shouldDelete(thing: Thing)
+}
+
 class ThingController: UIViewController {
+    
+    weak var delegate: ThingControllerDelegate?
     
     let thing: Thing
     let viewModel: ThingViewModel
@@ -23,6 +30,8 @@ class ThingController: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
+        self.thingView.delegate = self
+
         self.view.backgroundColor = UIColor.black.alpha(0.5)
         
         self.view.addSubviews(self.thingView)
@@ -46,11 +55,14 @@ class ThingController: UIViewController {
     }
     
     func edit() {
-        
+        self.close()
+        self.delegate?.shouldEdit(thing: self.thing)
     }
     
     func delete() {
-        
+        // delete - work out this communication
+        self.delegate?.shouldDelete(thing: self.thing)
+        self.close()
     }
 }
 
@@ -58,5 +70,15 @@ extension ThingController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         // limit only to the view with the gesture recognizer and not its subviews
         return touch.view == gestureRecognizer.view
+    }
+}
+
+extension ThingController: ThingViewDelegate {
+    func didEdit() {
+        self.edit()
+    }
+    
+    func didDelete() {
+        self.delete()
     }
 }

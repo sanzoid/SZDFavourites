@@ -17,4 +17,5 @@ class ThingViewModel {
     // edit name
     // add, move, edit, delete item
     // edit group
+    
 }

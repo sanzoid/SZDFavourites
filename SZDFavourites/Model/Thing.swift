@@ -53,3 +53,9 @@ class Thing: Codable {
         return self.items[index]
     }
 }
+
+extension Thing: Equatable {
+    static func ==(lhs: Thing, rhs: Thing) -> Bool {
+        return lhs.name == rhs.name && lhs.items == rhs.items
+    }
+}

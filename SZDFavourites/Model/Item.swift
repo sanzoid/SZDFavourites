@@ -20,3 +20,9 @@ class Item: Codable {
 //        self.image = image
     }
 }
+
+extension Item: Equatable {
+    static func ==(lhs: Item, rhs: Item) -> Bool {
+        return lhs.name == rhs.name
+    }
+}

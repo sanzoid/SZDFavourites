@@ -32,4 +32,14 @@ class GroupList: Codable {
     subscript(index: Int) -> Group {
         return self.groups[index]
     }
+    
+    @discardableResult
+    func remove(thing: Thing) -> Bool {
+        for group in self.groups {
+            if group.remove(thing: thing) {
+                return true
+            }
+        }
+        return false
+    }
 }

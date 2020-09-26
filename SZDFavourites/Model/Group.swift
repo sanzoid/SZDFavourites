@@ -26,4 +26,17 @@ class Group: Codable {
     func add(thing: Thing) {
         self.things.append(thing)
     }
+    
+    func remove(thing: Thing) -> Bool {
+        if let index = self.index(of: thing) {
+            self.things.remove(at: index)
+            return true
+        }
+        
+        return false 
+    }
+    
+    func index(of thing: Thing) -> Int? {
+        return self.things.firstIndex{$0 == thing}
+    }
 }

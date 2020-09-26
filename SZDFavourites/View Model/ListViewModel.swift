@@ -67,4 +67,22 @@ class ListViewModel {
         
         self.saveList()
     }
+    
+    func editThing(_ thing: Thing, name: String, topItemName: String) {
+        thing.name = name
+        
+        if let topItem = thing.topItem() {
+            topItem.name = topItemName
+        } else if !topItemName.isEmpty {
+            thing.addItem(name: topItemName)
+        }
+        
+        self.saveList()
+    }
+    
+    func remove(thing: Thing) {
+        self.groups.remove(thing: thing)
+        
+        self.saveList()
+    }
 }

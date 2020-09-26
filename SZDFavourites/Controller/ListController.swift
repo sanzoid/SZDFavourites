@@ -51,23 +51,54 @@ class ListController: UIViewController {
     // MARK: Action
     
     @objc func addThing() {
+        self.presentEditThingController(isAdd: true)
+    }
+    
+    func editThing(_ thing: Thing) {
+        self.presentEditThingController(isAdd: false, thing: thing)
+    }
+    
+    func presentEditThingController(isAdd: Bool, thing: Thing? = nil) {
+        var title: String
+        var actionTitle: String
+        var actionBlock: (String, String) -> Void
+        var textFieldPlaceholder: (thing: String?, item: String?)
+        if !isAdd, let thing = thing {
+            title = "Edit Thing"
+            actionTitle = "Edit"
+            actionBlock = { thingText, itemText in
+                self.viewModel.editThing(thing, name: thingText, topItemName: itemText)
+                
+                self.tableView.reloadData()
+            }
+            textFieldPlaceholder = (thing.name, thing.topItem()?.name)
+        } else {
+            title = "Add Thing"
+            actionTitle = "Add"
+            actionBlock = { thingText, itemText in
+                // add thing with item
+                let thing = Thing(name: thingText)
+                if !itemText.isEmpty {
+                    thing.addItem(name: itemText)
+                }
+                self.viewModel.addThing(thing)
+                
+                // TODO: consider having the view model tell it when it should reload
+                self.tableView.reloadData()
+            }
+        }
+        
         // alert controller dialog for adding thing name + item name
-        let alertController = UIAlertController(title: "Add Thing", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let addAction = UIAlertAction(title: "Add", style: .default) { action in
+        let addAction = UIAlertAction(title: actionTitle, style: .default) { action in
             guard let thingText = alertController.textFields?[0].text,
                 let itemText = alertController.textFields?[1].text else { return }
             
-            // add thing with item
-            let thing = Thing(name: thingText)
-            thing.addItem(name: itemText)
-            self.viewModel.addThing(thing)
-            
-            // TODO: consider having the view model tell it when it should reload
-            self.tableView.reloadData()
+            actionBlock(thingText, itemText)
         }
         
-        alertController.addTextFields("Name", "Favourite")
+        alertController.addTextFields(("Name", textFieldPlaceholder.thing), ("Favourite", textFieldPlaceholder.item))
         alertController.addActions(cancelAction, addAction)
         
         self.present(alertController, animated: true, completion: nil)
@@ -77,11 +108,23 @@ class ListController: UIViewController {
         let thing = self.viewModel.thing(at: index)
         
         let controller = ThingController(thing: thing)
+        controller.delegate = self
         
         self.addChild(controller)
         controller.view.frame = self.view.frame
         self.view.addSubview(controller.view)
         controller.didMove(toParent: self)
+    }
+}
+
+extension ListController: ThingControllerDelegate {
+    func shouldEdit(thing: Thing) {
+        self.editThing(thing)
+    }
+    
+    func shouldDelete(thing: Thing) {
+        self.viewModel.remove(thing: thing)
+        self.tableView.reloadData()
     }
 }
 
@@ -116,4 +159,3 @@ extension ListController: UITableViewDelegate {
         self.presentThingController(index: ThingIndex(indexPath.section, indexPath.row))
     }
 }
-
