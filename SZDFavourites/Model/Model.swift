@@ -1,5 +1,5 @@
 //
-//  Manager.swift
+//  Model.swift
 //  SZDFavourites
 //
 //  Created by Sandy House on 2020-09-28.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Manager {
+class Model: Codable {
     
     /**
         **GroupList**
@@ -41,6 +41,14 @@ class Manager {
         self.thingMap = thingMap
     }
     
+    func groupCount() -> Int {
+        return self.groupList.count()
+    }
+    
+    func thingCount(in group: Int) -> Int {
+        self.groupList.count(in: group)
+    }
+    
     // MARK: Group
     
     func add(group name: GroupName) {
@@ -63,7 +71,10 @@ class Manager {
     
     func add(thing name: ThingName) {
         let thing = Thing(name: name)
-        
+        self.add(thing: thing)
+    }
+    
+    func add(thing: Thing) {
         self.thingMap.add(thing: thing)
         self.groupList.add(thing: thing)
     }
@@ -82,6 +93,44 @@ class Manager {
         // edit name in groupList
         if isNewName {
             self.groupList.edit(thing: thing.name, with: newThing.name)
+        }
+    }
+    
+    func thing(at index: ThingIndex) -> Thing? {
+        let name = self.groupList.thingName(at: index)
+        let thing = self.thingMap[name]
+        return thing
+    }
+    
+    // MARK: Peristence
+    // TODO: move this out 
+    
+    static func retrieve() -> Model {
+        let defaults = UserDefaults.standard
+        
+        if let data = defaults.object(forKey: "Model") as? Data {
+            let decoder = JSONDecoder()
+            if let model = try? decoder.decode(Model.self, from: data) {
+                return model
+            }
+        }
+        
+        // default model
+        let groupList = GroupList2()
+        let thingMap = ThingMap()
+        let model = Model(groupList: groupList, thingMap: thingMap)
+        
+        model.add(thing: "Poop")
+        model.add(thing: "Food")
+        
+        return model
+    }
+    
+    static func save(model: Model) {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(model) {
+            let defaults = UserDefaults.standard
+            defaults.set(data, forKey: "Model")
         }
     }
 }

@@ -20,9 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // window
         let window = UIWindow(windowScene: windowScene)
-
+        
         // root view controller
-        let viewController = ListController()
+        let model = Model.retrieve()
+        let viewController = ListController(model: model)
         let navigationController = UINavigationController(rootViewController: viewController)
         window.rootViewController = navigationController
         

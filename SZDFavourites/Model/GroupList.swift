@@ -44,11 +44,19 @@ class GroupList: Codable {
     }
 }
 
-class GroupList2 {
+class GroupList2: Codable {
     
     static let defaultGroupName = "default"
     
     private var groups: [Group2]
+    
+    func count() -> Int {
+        return self.groups.count
+    }
+    
+    func count(in group: Int) -> Int {
+        return self.groups[group].count
+    }
     
     var defaultGroup: Group2 {
         return self.groups[self.indexOf(group: GroupList2.defaultGroupName)!]
@@ -127,6 +135,10 @@ class GroupList2 {
         if let thing = self.remove(thing: name) {
             self.add(thing: thing, group: newGroupName)
         }
+    }
+    
+    func thingName(at index: ThingIndex) -> ThingName {
+        return self.groups[index.groupIndex].things[index.thingIndex]
     }
     
     // MARK: Helper

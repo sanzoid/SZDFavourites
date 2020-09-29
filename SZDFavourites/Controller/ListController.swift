@@ -21,8 +21,20 @@ import UIKit
 
 class ListController: UIViewController {
     
+    let viewModel: ListViewModel
+    let model: Model
     var tableView = ListTableView()
-    var viewModel = ListViewModel()
+    
+    init(model: Model) {
+        self.model = model
+        self.viewModel = ListViewModel(model: model)
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         self.title = "Favorites"
@@ -81,7 +93,7 @@ class ListController: UIViewController {
                 if !itemText.isEmpty {
                     thing.addItem(name: itemText)
                 }
-                self.viewModel.addThing(thing)
+                self.viewModel.add(thing: thing)
                 
                 // TODO: consider having the view model tell it when it should reload
                 self.tableView.reloadData()
@@ -105,7 +117,7 @@ class ListController: UIViewController {
     }
     
     func presentThingController(index: ThingIndex) {
-        let thing = self.viewModel.thing(at: index)
+        let thing = self.viewModel.thing(at: index)! // FIXME:
         
         let controller = ThingController(thing: thing)
         controller.delegate = self
@@ -135,7 +147,7 @@ extension ListController: UITableViewDataSource {
         
         // retrieve thing and item
         let index = ThingIndex(indexPath.section, indexPath.row)
-        let thing = self.viewModel.thing(at: index)
+        let thing = self.viewModel.thing(at: index)! // FIXME:
         let item = thing.topItem()
         
         cell.textLabel?.text = thing.name
@@ -145,11 +157,11 @@ extension ListController: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.viewModel.groups.count
+        return self.viewModel.groupCount()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.groups[section].count
+        return self.viewModel.thingCount(group: section)
     }
 }
 

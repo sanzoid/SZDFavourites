@@ -43,10 +43,14 @@ class Group: Codable {
 
 typealias GroupName = String
 
-class Group2 {
+class Group2: Codable {
     
     var name: String
     var things: [ThingName]
+    
+    var count: Int {
+        return things.count
+    }
     
     init(name: String, things: [ThingName] = [ThingName]()) {
         self.name = name

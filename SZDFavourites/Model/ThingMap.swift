@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ThingMap {
+class ThingMap: Codable {
     
     private var things: [ThingName: Thing]
     
@@ -41,5 +41,9 @@ class ThingMap {
         if isNewName {
             self.things[thing.name] = nil
         }
+    }
+    
+    subscript(name: String) -> Thing? {
+        return self.things[name]
     }
 }
