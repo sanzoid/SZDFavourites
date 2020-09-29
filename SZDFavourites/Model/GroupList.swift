@@ -12,43 +12,10 @@ import UIKit
 typealias ThingIndex = (groupIndex: Int, thingIndex: Int)
 
 class GroupList: Codable {
-    var groups: [Group]
-    
-    var count: Int {
-        return self.groups.count
-    }
-    
-    var defaultGroup: Group {
-        return self.groups.first!
-    }
-    
-    init() {
-        self.groups = [Group]()
-        
-        let defaultGroup = Group(name: "Default")
-        self.groups.append(defaultGroup)
-    }
-    
-    subscript(index: Int) -> Group {
-        return self.groups[index]
-    }
-    
-    @discardableResult
-    func remove(thing: Thing) -> Bool {
-        for group in self.groups {
-            if group.remove(thing: thing) {
-                return true
-            }
-        }
-        return false
-    }
-}
-
-class GroupList2: Codable {
     
     static let defaultGroupName = "default"
     
-    private var groups: [Group2]
+    private var groups: [Group]
     
     func count() -> Int {
         return self.groups.count
@@ -58,15 +25,15 @@ class GroupList2: Codable {
         return self.groups[group].count
     }
     
-    var defaultGroup: Group2 {
-        return self.groups[self.indexOf(group: GroupList2.defaultGroupName)!]
+    var defaultGroup: Group {
+        return self.groups[self.indexOf(group: GroupList.defaultGroupName)!]
     }
     
-    init(groups: [Group2] = [Group2]()) {
+    init(groups: [Group] = [Group]()) {
         self.groups = groups
         
         if self.groups.isEmpty {
-            let defaultGroup = Group2(name: GroupList2.defaultGroupName)
+            let defaultGroup = Group(name: GroupList.defaultGroupName)
             self.groups.append(defaultGroup)
         }
     }
@@ -74,7 +41,7 @@ class GroupList2: Codable {
     // MARK: Group
     
     func add(group name: GroupName) {
-        let group = Group2(name: name)
+        let group = Group(name: name)
         self.groups.append(group)
     }
     
@@ -101,7 +68,7 @@ class GroupList2: Codable {
     
     func add(thing: Thing) {
         // add to default group         
-        self.add(thing: thing.name, group: GroupList2.defaultGroupName)
+        self.add(thing: thing.name, group: GroupList.defaultGroupName)
     }
     
     func add(thing thingName: ThingName, group groupName: GroupName) {

@@ -97,12 +97,12 @@
 		5A2FC616251E3FF900002DBC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5A2FC61B251E436C00002DBC /* Item.swift */,
-				5A2FC619251E434A00002DBC /* Group.swift */,
-				5A2FC62D251E4E9900002DBC /* GroupList.swift */,
-				5A2FC617251E432B00002DBC /* Thing.swift */,
-				5A2FC63625221EFF00002DBC /* ThingMap.swift */,
 				5A2FC6382522214A00002DBC /* Model.swift */,
+				5A2FC62D251E4E9900002DBC /* GroupList.swift */,
+				5A2FC619251E434A00002DBC /* Group.swift */,
+				5A2FC63625221EFF00002DBC /* ThingMap.swift */,
+				5A2FC617251E432B00002DBC /* Thing.swift */,
+				5A2FC61B251E436C00002DBC /* Item.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

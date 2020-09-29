@@ -20,7 +20,7 @@ class Model: Codable {
         - A group's name can be changed
         - A thing (name) can move between groups.
      */
-    private var groupList: GroupList2
+    private var groupList: GroupList
     
     /**
         **ThingMap**
@@ -36,7 +36,7 @@ class Model: Codable {
     */
     private var thingMap: ThingMap
     
-    init(groupList: GroupList2, thingMap: ThingMap) {
+    init(groupList: GroupList, thingMap: ThingMap) {
         self.groupList = groupList
         self.thingMap = thingMap
     }
@@ -116,7 +116,7 @@ class Model: Codable {
         }
         
         // default model
-        let groupList = GroupList2()
+        let groupList = GroupList()
         let thingMap = ThingMap()
         let model = Model(groupList: groupList, thingMap: thingMap)
         
