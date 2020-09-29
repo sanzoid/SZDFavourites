@@ -40,3 +40,40 @@ class Group: Codable {
         return self.things.firstIndex{$0 == thing}
     }
 }
+
+typealias GroupName = String
+
+class Group2 {
+    
+    var name: String
+    var things: [ThingName]
+    
+    init(name: String, things: [ThingName] = [ThingName]()) {
+        self.name = name
+        self.things = things
+    }
+    
+    func add(thing: Thing) {
+        self.things.append(thing.name)
+    }
+    
+    func add(thing name: ThingName) {
+        self.things.append(name)
+    }
+    
+    func add(things names: [ThingName]) {
+        self.things.append(contentsOf: names)
+    }
+    
+    func remove(thing name: ThingName) -> ThingName? {
+        if let index = self.indexOf(thing: name) {
+            return self.things.remove(at: index)
+        }
+        
+        return nil
+    }
+    
+    func indexOf(thing name: ThingName) -> Int? {
+        return self.things.firstIndex{ $0 == name }
+    }
+}

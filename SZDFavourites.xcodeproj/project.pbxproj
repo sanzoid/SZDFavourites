@@ -20,6 +20,8 @@
 		5A2FC630251E50E500002DBC /* ThingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC62F251E50E500002DBC /* ThingViewModel.swift */; };
 		5A2FC633251E8F5400002DBC /* ThingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC632251E8F5400002DBC /* ThingView.swift */; };
 		5A2FC635251E8F7800002DBC /* ThingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC634251E8F7800002DBC /* ThingController.swift */; };
+		5A2FC63725221EFF00002DBC /* ThingMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC63625221EFF00002DBC /* ThingMap.swift */; };
+		5A2FC6392522214A00002DBC /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC6382522214A00002DBC /* Manager.swift */; };
 		5AA479B1251BDE76004415DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B0251BDE76004415DC /* AppDelegate.swift */; };
 		5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B2251BDE76004415DC /* SceneDelegate.swift */; };
 		5AA479BA251BDE79004415DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AA479B9251BDE79004415DC /* Assets.xcassets */; };
@@ -55,6 +57,8 @@
 		5A2FC62F251E50E500002DBC /* ThingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingViewModel.swift; sourceTree = "<group>"; };
 		5A2FC632251E8F5400002DBC /* ThingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingView.swift; sourceTree = "<group>"; };
 		5A2FC634251E8F7800002DBC /* ThingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingController.swift; sourceTree = "<group>"; };
+		5A2FC63625221EFF00002DBC /* ThingMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingMap.swift; sourceTree = "<group>"; };
+		5A2FC6382522214A00002DBC /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
 		5AA479AD251BDE76004415DC /* SZDFavourites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SZDFavourites.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AA479B0251BDE76004415DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5AA479B2251BDE76004415DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,10 +97,12 @@
 		5A2FC616251E3FF900002DBC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5A2FC617251E432B00002DBC /* Thing.swift */,
-				5A2FC619251E434A00002DBC /* Group.swift */,
 				5A2FC61B251E436C00002DBC /* Item.swift */,
+				5A2FC619251E434A00002DBC /* Group.swift */,
 				5A2FC62D251E4E9900002DBC /* GroupList.swift */,
+				5A2FC617251E432B00002DBC /* Thing.swift */,
+				5A2FC63625221EFF00002DBC /* ThingMap.swift */,
+				5A2FC6382522214A00002DBC /* Manager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -380,6 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A2FC627251E4B4A00002DBC /* Asset.swift in Sources */,
+				5A2FC63725221EFF00002DBC /* ThingMap.swift in Sources */,
 				5A2FC618251E432B00002DBC /* Thing.swift in Sources */,
 				5A2FC62C251E4E4800002DBC /* ListViewModel.swift in Sources */,
 				5A2FC620251E49C400002DBC /* ListController.swift in Sources */,
@@ -394,6 +401,7 @@
 				5A2FC635251E8F7800002DBC /* ThingController.swift in Sources */,
 				5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */,
 				5A2FC625251E4B3800002DBC /* Style.swift in Sources */,
+				5A2FC6392522214A00002DBC /* Manager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,12 +10,14 @@
 import Foundation
 import UIKit
 
+typealias ThingName = String
+
 class Thing: Codable {
     
-    var name: String
+    var name: ThingName
     private var items: [Item]
     
-    init(name: String, items: [Item] = [Item]()) {
+    init(name: ThingName, items: [Item] = [Item]()) {
         self.name = name
         self.items = items
     }
