@@ -14,27 +14,40 @@ class ListViewModel {
 
     let model: Model
     
-    func groupCount() -> Int {
-        return self.model.groupCount()
-    }
-    
-    func thingCount(group: Int) -> Int {
-        return self.model.thingCount(in: group)
-    }
-    
     init(model: Model) {
         self.model = model
     }
     
-    // MARK: Persistence
+    // MARK: Group
     
-    func saveList() {
-        Model.save(model: self.model)
+    func groupCount() -> Int {
+        return self.model.groupCount()
     }
     
-    // MARK: Data
-    // add, get, move, edit, delete thing
-    // later: add, move, edit, delete group
+    func group(at index: Int) -> Group? {
+        return self.model.group(at: index)
+    }
+    
+    func add(group name: GroupName) {
+        self.model.add(group: name)
+        self.save()
+    }
+    
+    func remove(group: GroupName) {
+        self.model.remove(group: group)
+        self.save()
+    }
+    
+    func edit(group name: GroupName, with newName: GroupName) {
+        self.model.edit(group: name, with: newName)
+        self.save()
+    }
+    
+    // MARK: Thing
+    
+    func thingCount(group: Int) -> Int {
+        return self.model.thingCount(in: group)
+    }
     
     func thing(at index: ThingIndex) -> Thing? {
         return self.model.thing(at: index)
@@ -42,23 +55,27 @@ class ListViewModel {
     
     func add(thing: Thing) {
         self.model.add(thing: thing)
-        
-        self.saveList()
+        self.save()
     }
     
-    func editThing(_ thing: Thing, name: String, topItemName: String) {
+    func remove(thing: Thing) {
+        self.model.remove(thing: thing.name)
+        self.save()
+    }
+
+    func edit(thing: Thing, with name: ThingName, topItemName: String) {
         // FIXME: better edit logic
         let newThing = Thing(name: name)
         newThing.addItem(name: topItemName)
         
         self.model.edit(thing: thing, with: newThing)
         
-        self.saveList()
+        self.save()
     }
     
-    func remove(thing: Thing) {
-        self.model.remove(thing: thing.name)
-        
-        self.saveList()
+    // MARK: Save
+    
+    private func save() {
+        Model.save(model: self.model)
     }
 }

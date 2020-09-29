@@ -41,15 +41,11 @@ class Model: Codable {
         self.thingMap = thingMap
     }
     
+    // MARK: Group
+    
     func groupCount() -> Int {
         return self.groupList.count()
     }
-    
-    func thingCount(in group: Int) -> Int {
-        self.groupList.count(in: group)
-    }
-    
-    // MARK: Group
     
     func add(group name: GroupName) {
         self.groupList.add(group: name)
@@ -67,7 +63,15 @@ class Model: Codable {
         self.groupList.move(thing: name, from: groupName, to: newGroupName)
     }
     
+    func group(at index: Int) -> Group? {
+        return self.groupList[index]
+    }
+    
     // MARK: Thing
+    
+    func thingCount(in group: Int) -> Int {
+        self.groupList.count(in: group)
+    }
     
     func add(thing name: ThingName) {
         let thing = Thing(name: name)

@@ -17,14 +17,6 @@ class GroupList: Codable {
     
     private var groups: [Group]
     
-    func count() -> Int {
-        return self.groups.count
-    }
-    
-    func count(in group: Int) -> Int {
-        return self.groups[group].count
-    }
-    
     var defaultGroup: Group {
         return self.groups[self.indexOf(group: GroupList.defaultGroupName)!]
     }
@@ -39,6 +31,14 @@ class GroupList: Codable {
     }
     
     // MARK: Group
+    
+    func count() -> Int {
+        return self.groups.count
+    }
+    
+    subscript(index: Int) -> Group {
+        return self.groups[index]
+    }
     
     func add(group name: GroupName) {
         let group = Group(name: name)
@@ -65,6 +65,10 @@ class GroupList: Codable {
     }
     
     // MARK: Thing
+    
+    func count(in group: Int) -> Int {
+        return self.groups[group].count
+    }
     
     func add(thing: Thing) {
         // add to default group         

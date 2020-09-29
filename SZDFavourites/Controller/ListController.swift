@@ -21,13 +21,15 @@ import UIKit
 
 class ListController: UIViewController {
     
-    let viewModel: ListViewModel
     let model: Model
-    var tableView = ListTableView()
+    let viewModel: ListViewModel
+    var tableView: ListTableView
     
     init(model: Model) {
         self.model = model
         self.viewModel = ListViewModel(model: model)
+        
+        self.tableView = ListTableView()
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -79,7 +81,7 @@ class ListController: UIViewController {
             title = "Edit Thing"
             actionTitle = "Edit"
             actionBlock = { thingText, itemText in
-                self.viewModel.editThing(thing, name: thingText, topItemName: itemText)
+                self.viewModel.edit(thing: thing, with: thingText, topItemName: itemText)
                 
                 self.tableView.reloadData()
             }
