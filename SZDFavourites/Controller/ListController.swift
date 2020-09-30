@@ -50,7 +50,10 @@ class ListController: UIViewController {
     
     func addBarButtonItems() {
         let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addThing))
-        self.navigationItem.setRightBarButton(addBarButtonItem, animated: true)
+        let addGroupBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addGroup))
+        let editBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEdit))
+        
+        self.navigationItem.setRightBarButtonItems([addBarButtonItem, addGroupBarButtonItem, editBarButtonItem], animated: true)
     }
     
     func setupTable() {
@@ -60,9 +63,59 @@ class ListController: UIViewController {
         self.view.addSubview(self.tableView)
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
         self.tableView.constrainTo(view: self.view, on: .all)
+        
+        // register header
+        self.tableView.register(ListTableHeader.self, forHeaderFooterViewReuseIdentifier: "ListHeader")
     }
     
     // MARK: Action
+    
+    @objc func toggleEdit() {
+        self.tableView.setEditing(!self.tableView.isEditing, animated: true)
+    }
+    
+    @objc func addGroup() {
+        self.presentEditGroupController(isAdd: true)
+    }
+    
+    func presentEditGroupController(isAdd: Bool, group: Group? = nil) {
+        var title: String
+        var actionTitle: String
+        var actionBlock: (String) -> Void
+        var textFieldText: String?
+        
+        if !isAdd, let group = group {
+            title = "Edit Group"
+            actionTitle = "OK"
+            actionBlock = { groupText in
+                self.viewModel.edit(group: group.name, with: groupText)
+                
+                self.tableView.reloadData()
+            }
+            textFieldText = group.name
+        } else {
+            title = "Add Group"
+            actionTitle = "Add"
+            actionBlock = { groupText in
+                self.viewModel.add(group: groupText)
+                
+                self.tableView.reloadData()
+            }
+        }
+        
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let addAction = UIAlertAction(title: actionTitle, style: .default) { action in
+            guard let text = alertController.textFields?[0].text else { return }
+            
+            actionBlock(text)
+        }
+        
+        alertController.addTextFields(("Group", textFieldText))
+        alertController.addActions(cancelAction, addAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
     
     @objc func addThing() {
         self.presentEditThingController(isAdd: true)
@@ -72,20 +125,21 @@ class ListController: UIViewController {
         self.presentEditThingController(isAdd: false, thing: thing)
     }
     
+    // TODO: move this controller out to a class with delegates so we can change this up later
     func presentEditThingController(isAdd: Bool, thing: Thing? = nil) {
         var title: String
         var actionTitle: String
         var actionBlock: (String, String) -> Void
-        var textFieldPlaceholder: (thing: String?, item: String?)
+        var textFieldText: (thing: String?, item: String?)
         if !isAdd, let thing = thing {
             title = "Edit Thing"
-            actionTitle = "Edit"
+            actionTitle = "OK"
             actionBlock = { thingText, itemText in
                 self.viewModel.edit(thing: thing, with: thingText, topItemName: itemText)
                 
                 self.tableView.reloadData()
             }
-            textFieldPlaceholder = (thing.name, thing.topItem()?.name)
+            textFieldText = (thing.name, thing.topItem()?.name)
         } else {
             title = "Add Thing"
             actionTitle = "Add"
@@ -112,7 +166,7 @@ class ListController: UIViewController {
             actionBlock(thingText, itemText)
         }
         
-        alertController.addTextFields(("Name", textFieldPlaceholder.thing), ("Favourite", textFieldPlaceholder.item))
+        alertController.addTextFields(("Name", textFieldText.thing), ("Favourite", textFieldText.item))
         alertController.addActions(cancelAction, addAction)
         
         self.present(alertController, animated: true, completion: nil)
@@ -143,7 +197,6 @@ extension ListController: ThingControllerDelegate {
 }
 
 extension ListController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.tableView.reuseIdentifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: self.tableView.reuseIdentifier)
         
@@ -165,11 +218,41 @@ extension ListController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.viewModel.thingCount(group: section)
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ListHeader") as! ListTableHeader
+        
+        view.section = section
+        view.delegate = self
+        view.nameLabel.text = self.viewModel.group(at: section)?.name
+        
+        return view
+    }
 }
 
 extension ListController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.presentThingController(index: ThingIndex(indexPath.section, indexPath.row))
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let index = ThingIndex(sourceIndexPath.section, sourceIndexPath.row)
+        let newIndex = ThingIndex(destinationIndexPath.section, destinationIndexPath.row)
+        self.viewModel.move(thing: index, to: newIndex)
+    }
+}
+
+extension ListController: ListTableHeaderDelegate {
+    func didPressEdit(section: Int) {
+        self.presentEditGroupController(isAdd: false, group: self.viewModel.group(at: section))
+    }
+    
+    func didPressRemove(section: Int) {
+        self.viewModel.remove(group: section)
+        self.tableView.reloadData()
     }
 }

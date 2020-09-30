@@ -29,6 +29,10 @@ class Group: Codable {
         self.things.append(thing.name)
     }
     
+    func add(thing name: ThingName, to index: Int) {
+        self.things.insert(name, at: index)
+    }
+    
     func add(thing name: ThingName) {
         self.things.append(name)
     }
@@ -43,6 +47,10 @@ class Group: Codable {
         }
         
         return nil
+    }
+    
+    func remove(thing index: Int) -> ThingName? {
+        return self.things.remove(at: index)
     }
     
     func indexOf(thing name: ThingName) -> Int? {

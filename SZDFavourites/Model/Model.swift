@@ -55,12 +55,20 @@ class Model: Codable {
         self.groupList.remove(group: name)
     }
     
+    func remove(group index: Int) {
+        self.groupList.remove(group: index)
+    }
+    
     func edit(group name: GroupName, with newName: GroupName) {
         self.groupList.edit(group: name, with: newName)
     }
     
     func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {
         self.groupList.move(thing: name, from: groupName, to: newGroupName)
+    }
+    
+    func move(thing index: ThingIndex, to newIndex: ThingIndex) {
+        self.groupList.move(thing: index, to: newIndex)
     }
     
     func group(at index: Int) -> Group? {

@@ -49,13 +49,17 @@ class GroupList: Codable {
     func remove(group name: GroupName) -> Bool {
         // find group, move its things to default group, and remove
         if let index = self.indexOf(group: name) {
-            let things = self.groups[index].things
-            self.defaultGroup.add(things: things)
-            self.groups.remove(at: index)
+            self.remove(group: index)
             return true
         }
         
         return false
+    }
+    
+    func remove(group index: Int) {
+        let things = self.groups[index].things
+        self.defaultGroup.add(things: things)
+        self.groups.remove(at: index)
     }
     
     func edit(group name: GroupName, with newName: GroupName) {
@@ -81,6 +85,10 @@ class GroupList: Codable {
         }
     }
     
+    func add(thing name: ThingName, to index: ThingIndex) {
+        self.groups[index.groupIndex].add(thing: name, to: index.thingIndex)
+    }
+    
     @discardableResult
     func remove(thing name: ThingName) -> ThingName? {
         // TODO: refactor to use indexOf
@@ -94,6 +102,10 @@ class GroupList: Codable {
         return nil
     }
     
+    func remove(thing index: ThingIndex) -> ThingName? {
+        return self.groups[index.groupIndex].remove(thing: index.thingIndex)
+    }
+    
     func edit(thing name: ThingName, with newName: ThingName) {
         // find it and change the name
         if let index = self.indexOfThing(name: name) {
@@ -105,6 +117,13 @@ class GroupList: Codable {
         // remove from old group and add to new group
         if let thing = self.remove(thing: name) {
             self.add(thing: thing, group: newGroupName)
+        }
+    }
+    
+    func move(thing index: ThingIndex, to newIndex: ThingIndex) {
+        // remove from old location, add to new location
+        if let thing = self.remove(thing: index) {
+            self.add(thing: thing, to: newIndex)
         }
     }
     

@@ -38,6 +38,11 @@ class ListViewModel {
         self.save()
     }
     
+    func remove(group index: Int) {
+        self.model.remove(group: index)
+        self.save()
+    }
+    
     func edit(group name: GroupName, with newName: GroupName) {
         self.model.edit(group: name, with: newName)
         self.save()
@@ -70,6 +75,11 @@ class ListViewModel {
         
         self.model.edit(thing: thing, with: newThing)
         
+        self.save()
+    }
+    
+    func move(thing index: ThingIndex, to newIndex: ThingIndex) {
+        self.model.move(thing: index, to: newIndex)
         self.save()
     }
     
