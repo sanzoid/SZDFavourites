@@ -13,6 +13,7 @@ import UIKit
 protocol ThingControllerDelegate: class {
     func shouldEdit(thing: Thing)
     func shouldDelete(thing: Thing)
+    func shouldAddItem(name: String, to thing: Thing)
 }
 
 class ThingController: UIViewController {
@@ -64,6 +65,10 @@ class ThingController: UIViewController {
         self.delegate?.shouldDelete(thing: self.thing)
         self.close()
     }
+    
+    func addItem(name: String) {
+        self.delegate?.shouldAddItem(name: name, to: self.thing)
+    }
 }
 
 extension ThingController: UIGestureRecognizerDelegate {
@@ -80,5 +85,10 @@ extension ThingController: ThingViewDelegate {
     
     func didDelete() {
         self.delete()
+    }
+    
+    func didAddItem(name: String) {
+        self.addItem(name: name)
+        self.thingView.setText(thing: self.thing)
     }
 }

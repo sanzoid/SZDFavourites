@@ -13,8 +13,8 @@ typealias GroupName = String
 
 class Group: Codable {
     
-    var name: String
-    var things: [ThingName]
+    private(set) var name: GroupName
+    private(set) var things: [ThingName]
     
     var count: Int {
         return things.count
@@ -23,6 +23,10 @@ class Group: Codable {
     init(name: String, things: [ThingName] = [ThingName]()) {
         self.name = name
         self.things = things
+    }
+    
+    func edit(name: GroupName) {
+        self.name = name
     }
     
     func add(thing: Thing) {
@@ -47,6 +51,10 @@ class Group: Codable {
         }
         
         return nil
+    }
+    
+    func edit(thing index: Int, with newName: ThingName) {
+        self.things[index] = newName
     }
     
     func remove(thing index: Int) -> ThingName? {

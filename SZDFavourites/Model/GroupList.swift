@@ -64,7 +64,7 @@ class GroupList: Codable {
     
     func edit(group name: GroupName, with newName: GroupName) {
         if let index = self.indexOf(group: name) {
-            self.groups[index].name = newName
+            self.groups[index].edit(name: newName)
         }
     }
     
@@ -91,12 +91,8 @@ class GroupList: Codable {
     
     @discardableResult
     func remove(thing name: ThingName) -> ThingName? {
-        // TODO: refactor to use indexOf
-        // find group it's in
-        for group in self.groups {
-            if let thing = group.remove(thing: name) {
-                return thing
-            }
+        if let index = self.indexOfThing(name: name) {
+            return self.groups[index.group].remove(thing: index.thing)
         }
         
         return nil
@@ -109,7 +105,7 @@ class GroupList: Codable {
     func edit(thing name: ThingName, with newName: ThingName) {
         // find it and change the name
         if let index = self.indexOfThing(name: name) {
-            self.groups[index.group].things[index.thing] = newName
+            self.groups[index.group].edit(thing: index.thing, with: newName)
         }
     }
     

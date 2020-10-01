@@ -14,8 +14,8 @@ typealias ThingName = String
 
 class Thing: Codable {
     
-    var name: ThingName
-    private var items: [Item]
+    private(set) var name: ThingName
+    private(set) var items: [Item]
     
     init(name: ThingName, items: [Item] = [Item]()) {
         self.name = name
@@ -24,7 +24,7 @@ class Thing: Codable {
     
     /// add a new item to the end of the list
     @discardableResult
-    func addItem(name: String, image: UIImage? = nil) -> Bool {
+    func addItem(name: ItemName, image: UIImage? = nil) -> Bool {
         // check if item already exists
         if self.indexOfItem(with: name) != nil {
             return false
@@ -40,7 +40,7 @@ class Thing: Codable {
         self.items.remove(at: index)
     }
     
-    func indexOfItem(with name: String) -> Int? {
+    func indexOfItem(with name: ItemName) -> Int? {
         return self.items.firstIndex{$0.name == name}
     }
     

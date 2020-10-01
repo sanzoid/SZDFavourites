@@ -114,6 +114,12 @@ class Model: Codable {
         return thing
     }
     
+    // MARK: Item
+    
+    func add(item name: ItemName, to thing: Thing) {
+        self.thingMap[thing.name]?.addItem(name: name)
+    }
+    
     // MARK: Peristence
     // TODO: move this out 
     

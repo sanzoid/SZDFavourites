@@ -194,6 +194,10 @@ extension ListController: ThingControllerDelegate {
         self.viewModel.remove(thing: thing)
         self.tableView.reloadData()
     }
+    
+    func shouldAddItem(name: String, to thing: Thing) {
+        self.viewModel.add(item: name, to: thing)
+    }
 }
 
 extension ListController: UITableViewDataSource {

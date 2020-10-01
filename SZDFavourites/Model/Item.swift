@@ -10,12 +10,14 @@
 import Foundation
 import UIKit
 
+typealias ItemName = String
+
 class Item: Codable {
     
-    var name: String
+    private(set) var name: ItemName
 //    var image: UIImage?
     
-    init(name: String, image: UIImage? = nil) {
+    init(name: ItemName, image: UIImage? = nil) {
         self.name = name
 //        self.image = image
     }

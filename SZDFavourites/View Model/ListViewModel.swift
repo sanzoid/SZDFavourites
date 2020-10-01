@@ -70,6 +70,7 @@ class ListViewModel {
 
     func edit(thing: Thing, with name: ThingName, topItemName: String) {
         // FIXME: better edit logic
+        // self.model.edit(thing: name, with: itemName)
         let newThing = Thing(name: name)
         newThing.addItem(name: topItemName)
         
@@ -80,6 +81,13 @@ class ListViewModel {
     
     func move(thing index: ThingIndex, to newIndex: ThingIndex) {
         self.model.move(thing: index, to: newIndex)
+        self.save()
+    }
+    
+    // MARK: Item
+    
+    func add(item name: ItemName, to thing: Thing) {
+        self.model.add(item: name, to: thing)
         self.save()
     }
     
