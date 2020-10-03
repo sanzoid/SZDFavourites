@@ -64,6 +64,9 @@ class ListController: UIViewController {
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
         self.tableView.constrainTo(view: self.view, on: .all)
         
+        // TODO: register when a custom cell
+//        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.tableView.reuseIdentifier)
+        
         // register header
         self.tableView.register(ListTableHeader.self, forHeaderFooterViewReuseIdentifier: "ListHeader")
     }
@@ -198,10 +201,15 @@ extension ListController: ThingControllerDelegate {
     func shouldAddItem(name: String, to thing: Thing) {
         self.viewModel.add(item: name, to: thing)
     }
+    
+    func shouldEditItem(at index: Int,for thing: Thing, with newName: String) {
+        self.viewModel.edit(item: index, for: thing, with: newName)
+    }
 }
 
 extension ListController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // TODO: use withIdentifier:for: when registering custom cell 
         let cell = tableView.dequeueReusableCell(withIdentifier: self.tableView.reuseIdentifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: self.tableView.reuseIdentifier)
         
         // retrieve thing and item

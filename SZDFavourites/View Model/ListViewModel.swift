@@ -91,6 +91,11 @@ class ListViewModel {
         self.save()
     }
     
+    func edit(item index: Int, for thing: Thing, with newName: ItemName) {
+        self.model.edit(item: index, for: thing, with: newName)
+        self.save()
+    }
+    
     // MARK: Save
     
     private func save() {

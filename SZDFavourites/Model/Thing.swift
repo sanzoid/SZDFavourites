@@ -22,6 +22,10 @@ class Thing: Codable {
         self.items = items
     }
     
+    func itemCount() -> Int {
+        return self.items.count 
+    }
+    
     /// add a new item to the end of the list
     @discardableResult
     func addItem(name: ItemName, image: UIImage? = nil) -> Bool {
@@ -42,6 +46,10 @@ class Thing: Codable {
     
     func indexOfItem(with name: ItemName) -> Int? {
         return self.items.firstIndex{$0.name == name}
+    }
+    
+    func edit(item index: Int, with newName: ItemName) {
+        self.items[index].edit(name: newName)
     }
     
     func topItem() -> Item? {

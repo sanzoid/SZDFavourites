@@ -9,11 +9,13 @@
 //  A user can view, edit, and delete their Thing
 
 import UIKit
+import SZDCommons
 
 protocol ThingControllerDelegate: class {
     func shouldEdit(thing: Thing)
     func shouldDelete(thing: Thing)
     func shouldAddItem(name: String, to thing: Thing)
+    func shouldEditItem(at index: Int,for thing: Thing, with newName: String)
 }
 
 class ThingController: UIViewController {
@@ -24,21 +26,37 @@ class ThingController: UIViewController {
     let viewModel: ThingViewModel
     let thingView: ThingView
     
+    let itemListController: ItemListController
+    
     init(thing: Thing) {
         self.thing = thing
         self.viewModel = ThingViewModel(thing: thing)
         self.thingView = ThingView(thing: thing)
+        self.itemListController = ItemListController(thing: thing)
         
         super.init(nibName: nil, bundle: nil)
         
         self.thingView.delegate = self
+        self.itemListController.delegate = self
 
         self.view.backgroundColor = UIColor.black.alpha(0.5)
+        self.thingView.backgroundColor = .yellow
         
-        self.view.addSubviews(self.thingView)
-        self.thingView.constrainToHeight(constant: 300)
-        self.thingView.constrainToHorizontal(of: self.view, axis: .both, constant: 20)
-        self.thingView.constrainTo(view: self.view, on: .center)
+        let stackView: UIStackView = {
+            let stackView = UIStackView()
+            stackView.axis = .vertical
+            stackView.distribution = .fillProportionally
+            return stackView
+        }()
+        
+        self.view.addSubviews(stackView)
+        
+        stackView.addArrangedSubview(self.itemListController.view)
+        stackView.addArrangedSubview(self.thingView)
+        
+        stackView.constrainTo(view: self.view, on: .center)
+        stackView.constrainToHeight(constant: 600)
+        stackView.constrainToHorizontal(of: self.view, axis: .both, constant: 20)
         
         // tap background to dismiss
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(close))
@@ -69,6 +87,45 @@ class ThingController: UIViewController {
     func addItem(name: String) {
         self.delegate?.shouldAddItem(name: name, to: self.thing)
     }
+    
+    func editItem(isAdd: Bool, index: Int? = nil) {
+        var title: String
+        var actionTitle: String
+        var actionBlock: (String) -> Void
+        var textFieldText: String?
+        
+        if !isAdd, let index = index {
+            title = "Edit Item"
+            actionTitle = "OK"
+            actionBlock = { text in
+                self.delegate?.shouldEditItem(at: index, for: self.thing, with: text)
+                
+                self.itemListController.refresh()
+            }
+            textFieldText = self.thing[index].name // FIXME: we should be accessing this a better way, possibly through the viewmodel if it's useful
+        } else {
+            title = "Add Item"
+            actionTitle = "Add"
+            actionBlock = { text in
+                self.delegate?.shouldAddItem(name: text, to: self.thing)
+                
+                self.itemListController.refresh()
+            }
+        }
+        
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let addAction = UIAlertAction(title: actionTitle, style: .default) { action in
+            guard let text = alertController.textFields?[0].text else { return }
+            
+            actionBlock(text)
+        }
+        
+        alertController.addTextFields(("Item", textFieldText))
+        alertController.addActions(cancelAction, addAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension ThingController: UIGestureRecognizerDelegate {
@@ -90,5 +147,15 @@ extension ThingController: ThingViewDelegate {
     func didAddItem(name: String) {
         self.addItem(name: name)
         self.thingView.setText(thing: self.thing)
+    }
+}
+
+extension ThingController: ItemListDelegate {
+    func didPressAddItem() {
+        self.editItem(isAdd: true)
+    }
+    
+    func didPressEditItem(index: Int) {
+        self.editItem(isAdd: false, index: index)
     }
 }

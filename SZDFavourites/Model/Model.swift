@@ -120,6 +120,10 @@ class Model: Codable {
         self.thingMap[thing.name]?.addItem(name: name)
     }
     
+    func edit(item index: Int, for thing: Thing, with newName: ItemName) {
+        self.thingMap[thing.name]?.edit(item: index, with: newName)
+    }
+    
     // MARK: Peristence
     // TODO: move this out 
     

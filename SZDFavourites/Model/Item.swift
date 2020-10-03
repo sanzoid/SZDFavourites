@@ -21,6 +21,10 @@ class Item: Codable {
         self.name = name
 //        self.image = image
     }
+    
+    func edit(name newName: String) {
+        self.name = newName
+    }
 }
 
 extension Item: Equatable {

@@ -49,8 +49,8 @@ class ThingView: UIView {
         stackView.addArrangedSubview(self.itemLabel)
         stackView.addArrangedSubview(self.editButton)
         stackView.addArrangedSubview(self.deleteButton)
-        stackView.addArrangedSubview(self.addItemTextField)
-        stackView.addArrangedSubview(self.addItemButton)
+//        stackView.addArrangedSubview(self.addItemTextField)
+//        stackView.addArrangedSubview(self.addItemButton)
         
         self.editButton.addTarget(self, action: #selector(pressEdit), for: .touchUpInside)
         self.deleteButton.addTarget(self, action: #selector(pressDelete), for: .touchUpInside)
