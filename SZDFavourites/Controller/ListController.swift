@@ -202,8 +202,16 @@ extension ListController: ThingControllerDelegate {
         self.viewModel.add(item: name, to: thing)
     }
     
-    func shouldEditItem(at index: Int,for thing: Thing, with newName: String) {
+    func shouldEditItem(at index: Int, for thing: Thing, with newName: String) {
         self.viewModel.edit(item: index, for: thing, with: newName)
+    }
+    
+    func shouldMoveItem(from index: Int, for thing: Thing, to newIndex: Int) {
+        self.viewModel.move(item: index, for: thing, to: newIndex)
+    }
+    
+    func shouldDeleteItem(at index: Int, for thing: Thing) {
+        self.viewModel.remove(item: index, for: thing)
     }
 }
 

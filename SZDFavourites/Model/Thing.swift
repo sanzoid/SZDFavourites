@@ -39,9 +39,14 @@ class Thing: Codable {
         return true
     }
     
+    func insert(item: Item, at index: Int) {
+        self.items.insert(item, at: index)
+    }
+    
     /// remove item at index
-    func removeItem(at index: Int) {
-        self.items.remove(at: index)
+    @discardableResult
+    func removeItem(at index: Int) -> Item {
+        return self.items.remove(at: index)
     }
     
     func indexOfItem(with name: ItemName) -> Int? {
@@ -50,6 +55,11 @@ class Thing: Codable {
     
     func edit(item index: Int, with newName: ItemName) {
         self.items[index].edit(name: newName)
+    }
+    
+    func move(item index: Int, to newIndex: Int) {
+        let item = self.removeItem(at: index)
+        self.insert(item: item, at: newIndex)
     }
     
     func topItem() -> Item? {

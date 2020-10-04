@@ -124,6 +124,14 @@ class Model: Codable {
         self.thingMap[thing.name]?.edit(item: index, with: newName)
     }
     
+    func move(item index: Int, for thing: Thing, to newIndex: Int) {
+        self.thingMap[thing.name]?.move(item: index, to: newIndex)
+    }
+    
+    func remove(item index: Int, for thing: Thing) {
+        self.thingMap[thing.name]?.removeItem(at: index)
+    }
+    
     // MARK: Peristence
     // TODO: move this out 
     

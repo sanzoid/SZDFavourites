@@ -96,6 +96,16 @@ class ListViewModel {
         self.save()
     }
     
+    func move(item index: Int, for thing: Thing, to newIndex: Int) {
+        self.model.move(item: index, for: thing, to: newIndex)
+        self.save()
+    }
+    
+    func remove(item index: Int, for thing: Thing) {
+        self.model.remove(item: index, for: thing)
+        self.save()
+    }
+    
     // MARK: Save
     
     private func save() {

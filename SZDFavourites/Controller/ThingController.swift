@@ -15,7 +15,9 @@ protocol ThingControllerDelegate: class {
     func shouldEdit(thing: Thing)
     func shouldDelete(thing: Thing)
     func shouldAddItem(name: String, to thing: Thing)
-    func shouldEditItem(at index: Int,for thing: Thing, with newName: String)
+    func shouldEditItem(at index: Int, for thing: Thing, with newName: String)
+    func shouldMoveItem(from index: Int, for thing: Thing, to newIndex: Int)
+    func shouldDeleteItem(at index: Int, for thing: Thing)
 }
 
 class ThingController: UIViewController {
@@ -27,6 +29,8 @@ class ThingController: UIViewController {
     let thingView: ThingView
     
     let itemListController: ItemListController
+    
+    var itemListIsEditing: Bool = false
     
     init(thing: Thing) {
         self.thing = thing
@@ -69,12 +73,17 @@ class ThingController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func toggleEdit() {
+        self.itemListIsEditing = !self.itemListIsEditing
+        self.itemListController.setEditMode(self.itemListIsEditing)
+    }
+    
     @objc func close() {
         self.removeFromParentDefault()
     }
     
     func edit() {
-        self.close()
+//        self.close()
         self.delegate?.shouldEdit(thing: self.thing)
     }
     
@@ -84,8 +93,16 @@ class ThingController: UIViewController {
         self.close()
     }
     
+    func moveItem(from index: Int, to newIndex: Int) {
+        self.delegate?.shouldMoveItem(from: index, for: self.thing, to: newIndex)
+    }
+    
     func addItem(name: String) {
         self.delegate?.shouldAddItem(name: name, to: self.thing)
+    }
+    
+    func deleteItem(at index: Int) {
+        self.delegate?.shouldDeleteItem(at: index, for: self.thing)
     }
     
     func editItem(isAdd: Bool, index: Int? = nil) {
@@ -93,13 +110,13 @@ class ThingController: UIViewController {
         var actionTitle: String
         var actionBlock: (String) -> Void
         var textFieldText: String?
-        
+
         if !isAdd, let index = index {
             title = "Edit Item"
             actionTitle = "OK"
             actionBlock = { text in
                 self.delegate?.shouldEditItem(at: index, for: self.thing, with: text)
-                
+
                 self.itemListController.refresh()
             }
             textFieldText = self.thing[index].name // FIXME: we should be accessing this a better way, possibly through the viewmodel if it's useful
@@ -108,22 +125,22 @@ class ThingController: UIViewController {
             actionTitle = "Add"
             actionBlock = { text in
                 self.delegate?.shouldAddItem(name: text, to: self.thing)
-                
+
                 self.itemListController.refresh()
             }
         }
-        
+
         let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let addAction = UIAlertAction(title: actionTitle, style: .default) { action in
             guard let text = alertController.textFields?[0].text else { return }
-            
+
             actionBlock(text)
         }
-        
+
         alertController.addTextFields(("Item", textFieldText))
         alertController.addActions(cancelAction, addAction)
-        
+
         self.present(alertController, animated: true, completion: nil)
     }
 }
@@ -144,9 +161,8 @@ extension ThingController: ThingViewDelegate {
         self.delete()
     }
     
-    func didAddItem(name: String) {
-        self.addItem(name: name)
-        self.thingView.setText(thing: self.thing)
+    func didEditItems() {
+        self.toggleEdit()
     }
 }
 
@@ -157,5 +173,13 @@ extension ThingController: ItemListDelegate {
     
     func didPressEditItem(index: Int) {
         self.editItem(isAdd: false, index: index)
+    }
+    
+    func didMoveItem(from index: Int, to newIndex: Int) {
+        self.moveItem(from: index, to: newIndex)
+    }
+    
+    func didDeleteItem(at index: Int) {
+        self.deleteItem(at: index)
     }
 }

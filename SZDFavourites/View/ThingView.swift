@@ -11,7 +11,7 @@ import UIKit
 protocol ThingViewDelegate: class {
     func didEdit()
     func didDelete()
-    func didAddItem(name: String)
+    func didEditItems()
 }
 
 class ThingView: UIView {
@@ -22,8 +22,7 @@ class ThingView: UIView {
     let itemLabel = UILabel()
     let editButton = UIButton()
     let deleteButton = UIButton()
-    let addItemButton = UIButton()
-    let addItemTextField = UITextField()
+    let editItemsButton = UIButton()
     
     init(thing: Thing) {
         super.init(frame: .zero)
@@ -34,9 +33,8 @@ class ThingView: UIView {
         self.editButton.setTitleColor(.systemBlue, for: .normal)
         self.deleteButton.setTitle("Delete", for: .normal)
         self.deleteButton.setTitleColor(.systemBlue, for: .normal)
-        self.addItemButton.setTitleColor(.systemBlue, for: .normal)
-        self.addItemButton.setTitle("Add", for: .normal)
-        self.addItemTextField.placeholder = "New Item"
+        self.editItemsButton.setTitleColor(.systemBlue, for: .normal)
+        self.editItemsButton.setTitle("Edit Items", for: .normal)
         
         let stackView: UIStackView = {
             let view = UIStackView()
@@ -49,12 +47,11 @@ class ThingView: UIView {
         stackView.addArrangedSubview(self.itemLabel)
         stackView.addArrangedSubview(self.editButton)
         stackView.addArrangedSubview(self.deleteButton)
-//        stackView.addArrangedSubview(self.addItemTextField)
-//        stackView.addArrangedSubview(self.addItemButton)
+        stackView.addArrangedSubview(self.editItemsButton)
         
         self.editButton.addTarget(self, action: #selector(pressEdit), for: .touchUpInside)
         self.deleteButton.addTarget(self, action: #selector(pressDelete), for: .touchUpInside)
-        self.addItemButton.addTarget(self, action: #selector(pressAddItem), for: .touchUpInside)
+        self.editItemsButton.addTarget(self, action: #selector(pressEditItems), for: .touchUpInside)
         
         self.setText(thing: thing)
     }
@@ -82,9 +79,7 @@ class ThingView: UIView {
         self.delegate?.didDelete()
     }
     
-    @objc func pressAddItem() {
-        guard let text = self.addItemTextField.text, !text.isEmpty else { return }
-        self.delegate?.didAddItem(name: text)
-        self.addItemTextField.text = nil
+    @objc func pressEditItems() {
+        self.delegate?.didEditItems()
     }
 }

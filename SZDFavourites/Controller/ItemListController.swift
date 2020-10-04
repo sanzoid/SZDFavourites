@@ -31,6 +31,8 @@ class ItemListViewModel {
 protocol ItemListDelegate: class {
     func didPressAddItem()
     func didPressEditItem(index: Int)
+    func didMoveItem(from index: Int, to newIndex: Int)
+    func didDeleteItem(at index: Int)
 }
 
 class ItemListController: UIViewController {
@@ -67,8 +69,13 @@ class ItemListController: UIViewController {
     func refresh() {
         self.tableView.reloadData()
     }
+    
+    func setEditMode(_ isEdit: Bool) {
+        self.tableView.setEditing(isEdit, animated: true)
+    }
 }
 
+// TODO: move to SZDCommons
 extension UITableView {
     func isLastRow(indexPath: IndexPath) -> Bool {
         return indexPath.row == self.numberOfRows(inSection: indexPath.section) - 1
@@ -93,6 +100,18 @@ extension ItemListController: UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return !tableView.isLastRow(indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return !tableView.isLastRow(indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
 }
 
 extension ItemListController: UITableViewDelegate {
@@ -103,6 +122,22 @@ extension ItemListController: UITableViewDelegate {
         } else {
             // edit item
             self.delegate?.didPressEditItem(index: indexPath.row)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        self.delegate?.didMoveItem(from: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
+    
+    // TODO: Change add cell to a footer so we don't have to do all this last row logic
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        return tableView.isLastRow(indexPath: proposedDestinationIndexPath) ? sourceIndexPath : proposedDestinationIndexPath
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.delegate?.didDeleteItem(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
 }
