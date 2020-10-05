@@ -12,6 +12,12 @@ import UIKit
 
 typealias ItemName = String
 
+/**
+   An **Item** has a name and an optional image.
+
+   - Outside: Methods to manage name and image, accessors to properties.
+   - Inside: Directly manages properties. 
+*/
 class Item: Codable {
     
     private(set) var name: ItemName

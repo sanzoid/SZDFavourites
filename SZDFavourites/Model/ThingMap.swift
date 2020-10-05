@@ -8,6 +8,12 @@
 
 import Foundation
 
+/**
+   A **ThingMap** is an unordered map of things.
+
+   - Outside: Methods to manage things, accessors to properties.
+   - Inside: Directly manages things and manages each Thing by calling its methods.
+*/
 class ThingMap: Codable {
     
     private var things: [ThingName: Thing]

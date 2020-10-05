@@ -5,12 +5,17 @@
 //  Created by Sandy House on 2020-09-25.
 //  Copyright © 2020 sandzapps. All rights reserved.
 //
-//  A Group has a name and an ordered list of Things
 
 import Foundation
 
 typealias GroupName = String
 
+/**
+    A **Group** has a name and an ordered list of Things.
+ 
+    - Outside: Methods to manage name and things, accessors to properties.
+    - Inside: Directly manages properties.
+ */
 class Group: Codable {
     
     private(set) var name: GroupName

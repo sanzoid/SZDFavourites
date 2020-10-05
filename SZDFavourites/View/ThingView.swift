@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ThingViewDataSource: class {
+    var name: String? { get }
+}
+
 protocol ThingViewDelegate: class {
     func didEdit()
     func didDelete()
@@ -16,15 +20,16 @@ protocol ThingViewDelegate: class {
 
 class ThingView: UIView {
     
+    weak var dataSource: ThingViewDataSource?
     weak var delegate: ThingViewDelegate?
     
-    let nameLabel = UILabel()
-    let itemLabel = UILabel()
-    let editButton = UIButton()
-    let deleteButton = UIButton()
-    let editItemsButton = UIButton()
+    private let nameLabel = UILabel()
+//    let itemLabel = UILabel()
+    private let editButton = UIButton()
+    private let deleteButton = UIButton()
+    private let editItemsButton = UIButton()
     
-    init(thing: Thing) {
+    init() {
         super.init(frame: .zero)
         
         self.backgroundColor = UIColor.white.alpha(0.9)
@@ -44,7 +49,7 @@ class ThingView: UIView {
         
         self.addSubviews(stackView)
         stackView.addArrangedSubview(self.nameLabel)
-        stackView.addArrangedSubview(self.itemLabel)
+//        stackView.addArrangedSubview(self.itemLabel)
         stackView.addArrangedSubview(self.editButton)
         stackView.addArrangedSubview(self.deleteButton)
         stackView.addArrangedSubview(self.editItemsButton)
@@ -52,34 +57,27 @@ class ThingView: UIView {
         self.editButton.addTarget(self, action: #selector(pressEdit), for: .touchUpInside)
         self.deleteButton.addTarget(self, action: #selector(pressDelete), for: .touchUpInside)
         self.editItemsButton.addTarget(self, action: #selector(pressEditItems), for: .touchUpInside)
-        
-        self.setText(thing: thing)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setText(thing: Thing) {
-        self.nameLabel.text = "Favorite " + thing.name
-        
-        var itemString = ""
-        thing.items.forEach { item in
-            itemString += (itemString.isEmpty ? "" : ", ") + item.name
-        }
-        
-        self.itemLabel.text = itemString
+    func refresh() {
+        guard let name = self.dataSource?.name else { return }
+        self.nameLabel.text = "Favorite " + name
     }
     
-    @objc func pressEdit() {
+    @objc private func pressEdit() {
         self.delegate?.didEdit()
+        self.refresh()
     }
     
-    @objc func pressDelete() {
+    @objc private func pressDelete() {
         self.delegate?.didDelete()
     }
     
-    @objc func pressEditItems() {
+    @objc private func pressEditItems() {
         self.delegate?.didEditItems()
     }
 }

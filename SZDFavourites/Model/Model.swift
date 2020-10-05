@@ -8,6 +8,12 @@
 
 import Foundation
 
+/**
+    The **Model** is responsible for all data manipulation.
+ 
+    - Outside: Methods to manage groups, things, and items. Groups are a mapping of Things. Things can be managed on their own. Items belong to Things.
+    - Inside: Manages a groupList and thingMap by calling their methods.
+ */
 class Model: Codable {
     
     /**
@@ -95,18 +101,6 @@ class Model: Codable {
         self.thingMap.remove(thing: name)
         self.groupList.remove(thing: name)
     }
-    
-//    func edit(thing: Thing, with newThing: Thing) {
-//        let isNewName = thing.name != newThing.name
-//
-//        // edit object in thingMap
-//        self.thingMap.edit(thing: thing, with: newThing, isNewName: isNewName)
-//
-//        // edit name in groupList
-//        if isNewName {
-//            self.groupList.edit(thing: thing.name, with: newThing.name)
-//        }
-//    }
     
     func edit(thing name: ThingName, with newName: ThingName) {
         // edit in thingMap

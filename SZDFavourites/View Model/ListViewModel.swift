@@ -5,14 +5,20 @@
 //  Created by Sandy House on 2020-09-25.
 //  Copyright © 2020 sandzapps. All rights reserved.
 //
-//  Applies all changes to the Favourites list.
-//  Keeps a reference to the GroupList
 
 import UIKit
 
+/**
+   The **ListViewModel** is the main view model to manipulate the model. It should be the only one making Model calls.
+
+   - Outside: Pass in the Model and make calls for data and data manipulation.
+   - Inside: Make data manipulations by calling Model methods.
+*/
 class ListViewModel {
 
     let model: Model
+    
+    var selectedThing: Thing? 
     
     init(model: Model) {
         self.model = model

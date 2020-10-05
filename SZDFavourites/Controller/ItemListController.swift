@@ -11,21 +11,10 @@
 
 import UIKit
 
-class ItemListViewModel {
-    
-    let thing: Thing
-    
-    init(thing: Thing) {
-        self.thing = thing
-    }
-    
-    func itemCount() -> Int {
-        return self.thing.itemCount()
-    }
-    
-    func item(at index: Int) -> Item {
-        return self.thing[index]
-    }
+// TODO: 
+protocol ItemListDataSource: class {
+    var numberOfItems: Int? { get }
+    func item(at index: Int) -> Item?
 }
 
 protocol ItemListDelegate: class {
@@ -35,19 +24,21 @@ protocol ItemListDelegate: class {
     func didDeleteItem(at index: Int)
 }
 
+/**
+   The **ItemListController** manages a thing's item list.
+
+   - Outside: Set dataSource and delegate and implement methods to pass in data and handle actions.
+   - Inside: Present views, handle user interactions, tell delegate to make updates.
+*/
 class ItemListController: UIViewController {
     
     weak var delegate: ItemListDelegate?
+    weak var dataSource: ItemListDataSource?
     
     let tableView: ItemListTableView
-    let thing: Thing
-    let viewModel: ItemListViewModel
     
-    init(thing: Thing) {
-        self.thing = thing
-        
+    init() {
         self.tableView = ItemListTableView()
-        self.viewModel = ItemListViewModel(thing: thing)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -84,7 +75,7 @@ extension UITableView {
 
 extension ItemListController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.itemCount() + 1
+        return (self.dataSource?.numberOfItems ?? 0) + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -94,8 +85,9 @@ extension ItemListController: UITableViewDataSource {
             // add item cell
             cell.textLabel?.text = "+"
         } else {
-            let item = self.viewModel.item(at: indexPath.row)
-            cell.textLabel?.text = item.name
+            if let item = self.dataSource?.item(at: indexPath.row) {
+                cell.textLabel?.text = item.name
+            }
         }
         
         return cell

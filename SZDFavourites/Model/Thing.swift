@@ -5,13 +5,18 @@
 //  Created by Sandy House on 2020-09-25.
 //  Copyright © 2020 sandzapps. All rights reserved.
 //
-//  A Thing has a name and an ordered list of items
 
 import Foundation
 import UIKit
 
 typealias ThingName = String
 
+/**
+   A **Thing** has a name and an ordered list of items.
+
+   - Outside: Methods to manage name and items, accessors to properties.
+   - Inside: Directly manages properties.
+*/
 class Thing: Codable {
     
     private(set) var name: ThingName

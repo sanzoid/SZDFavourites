@@ -5,17 +5,22 @@
 //  Created by Sandy House on 2020-09-25.
 //  Copyright © 2020 sandzapps. All rights reserved.
 //
-//  A GroupList is an abstraction of a list of Groups.
 
 import UIKit
 
 typealias ThingIndex = (groupIndex: Int, thingIndex: Int)
 
+/**
+    A **GroupList** manages a list of Groups.
+    
+    - Outside: Methods to manage groups, accessor to properties.
+    - Inside: Directly manages groups and manages each Group by calling its methods. 
+ */
 class GroupList: Codable {
     
     static let defaultGroupName = "default"
     
-    private var groups: [Group]
+    private(set) var groups: [Group]
     
     var defaultGroup: Group {
         return self.groups[self.indexOf(group: GroupList.defaultGroupName)!]

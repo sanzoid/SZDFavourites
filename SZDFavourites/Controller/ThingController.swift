@@ -11,36 +11,49 @@
 import UIKit
 import SZDCommons
 
-protocol ThingControllerDelegate: class {
-    func shouldEdit(thing: Thing)
-    func shouldDelete(thing: Thing)
-    func shouldAddItem(name: String, to thing: Thing)
-    func shouldEditItem(at index: Int, for thing: Thing, with newName: String)
-    func shouldMoveItem(from index: Int, for thing: Thing, to newIndex: Int)
-    func shouldDeleteItem(at index: Int, for thing: Thing)
+// TODO: ListController should know which Thing is being manipulated. ThingController does not need to know which Thing is being manipulated. It should simply just ask its parent for data and to perform actions. It only needs to know there is a Thing, but not exactly which. 
+protocol ThingControllerDataSource: class {
+    var numberOfItems: Int? { get }
+    func name() -> ThingName?
+    func item(at index: Int) -> Item?
 }
 
+protocol ThingControllerDelegate: class {
+    func shouldEdit()
+    func shouldDelete()
+    func shouldAddItem(name: String)
+    func shouldEditItem(at index: Int, with newName: String)
+    func shouldMoveItem(from index: Int, to newIndex: Int)
+    func shouldDeleteItem(at index: Int)
+    func close()
+}
+
+/**
+   The **ThingController** manages a thing.
+
+   - Outside: Set dataSource and delegate and implement methods to pass in data and handle actions.
+   - Inside: Present views, handle user interactions, tell delegate to make updates.
+*/
 class ThingController: UIViewController {
     
+    weak var dataSource: ThingControllerDataSource?
     weak var delegate: ThingControllerDelegate?
     
-    let thing: Thing
-    let viewModel: ThingViewModel
     let thingView: ThingView
     
     let itemListController: ItemListController
     
     var itemListIsEditing: Bool = false
     
-    init(thing: Thing) {
-        self.thing = thing
-        self.viewModel = ThingViewModel(thing: thing)
-        self.thingView = ThingView(thing: thing)
-        self.itemListController = ItemListController(thing: thing)
+    init() {
+        self.thingView = ThingView()
+        self.itemListController = ItemListController()
         
         super.init(nibName: nil, bundle: nil)
         
+        self.thingView.dataSource = self
         self.thingView.delegate = self
+        self.itemListController.dataSource = self
         self.itemListController.delegate = self
 
         self.view.backgroundColor = UIColor.black.alpha(0.5)
@@ -73,6 +86,11 @@ class ThingController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        // TODO: find a better way to make sure the initial stuff is all there 
+        self.thingView.refresh()
+    }
+    
     func toggleEdit() {
         self.itemListIsEditing = !self.itemListIsEditing
         self.itemListController.setEditMode(self.itemListIsEditing)
@@ -83,26 +101,25 @@ class ThingController: UIViewController {
     }
     
     func edit() {
-//        self.close()
-        self.delegate?.shouldEdit(thing: self.thing)
+        self.delegate?.shouldEdit()
     }
     
     func delete() {
         // delete - work out this communication
-        self.delegate?.shouldDelete(thing: self.thing)
+        self.delegate?.shouldDelete()
         self.close()
     }
     
     func moveItem(from index: Int, to newIndex: Int) {
-        self.delegate?.shouldMoveItem(from: index, for: self.thing, to: newIndex)
+        self.delegate?.shouldMoveItem(from: index, to: newIndex)
     }
     
     func addItem(name: String) {
-        self.delegate?.shouldAddItem(name: name, to: self.thing)
+        self.delegate?.shouldAddItem(name: name)
     }
     
     func deleteItem(at index: Int) {
-        self.delegate?.shouldDeleteItem(at: index, for: self.thing)
+        self.delegate?.shouldDeleteItem(at: index)
     }
     
     func editItem(isAdd: Bool, index: Int? = nil) {
@@ -115,16 +132,16 @@ class ThingController: UIViewController {
             title = "Edit Item"
             actionTitle = "OK"
             actionBlock = { text in
-                self.delegate?.shouldEditItem(at: index, for: self.thing, with: text)
+                self.delegate?.shouldEditItem(at: index, with: text)
 
                 self.itemListController.refresh()
             }
-            textFieldText = self.thing[index].name // FIXME: we should be accessing this a better way, possibly through the viewmodel if it's useful
+            textFieldText = self.dataSource?.item(at: index)?.name
         } else {
             title = "Add Item"
             actionTitle = "Add"
             actionBlock = { text in
-                self.delegate?.shouldAddItem(name: text, to: self.thing)
+                self.delegate?.shouldAddItem(name: text)
 
                 self.itemListController.refresh()
             }
@@ -152,6 +169,12 @@ extension ThingController: UIGestureRecognizerDelegate {
     }
 }
 
+extension ThingController: ThingViewDataSource {
+    var name: String? {
+        return self.dataSource?.name()
+    }
+}
+
 extension ThingController: ThingViewDelegate {
     func didEdit() {
         self.edit()
@@ -163,6 +186,16 @@ extension ThingController: ThingViewDelegate {
     
     func didEditItems() {
         self.toggleEdit()
+    }
+}
+
+extension ThingController: ItemListDataSource {
+    var numberOfItems: Int? {
+        return self.dataSource?.numberOfItems
+    }
+    
+    func item(at index: Int) -> Item? {
+        return self.dataSource?.item(at: index)
     }
 }
 

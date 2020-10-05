@@ -19,6 +19,14 @@
 import Foundation
 import UIKit
 
+// TODO: When instantiating a ThingController, it has to keep track of what Thing is currently being manipulated. The ThingController is not responsible for knowing, it is its datasource/delegate's responsibility. 
+
+/**
+    The **ListController** is the main view for managing their favourites.
+ 
+    - Outside: Pass in a Model object, intended to be the persisted model across app sessions.
+    - Inside: Present views, handle user interactions, tell viewModel to update model.
+ */
 class ListController: UIViewController {
     
     let model: Model
@@ -171,9 +179,12 @@ class ListController: UIViewController {
     }
     
     func presentThingController(index: ThingIndex) {
-        let thing = self.viewModel.thing(at: index)! // FIXME:
+        let thing = self.viewModel.thing(at: index)!
+        // TODO: probably don't need thing here
+        self.viewModel.selectedThing = thing 
         
-        let controller = ThingController(thing: thing)
+        let controller = ThingController()
+        controller.dataSource = self
         controller.delegate = self
         
         self.addChild(controller)
@@ -183,30 +194,54 @@ class ListController: UIViewController {
     }
 }
 
+extension ListController: ThingControllerDataSource {
+    var numberOfItems: Int? {
+        return self.viewModel.selectedThing?.itemCount()
+    }
+    
+    func name() -> ThingName? {
+        return self.viewModel.selectedThing?.name
+    }
+    
+    func item(at index: Int) -> Item? {
+        return self.viewModel.selectedThing?.items[index]
+    }
+}
+
 extension ListController: ThingControllerDelegate {
-    func shouldEdit(thing: Thing) {
+    func shouldEdit() {
+        guard let thing = self.viewModel.selectedThing else { return }
         self.editThing(thing)
     }
     
-    func shouldDelete(thing: Thing) {
+    func shouldDelete() {
+        guard let thing = self.viewModel.selectedThing else { return }
         self.viewModel.remove(thing: thing)
         self.tableView.reloadData()
     }
     
-    func shouldAddItem(name: String, to thing: Thing) {
+    func shouldAddItem(name: String) {
+        guard let thing = self.viewModel.selectedThing else { return }
         self.viewModel.add(item: name, to: thing)
     }
     
-    func shouldEditItem(at index: Int, for thing: Thing, with newName: String) {
+    func shouldEditItem(at index: Int, with newName: String) {
+        guard let thing = self.viewModel.selectedThing else { return }
         self.viewModel.edit(item: index, for: thing, with: newName)
     }
     
-    func shouldMoveItem(from index: Int, for thing: Thing, to newIndex: Int) {
+    func shouldMoveItem(from index: Int, to newIndex: Int) {
+        guard let thing = self.viewModel.selectedThing else { return }
         self.viewModel.move(item: index, for: thing, to: newIndex)
     }
     
-    func shouldDeleteItem(at index: Int, for thing: Thing) {
+    func shouldDeleteItem(at index: Int) {
+        guard let thing = self.viewModel.selectedThing else { return }
         self.viewModel.remove(item: index, for: thing)
+    }
+    
+    func close() {
+        self.viewModel.selectedThing = nil
     }
 }
 

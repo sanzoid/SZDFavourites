@@ -17,7 +17,6 @@
 		5A2FC62A251E4DBB00002DBC /* ListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC629251E4DBB00002DBC /* ListTableView.swift */; };
 		5A2FC62C251E4E4800002DBC /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC62B251E4E4800002DBC /* ListViewModel.swift */; };
 		5A2FC62E251E4E9900002DBC /* GroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC62D251E4E9900002DBC /* GroupList.swift */; };
-		5A2FC630251E50E500002DBC /* ThingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC62F251E50E500002DBC /* ThingViewModel.swift */; };
 		5A2FC633251E8F5400002DBC /* ThingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC632251E8F5400002DBC /* ThingView.swift */; };
 		5A2FC635251E8F7800002DBC /* ThingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC634251E8F7800002DBC /* ThingController.swift */; };
 		5A2FC63725221EFF00002DBC /* ThingMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC63625221EFF00002DBC /* ThingMap.swift */; };
@@ -57,7 +56,6 @@
 		5A2FC629251E4DBB00002DBC /* ListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableView.swift; sourceTree = "<group>"; };
 		5A2FC62B251E4E4800002DBC /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		5A2FC62D251E4E9900002DBC /* GroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupList.swift; sourceTree = "<group>"; };
-		5A2FC62F251E50E500002DBC /* ThingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingViewModel.swift; sourceTree = "<group>"; };
 		5A2FC632251E8F5400002DBC /* ThingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingView.swift; sourceTree = "<group>"; };
 		5A2FC634251E8F7800002DBC /* ThingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingController.swift; sourceTree = "<group>"; };
 		5A2FC63625221EFF00002DBC /* ThingMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingMap.swift; sourceTree = "<group>"; };
@@ -160,7 +158,6 @@
 			isa = PBXGroup;
 			children = (
 				5A2FC62B251E4E4800002DBC /* ListViewModel.swift */,
-				5A2FC62F251E50E500002DBC /* ThingViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -404,7 +401,6 @@
 				5A2FC62A251E4DBB00002DBC /* ListTableView.swift in Sources */,
 				5A2FC623251E4B2A00002DBC /* Color.swift in Sources */,
 				5AA479B1251BDE76004415DC /* AppDelegate.swift in Sources */,
-				5A2FC630251E50E500002DBC /* ThingViewModel.swift in Sources */,
 				5A2FC62E251E4E9900002DBC /* GroupList.swift in Sources */,
 				5A2FC61A251E434A00002DBC /* Group.swift in Sources */,
 				5A2FC63B2524C55700002DBC /* ListTableHeader.swift in Sources */,
