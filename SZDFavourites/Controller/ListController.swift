@@ -132,26 +132,22 @@ class ListController: UIViewController {
     func presentEditThingController(isAdd: Bool, thing: Thing? = nil) {
         var title: String
         var actionTitle: String
-        var actionBlock: (String, String) -> Void
-        var textFieldText: (thing: String?, item: String?)
+        var actionBlock: (String) -> Void
+        var textFieldText: String?
         if !isAdd, let thing = thing {
             title = "Edit Thing"
             actionTitle = "OK"
-            actionBlock = { thingText, itemText in
-                self.viewModel.edit(thing: thing, with: thingText, topItemName: itemText)
+            actionBlock = { thingText in
+                self.viewModel.edit(thing: thing.name, with: thingText)
                 
                 self.tableView.reloadData()
             }
-            textFieldText = (thing.name, thing.topItem()?.name)
+            textFieldText = thing.name
         } else {
             title = "Add Thing"
             actionTitle = "Add"
-            actionBlock = { thingText, itemText in
-                // add thing with item
+            actionBlock = { thingText in
                 let thing = Thing(name: thingText)
-                if !itemText.isEmpty {
-                    thing.addItem(name: itemText)
-                }
                 self.viewModel.add(thing: thing)
                 
                 // TODO: consider having the view model tell it when it should reload
@@ -163,13 +159,12 @@ class ListController: UIViewController {
         let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let addAction = UIAlertAction(title: actionTitle, style: .default) { action in
-            guard let thingText = alertController.textFields?[0].text,
-                let itemText = alertController.textFields?[1].text else { return }
+            guard let thingText = alertController.textFields?[0].text else { return }
             
-            actionBlock(thingText, itemText)
+            actionBlock(thingText)
         }
         
-        alertController.addTextFields(("Name", textFieldText.thing), ("Favourite", textFieldText.item))
+        alertController.addTextFields(("Name", textFieldText))
         alertController.addActions(cancelAction, addAction)
         
         self.present(alertController, animated: true, completion: nil)

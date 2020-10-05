@@ -26,20 +26,21 @@ class ThingMap: Codable {
         self.things[thing.name] = thing
     }
     
-    func remove(thing: Thing) {
-        self.remove(thing: thing.name)
+    @discardableResult
+    func remove(thing: Thing) -> Thing? {
+        return self.remove(thing: thing.name)
     }
     
-    func remove(thing name: ThingName) {
-        self.things.removeValue(forKey: name)
+    @discardableResult
+    func remove(thing name: ThingName) -> Thing? {
+        return self.things.removeValue(forKey: name)
     }
     
-    func edit(thing: Thing, with newThing: Thing, isNewName: Bool) {
-        self.things[newThing.name] = newThing
-        
-        // remove old reference if name changed
-        if isNewName {
-            self.things[thing.name] = nil
+    func edit(thing name: ThingName, with newName: ThingName) {
+        // remove and add back with new name
+        if let thing = self.remove(thing: name) {
+            thing.edit(name: newName)
+            self.things[newName] = thing
         }
     }
     

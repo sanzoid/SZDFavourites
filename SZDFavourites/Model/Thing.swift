@@ -26,6 +26,10 @@ class Thing: Codable {
         return self.items.count 
     }
     
+    func edit(name newName: ThingName) {
+        self.name = newName
+    }
+    
     /// add a new item to the end of the list
     @discardableResult
     func addItem(name: ItemName, image: UIImage? = nil) -> Bool {

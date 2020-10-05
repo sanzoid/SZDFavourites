@@ -68,14 +68,8 @@ class ListViewModel {
         self.save()
     }
 
-    func edit(thing: Thing, with name: ThingName, topItemName: String) {
-        // FIXME: better edit logic
-        // self.model.edit(thing: name, with: itemName)
-        let newThing = Thing(name: name)
-        newThing.addItem(name: topItemName)
-        
-        self.model.edit(thing: thing, with: newThing)
-        
+    func edit(thing name: ThingName, with newName: ThingName) {
+        self.model.edit(thing: name, with: newName)
         self.save()
     }
     

@@ -96,15 +96,25 @@ class Model: Codable {
         self.groupList.remove(thing: name)
     }
     
-    func edit(thing: Thing, with newThing: Thing) {
-        let isNewName = thing.name != newThing.name
+//    func edit(thing: Thing, with newThing: Thing) {
+//        let isNewName = thing.name != newThing.name
+//
+//        // edit object in thingMap
+//        self.thingMap.edit(thing: thing, with: newThing, isNewName: isNewName)
+//
+//        // edit name in groupList
+//        if isNewName {
+//            self.groupList.edit(thing: thing.name, with: newThing.name)
+//        }
+//    }
+    
+    func edit(thing name: ThingName, with newName: ThingName) {
+        // edit in thingMap
+        self.thingMap.edit(thing: name, with: newName)
         
-        // edit object in thingMap
-        self.thingMap.edit(thing: thing, with: newThing, isNewName: isNewName)
-        
-        // edit name in groupList
-        if isNewName {
-            self.groupList.edit(thing: thing.name, with: newThing.name)
+        // edit in groupList if needed 
+        if name != newName{
+            self.groupList.edit(thing: name, with: newName)
         }
     }
     
