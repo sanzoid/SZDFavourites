@@ -11,7 +11,6 @@
 import UIKit
 import SZDCommons
 
-// TODO: ListController should know which Thing is being manipulated. ThingController does not need to know which Thing is being manipulated. It should simply just ask its parent for data and to perform actions. It only needs to know there is a Thing, but not exactly which. 
 protocol ThingControllerDataSource: class {
     var numberOfItems: Int? { get }
     func name() -> ThingName?
@@ -87,7 +86,7 @@ class ThingController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // TODO: find a better way to make sure the initial stuff is all there 
+        // TODO: find a better way to make sure the initial stuff is all there
         self.thingView.refresh()
     }
     

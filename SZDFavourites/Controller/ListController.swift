@@ -19,8 +19,6 @@
 import Foundation
 import UIKit
 
-// TODO: When instantiating a ThingController, it has to keep track of what Thing is currently being manipulated. The ThingController is not responsible for knowing, it is its datasource/delegate's responsibility. 
-
 /**
     The **ListController** is the main view for managing their favourites.
  

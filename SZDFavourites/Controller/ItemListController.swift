@@ -6,12 +6,8 @@
 //  Copyright © 2020 sandzapps. All rights reserved.
 //
 
-//  TODO: Consider having a dataSource so you don't have to pass in Thing
-//  We already have a delegate, to pass actions back up to the parent, might as well also get data from the parent.
-
 import UIKit
 
-// TODO: 
 protocol ItemListDataSource: class {
     var numberOfItems: Int? { get }
     func item(at index: Int) -> Item?

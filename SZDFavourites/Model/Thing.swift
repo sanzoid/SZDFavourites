@@ -66,6 +66,10 @@ class Thing: Codable {
         self.items[index].edit(name: newName)
     }
     
+    func edit(item index: Int, with newImage: UIImage?) {
+        self.items[index].edit(image: newImage)
+    }
+    
     func move(item index: Int, to newIndex: Int) {
         let item = self.removeItem(at: index)
         self.insert(item: item, at: newIndex)

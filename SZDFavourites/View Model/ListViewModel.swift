@@ -96,6 +96,11 @@ class ListViewModel {
         self.save()
     }
     
+    func edit(item index: Int, for thing: Thing, with newImage: UIImage?) {
+        self.model.edit(item: index, for: thing, with: newImage)
+        self.save()
+    }
+    
     func move(item index: Int, for thing: Thing, to newIndex: Int) {
         self.model.move(item: index, for: thing, to: newIndex)
         self.save()

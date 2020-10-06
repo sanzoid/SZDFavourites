@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
     The **Model** is responsible for all data manipulation.
@@ -126,6 +127,10 @@ class Model: Codable {
     
     func edit(item index: Int, for thing: Thing, with newName: ItemName) {
         self.thingMap[thing.name]?.edit(item: index, with: newName)
+    }
+    
+    func edit(item index: Int, for thing: Thing, with newImage: UIImage?) {
+        self.thingMap[thing.name]?.edit(item: index, with: newImage)
     }
     
     func move(item index: Int, for thing: Thing, to newIndex: Int) {
