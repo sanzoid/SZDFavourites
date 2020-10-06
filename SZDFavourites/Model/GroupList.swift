@@ -76,7 +76,7 @@ class GroupList: Codable {
     // MARK: Thing
     
     func count(in group: Int) -> Int {
-        return self.groups[group].count
+        return self.groups[group].thingCount
     }
     
     func add(thing: Thing) {
@@ -91,7 +91,7 @@ class GroupList: Codable {
     }
     
     func add(thing name: ThingName, to index: ThingIndex) {
-        self.groups[index.groupIndex].add(thing: name, to: index.thingIndex)
+        self.groups[index.groupIndex].insert(thing: name, at: index.thingIndex)
     }
     
     @discardableResult
@@ -129,7 +129,7 @@ class GroupList: Codable {
     }
     
     func thingName(at index: ThingIndex) -> ThingName {
-        return self.groups[index.groupIndex].things[index.thingIndex]
+        return self.groups[index.groupIndex].thing(at: index.thingIndex)
     }
     
     // MARK: Helper

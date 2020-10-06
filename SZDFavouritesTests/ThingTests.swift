@@ -36,6 +36,7 @@ class ThingTests: XCTestCase {
     }
     
     func testEdit() {
+        XCTAssert(thing1.name == "Thing1")
         thing1.edit(name: "ThingA")
         XCTAssert(thing1.name == "ThingA")
     }

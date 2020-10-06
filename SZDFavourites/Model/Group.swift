@@ -21,7 +21,7 @@ class Group: Codable {
     private(set) var name: GroupName
     private(set) var things: [ThingName]
     
-    var count: Int {
+    var thingCount: Int {
         return things.count
     }
     
@@ -34,12 +34,14 @@ class Group: Codable {
         self.name = name
     }
     
-    func add(thing: Thing) {
-        self.things.append(thing.name)
+    // MARK: Thing
+    
+    func thing(at index: Int) -> ThingName {
+        return self.things[index]
     }
     
-    func add(thing name: ThingName, to index: Int) {
-        self.things.insert(name, at: index)
+    func indexOf(thing name: ThingName) -> Int? {
+        return self.things.firstIndex{ $0 == name }
     }
     
     func add(thing name: ThingName) {
@@ -50,6 +52,10 @@ class Group: Codable {
         self.things.append(contentsOf: names)
     }
     
+    func insert(thing name: ThingName, at index: Int) {
+        self.things.insert(name, at: index)
+    }
+    
     func remove(thing name: ThingName) -> ThingName? {
         if let index = self.indexOf(thing: name) {
             return self.things.remove(at: index)
@@ -58,15 +64,11 @@ class Group: Codable {
         return nil
     }
     
-    func edit(thing index: Int, with newName: ThingName) {
-        self.things[index] = newName
-    }
-    
     func remove(thing index: Int) -> ThingName? {
         return self.things.remove(at: index)
     }
-    
-    func indexOf(thing name: ThingName) -> Int? {
-        return self.things.firstIndex{ $0 == name }
+
+    func edit(thing index: Int, with newName: ThingName) {
+        self.things[index] = newName
     }
 }
