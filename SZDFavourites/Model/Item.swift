@@ -25,6 +25,7 @@ final class Item: Codable {
         case image
     }
 
+    // TODO: name validation (char limit and non empty) 
     private(set) var name: ItemName
     private(set) var image: UIImage?
     

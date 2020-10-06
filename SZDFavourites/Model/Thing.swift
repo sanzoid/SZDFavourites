@@ -27,15 +27,29 @@ class Thing: Codable {
         self.items = items
     }
     
-    func itemCount() -> Int {
-        return self.items.count 
-    }
-    
     func edit(name newName: ThingName) {
         self.name = newName
     }
+
+    // MARK: Item
     
-    /// add a new item to the end of the list
+    func itemCount() -> Int {
+        return self.items.count
+    }
+    
+    func item(at index: Int) -> Item {
+        return self.items[index]
+    }
+    
+    // TODO: remove
+    subscript(index: Int) -> Item {
+        return self.items[index]
+    }
+    
+    func indexOfItem(with name: ItemName) -> Int? {
+        return self.items.firstIndex{$0.name == name}
+    }
+    
     @discardableResult
     func addItem(name: ItemName, image: UIImage? = nil) -> Bool {
         // check if item already exists
@@ -52,16 +66,17 @@ class Thing: Codable {
         self.items.insert(item, at: index)
     }
     
-    /// remove item at index
     @discardableResult
     func removeItem(at index: Int) -> Item {
         return self.items.remove(at: index)
     }
     
-    func indexOfItem(with name: ItemName) -> Int? {
-        return self.items.firstIndex{$0.name == name}
+    func move(item index: Int, to newIndex: Int) {
+        let item = self.removeItem(at: index)
+        self.insert(item: item, at: newIndex)
     }
     
+    // TODO: don't allow edit if newName is an existing item's name 
     func edit(item index: Int, with newName: ItemName) {
         self.items[index].edit(name: newName)
     }
@@ -70,20 +85,12 @@ class Thing: Codable {
         self.items[index].edit(image: newImage)
     }
     
-    func move(item index: Int, to newIndex: Int) {
-        let item = self.removeItem(at: index)
-        self.insert(item: item, at: newIndex)
-    }
-    
+    // TODO: is this needed
     func topItem() -> Item? {
         guard self.items.count > 0 else {
             return nil
         }
         return self.items[0]
-    }
-    
-    subscript(index: Int) -> Item {
-        return self.items[index]
     }
 }
 

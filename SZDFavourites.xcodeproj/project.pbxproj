@@ -24,7 +24,8 @@
 		5A2FC63B2524C55700002DBC /* ListTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC63A2524C55700002DBC /* ListTableHeader.swift */; };
 		5A2FC63D2528B82700002DBC /* ItemListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC63C2528B82600002DBC /* ItemListTableView.swift */; };
 		5A2FC63F2528B89200002DBC /* ItemListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC63E2528B89200002DBC /* ItemListController.swift */; };
-		5A2FC641252CD84C00002DBC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC640252CD84C00002DBC /* Item.swift */; };
+		5A2FC641252CD84C00002DBC /* ItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC640252CD84C00002DBC /* ItemTests.swift */; };
+		5A2FC643252D119000002DBC /* ThingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC642252D119000002DBC /* ThingTests.swift */; };
 		5AA479B1251BDE76004415DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B0251BDE76004415DC /* AppDelegate.swift */; };
 		5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B2251BDE76004415DC /* SceneDelegate.swift */; };
 		5AA479BA251BDE79004415DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AA479B9251BDE79004415DC /* Assets.xcassets */; };
@@ -64,7 +65,8 @@
 		5A2FC63A2524C55700002DBC /* ListTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableHeader.swift; sourceTree = "<group>"; };
 		5A2FC63C2528B82600002DBC /* ItemListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListTableView.swift; sourceTree = "<group>"; };
 		5A2FC63E2528B89200002DBC /* ItemListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListController.swift; sourceTree = "<group>"; };
-		5A2FC640252CD84C00002DBC /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		5A2FC640252CD84C00002DBC /* ItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTests.swift; sourceTree = "<group>"; };
+		5A2FC642252D119000002DBC /* ThingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingTests.swift; sourceTree = "<group>"; };
 		5AA479AD251BDE76004415DC /* SZDFavourites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SZDFavourites.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AA479B0251BDE76004415DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5AA479B2251BDE76004415DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -209,7 +211,8 @@
 		5AA479C6251BDE79004415DC /* SZDFavouritesTests */ = {
 			isa = PBXGroup;
 			children = (
-				5A2FC640252CD84C00002DBC /* Item.swift */,
+				5A2FC642252D119000002DBC /* ThingTests.swift */,
+				5A2FC640252CD84C00002DBC /* ItemTests.swift */,
 				5AA479C7251BDE79004415DC /* SZDFavouritesTests.swift */,
 				5AA479C9251BDE79004415DC /* Info.plist */,
 			);
@@ -420,7 +423,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A2FC641252CD84C00002DBC /* Item.swift in Sources */,
+				5A2FC643252D119000002DBC /* ThingTests.swift in Sources */,
+				5A2FC641252CD84C00002DBC /* ItemTests.swift in Sources */,
 				5AA479C8251BDE79004415DC /* SZDFavouritesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
