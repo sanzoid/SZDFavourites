@@ -38,6 +38,12 @@ class GroupTests: XCTestCase {
         XCTAssert(group.name == "GroupA")
     }
     
+    func testEquals() {
+        let group2 = Group(name: "Group2")
+        XCTAssert(group == group)
+        XCTAssert(group != group2)
+    }
+    
     func testThings() {
         // count
         XCTAssert(group.thingCount == 3)

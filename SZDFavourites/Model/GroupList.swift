@@ -29,7 +29,8 @@ class GroupList: Codable {
     init(groups: [Group] = [Group]()) {
         self.groups = groups
         
-        if self.groups.isEmpty {
+        // must always have default
+        if self.groups.isEmpty || self.indexOf(group: GroupList.defaultGroupName) == nil {
             let defaultGroup = Group(name: GroupList.defaultGroupName)
             self.groups.append(defaultGroup)
         }
@@ -41,10 +42,23 @@ class GroupList: Codable {
         return self.groups.count
     }
     
+    func indexOf(group name: GroupName) -> Int? {
+        return self.groups.firstIndex{ $0.name == name }
+    }
+    
+    // TODO: figure out if this could be used elsewhere. This was added after everything was implemented.
+    func group(with name: GroupName) -> Group? {
+        guard let index = self.indexOf(group: name) else { return nil }
+        return self.groups[index]
+    }
+    
+    // TODO: group(at index)
     subscript(index: Int) -> Group {
         return self.groups[index]
     }
     
+    // TODO: check if it already exists
+    // TODO: Default group placement - do we want it fixed at the top, at the bottom, or wherever? Do we want to insert new group based on default position?
     func add(group name: GroupName) {
         let group = Group(name: name)
         self.groups.append(group)
@@ -52,6 +66,9 @@ class GroupList: Codable {
     
     @discardableResult
     func remove(group name: GroupName) -> Bool {
+        // prevent removing default group
+        guard name != GroupList.defaultGroupName else { return false }
+        
         // find group, move its things to default group, and remove
         if let index = self.indexOf(group: name) {
             self.remove(group: index)
@@ -61,10 +78,15 @@ class GroupList: Codable {
         return false
     }
     
-    func remove(group index: Int) {
-        let things = self.groups[index].things
+    @discardableResult
+    func remove(group index: Int) -> Bool {
+        let group = self.groups[index]
+        // prevent removing default group
+        guard group.name != GroupList.defaultGroupName else { return false }
+        let things = group.things
         self.defaultGroup.add(things: things)
         self.groups.remove(at: index)
+        return true
     }
     
     func edit(group name: GroupName, with newName: GroupName) {
@@ -79,9 +101,14 @@ class GroupList: Codable {
         return self.groups[group].thingCount
     }
     
-    func add(thing: Thing) {
+    func thingName(at index: ThingIndex) -> ThingName {
+        return self.groups[index.groupIndex].thing(at: index.thingIndex)
+    }
+    
+    // TODO: check thing doesn't already exist
+    func add(thing: ThingName) {
         // add to default group         
-        self.add(thing: thing.name, group: GroupList.defaultGroupName)
+        self.add(thing: thing, group: GroupList.defaultGroupName)
     }
     
     func add(thing thingName: ThingName, group groupName: GroupName) {
@@ -107,14 +134,9 @@ class GroupList: Codable {
         return self.groups[index.groupIndex].remove(thing: index.thingIndex)
     }
     
-    func edit(thing name: ThingName, with newName: ThingName) {
-        // find it and change the name
-        if let index = self.indexOfThing(name: name) {
-            self.groups[index.group].edit(thing: index.thing, with: newName)
-        }
-    }
-    
     func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {
+        // make sure current and new group exists
+        guard self.group(with: groupName) != nil && self.group(with: newGroupName) != nil else { return }
         // remove from old group and add to new group
         if let thing = self.remove(thing: name) {
             self.add(thing: thing, group: newGroupName)
@@ -128,17 +150,16 @@ class GroupList: Codable {
         }
     }
     
-    func thingName(at index: ThingIndex) -> ThingName {
-        return self.groups[index.groupIndex].thing(at: index.thingIndex)
+    func edit(thing name: ThingName, with newName: ThingName) {
+        // find it and change the name
+        if let index = self.indexOfThing(name: name) {
+            self.groups[index.group].edit(thing: index.thing, with: newName)
+        }
     }
     
     // MARK: Helper
     
-    private func indexOf(group name: GroupName) -> Int? {
-        return self.groups.firstIndex{ $0.name == name }
-    }
-    
-    private func indexOfThing(name: ThingName) -> (group: Int, thing: Int)? {
+    func indexOfThing(name: ThingName) -> (group: Int, thing: Int)? {
         // find the group it's in, find index in things
         var groupIndex: Int = 0
         var thingIndex: Int? = nil

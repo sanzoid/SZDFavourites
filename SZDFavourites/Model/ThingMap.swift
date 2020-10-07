@@ -18,6 +18,10 @@ class ThingMap: Codable {
     
     private var things: [ThingName: Thing]
     
+    var count: Int {
+        return self.things.count
+    }
+    
     init(things: [ThingName: Thing] = [ThingName: Thing]()) {
         self.things = things
     }

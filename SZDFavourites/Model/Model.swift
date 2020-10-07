@@ -95,7 +95,7 @@ class Model: Codable {
     
     func add(thing: Thing) {
         self.thingMap.add(thing: thing)
-        self.groupList.add(thing: thing)
+        self.groupList.add(thing: thing.name)
     }
     
     func remove(thing name: ThingName) {
