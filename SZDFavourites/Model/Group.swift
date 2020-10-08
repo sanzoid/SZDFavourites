@@ -11,7 +11,7 @@ import Foundation
 typealias GroupName = String
 
 /**
-    A **Group** has a name and an ordered list of Things.
+    A **Group** has a name and an ordered list of Things. Things are expected to be unique, but the class will not provide feedback if not. It is up to the managing class to provide unique things. 
  
     - Outside: Methods to manage name and things, accessors to properties.
     - Inside: Directly manages properties.

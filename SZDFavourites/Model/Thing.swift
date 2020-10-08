@@ -12,7 +12,7 @@ import UIKit
 typealias ThingName = String
 
 /**
-   A **Thing** has a name and an ordered list of items.
+   A **Thing** has a name and an ordered list of items. Items are expected to be unique, but the class will not provide feedback if not. It is up to the managing class to provide unique items. 
 
    - Outside: Methods to manage name and items, accessors to properties.
    - Inside: Directly manages properties.
@@ -41,25 +41,19 @@ class Thing: Codable {
         return self.items[index]
     }
     
-    // TODO: remove
-    subscript(index: Int) -> Item {
-        return self.items[index]
-    }
-    
     func indexOfItem(with name: ItemName) -> Int? {
         return self.items.firstIndex{$0.name == name}
     }
     
-    @discardableResult
-    func addItem(name: ItemName, image: UIImage? = nil) -> Bool {
-        // check if item already exists
-        if self.indexOfItem(with: name) != nil {
-            return false
-        }
-        
+    func exists(item name: ItemName) -> Bool {
+        return self.indexOfItem(with: name) != nil
+    }
+    
+    func addItem(name: ItemName, image: UIImage? = nil) {
+        // check item doesn't already exist
+        guard !self.exists(item: name) else { return }
         let item = Item(name: name, image: image)
         self.items.append(item)
-        return true
     }
     
     func insert(item: Item, at index: Int) {
@@ -76,8 +70,9 @@ class Thing: Codable {
         self.insert(item: item, at: newIndex)
     }
     
-    // TODO: don't allow edit if newName is an existing item's name 
     func edit(item index: Int, with newName: ItemName) {
+        // check newName doesn't already exist
+        guard !self.exists(item: newName) else { return }
         self.items[index].edit(name: newName)
     }
     
@@ -85,7 +80,6 @@ class Thing: Codable {
         self.items[index].edit(image: newImage)
     }
     
-    // TODO: is this needed
     func topItem() -> Item? {
         guard self.items.count > 0 else {
             return nil

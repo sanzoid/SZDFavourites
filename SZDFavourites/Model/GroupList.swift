@@ -11,7 +11,9 @@ import UIKit
 typealias ThingIndex = (groupIndex: Int, thingIndex: Int)
 
 /**
-    A **GroupList** manages a list of Groups.
+    A **GroupList** manages a list of Groups. Groups are expected to be unique, but the class will not provide feedback if not. It is up to the managing class to provide unique groups.
+ 
+    There is always a default group. It is expected that there is no attempt to modify or remove the default group.
     
     - Outside: Methods to manage groups, accessor to properties.
     - Inside: Directly manages groups and manages each Group by calling its methods. 
@@ -57,9 +59,13 @@ class GroupList: Codable {
         return self.groups[index]
     }
     
-    // TODO: check if it already exists
+    func exists(group name: GroupName) -> Bool {
+        return self.group(with: name) != nil
+    }
+    
     // TODO: Default group placement - do we want it fixed at the top, at the bottom, or wherever? Do we want to insert new group based on default position?
     func add(group name: GroupName) {
+        guard !self.exists(group: name) else { return }
         let group = Group(name: name)
         self.groups.append(group)
     }
@@ -90,6 +96,12 @@ class GroupList: Codable {
     }
     
     func edit(group name: GroupName, with newName: GroupName) {
+        // check newName doesn't already exist
+        guard !self.exists(group: newName) else { return }
+        
+        // check not editing default group
+        guard name != GroupList.defaultGroupName else { return }
+        
         if let index = self.indexOf(group: name) {
             self.groups[index].edit(name: newName)
         }
@@ -104,60 +116,6 @@ class GroupList: Codable {
     func thingName(at index: ThingIndex) -> ThingName {
         return self.groups[index.groupIndex].thing(at: index.thingIndex)
     }
-    
-    // TODO: check thing doesn't already exist
-    func add(thing: ThingName) {
-        // add to default group         
-        self.add(thing: thing, group: GroupList.defaultGroupName)
-    }
-    
-    func add(thing thingName: ThingName, group groupName: GroupName) {
-        if let index = indexOf(group: groupName) {
-            self.groups[index].add(thing: thingName)
-        }
-    }
-    
-    func add(thing name: ThingName, to index: ThingIndex) {
-        self.groups[index.groupIndex].insert(thing: name, at: index.thingIndex)
-    }
-    
-    @discardableResult
-    func remove(thing name: ThingName) -> ThingName? {
-        if let index = self.indexOfThing(name: name) {
-            return self.groups[index.group].remove(thing: index.thing)
-        }
-        
-        return nil
-    }
-    
-    func remove(thing index: ThingIndex) -> ThingName? {
-        return self.groups[index.groupIndex].remove(thing: index.thingIndex)
-    }
-    
-    func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {
-        // make sure current and new group exists
-        guard self.group(with: groupName) != nil && self.group(with: newGroupName) != nil else { return }
-        // remove from old group and add to new group
-        if let thing = self.remove(thing: name) {
-            self.add(thing: thing, group: newGroupName)
-        }
-    }
-    
-    func move(thing index: ThingIndex, to newIndex: ThingIndex) {
-        // remove from old location, add to new location
-        if let thing = self.remove(thing: index) {
-            self.add(thing: thing, to: newIndex)
-        }
-    }
-    
-    func edit(thing name: ThingName, with newName: ThingName) {
-        // find it and change the name
-        if let index = self.indexOfThing(name: name) {
-            self.groups[index.group].edit(thing: index.thing, with: newName)
-        }
-    }
-    
-    // MARK: Helper
     
     func indexOfThing(name: ThingName) -> (group: Int, thing: Int)? {
         // find the group it's in, find index in things
@@ -177,5 +135,63 @@ class GroupList: Codable {
         }
         
         return nil
+    }
+    
+    func thingExists(name: ThingName) -> Bool {
+        return self.indexOfThing(name: name) != nil
+    }
+    
+    func add(thing: ThingName) {
+        // add to default group         
+        self.add(thing: thing, group: GroupList.defaultGroupName)
+    }
+    
+    func add(thing thingName: ThingName, group groupName: GroupName) {
+        guard !self.thingExists(name: thingName) else { return }
+        if let index = indexOf(group: groupName) {
+            self.groups[index].add(thing: thingName)
+        }
+    }
+    
+    func add(thing name: ThingName, to index: ThingIndex) {
+        guard !self.thingExists(name: name) else { return }
+        self.groups[index.groupIndex].insert(thing: name, at: index.thingIndex)
+    }
+    
+    @discardableResult
+    func remove(thing name: ThingName) -> ThingName? {
+        if let index = self.indexOfThing(name: name) {
+            return self.groups[index.group].remove(thing: index.thing)
+        }
+        return nil
+    }
+    
+    func remove(thing index: ThingIndex) -> ThingName? {
+        return self.groups[index.groupIndex].remove(thing: index.thingIndex)
+    }
+    
+    func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {
+        // make sure current and new group exists
+        guard self.exists(group: groupName) && self.exists(group: newGroupName) else { return }
+        // remove from old group and add to new group
+        if let thing = self.remove(thing: name) {
+            self.add(thing: thing, group: newGroupName)
+        }
+    }
+    
+    func move(thing index: ThingIndex, to newIndex: ThingIndex) {
+        // remove from old location, add to new location
+        if let thing = self.remove(thing: index) {
+            self.add(thing: thing, to: newIndex)
+        }
+    }
+    
+    func edit(thing name: ThingName, with newName: ThingName) {
+        // check newName doesn't exist already
+        guard !self.thingExists(name: newName) else { return }
+        // find it and change the name
+        if let index = self.indexOfThing(name: name) {
+            self.groups[index.group].edit(thing: index.thing, with: newName)
+        }
     }
 }

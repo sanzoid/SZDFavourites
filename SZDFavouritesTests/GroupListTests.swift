@@ -17,6 +17,7 @@ class GroupListTests: XCTestCase {
     var groupList: GroupList!
     
     override func setUp() {
+        // [], [1,2], [A,B,C], []
         groupList = GroupList(groups: [group1, group2, group3])
     }
 
@@ -79,6 +80,14 @@ class GroupListTests: XCTestCase {
         
         // default
         XCTAssert(groupList[3] == groupList.defaultGroup)
+        
+        // exists
+        XCTAssert(groupList.exists(group: "Group1"))
+        XCTAssert(!groupList.exists(group: "GroupA"))
+        
+        // thing exists
+        XCTAssert(groupList.thingExists(name: "Thing1"))
+        XCTAssert(!groupList.thingExists(name: "ThingOne"))
     }
     
     // MARK: Group
@@ -106,6 +115,11 @@ class GroupListTests: XCTestCase {
         // [1, 2, 3, default, 4]
         groupList.add(group: "Group4")
         XCTAssert(groupList[4].name == "Group4")
+        
+        // exists
+        groupList.add(group: "Group1")
+        XCTAssert(groupList.count() == 5)
+        XCTAssert(groupList[0].name == "Group1")
     }
     
     func testGroupEdit() {
@@ -119,6 +133,12 @@ class GroupListTests: XCTestCase {
         XCTAssert(groupList.count() == 4)
         XCTAssert(groupList.group(with: "GroupX") == nil)
         XCTAssert(groupList.group(with: "GroupY") == nil)
+        
+        // new name already exists
+        groupList.edit(group: "Group3", with: "Group1")
+        XCTAssert(groupList.count() == 4)
+        XCTAssert(groupList.indexOf(group: "Group1") == 0)
+        XCTAssert(groupList.indexOf(group: "Group3") == 2)
     }
     
     // MARK: Thing
@@ -157,16 +177,26 @@ class GroupListTests: XCTestCase {
         groupList.add(thing: "Thing1.5", to: (1, 1))
         XCTAssert(groupList[1].thingCount == 4)
         XCTAssert(groupList[1].thing(at: 1) == "Thing1.5")
+        
+        // to group, exists
+        groupList.add(thing: "Thing3", group: "Group2")
+        XCTAssert(groupList[1].thingCount == 4)
+        XCTAssert(groupList[1].thing(at: 3) == "Thing3")
+        
+        // to index, exists
+        groupList.add(thing: "Thing1.5", to: (1, 1))
+        XCTAssert(groupList[1].thingCount == 4)
+        XCTAssert(groupList[1].thing(at: 1) == "Thing1.5")
     }
     
     func testThingMove() {
-        // with group name
+        // with group name  [], [1,2,C], [A,B]
         groupList.move(thing: "ThingC", from: "Group3", to: "Group2")
         XCTAssert(groupList[2].thingCount == 2)
         XCTAssert(groupList[1].thingCount == 3)
         XCTAssert(groupList.indexOfThing(name: "ThingC")! == (1, 2))
         
-        // with index
+        // with index       [B], [1,2,C], [A]
         groupList.move(thing: (2, 1), to: (0, 0))
         XCTAssert(groupList[2].thingCount == 1)
         XCTAssert(groupList[0].thingCount == 1)
@@ -194,5 +224,15 @@ class GroupListTests: XCTestCase {
         groupList.edit(thing: "ThingX", with: "ThingY")
         XCTAssert(groupList.indexOfThing(name: "ThingX") == nil)
         XCTAssert(groupList.indexOfThing(name: "ThingY") == nil)
+        
+        // thing already exists
+        groupList.edit(thing: "ThingA", with: "ThingB")
+        XCTAssert(groupList.indexOfThing(name: "ThingA")! == (2, 0))
+        XCTAssert(groupList.indexOfThing(name: "ThingB")! == (2, 1))
+        
+        // default group
+        groupList.edit(thing: GroupList.defaultGroupName, with: "Default2")
+        XCTAssert(groupList.exists(group: GroupList.defaultGroupName))
+        XCTAssert(!groupList.exists(group: "Default2"))
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-   A **ThingMap** is an unordered map of things.
+   A **ThingMap** is an unordered map of things. Things are expected to be unique, but the class will not provide feedback if not. It is up to the managing class to provide unique things. 
 
    - Outside: Methods to manage things, accessors to properties.
    - Inside: Directly manages things and manages each Thing by calling its methods.
@@ -26,13 +26,22 @@ class ThingMap: Codable {
         self.things = things
     }
     
+    subscript(name: String) -> Thing? {
+        return self.things[name]
+    }
+    
+    func exists(name: ThingName) -> Bool {
+        return self.things[name] != nil
+    }
+    
     func add(thing name: ThingName) {
         let thing = Thing(name: name)
         self.add(thing: thing)
     }
     
     func add(thing: Thing) {
-        // TODO: check it doesn't already exist
+        // check thing doesn't already exist
+        guard !self.exists(name: thing.name) else { return }
         self.things[thing.name] = thing
     }
     
@@ -47,14 +56,12 @@ class ThingMap: Codable {
     }
     
     func edit(thing name: ThingName, with newName: ThingName) {
+        // check new name doesn't exist already
+        guard !self.exists(name: newName) else { return }
         // remove and add back with new name
         if let thing = self.remove(thing: name) {
             thing.edit(name: newName)
             self.things[newName] = thing
         }
-    }
-    
-    subscript(name: String) -> Thing? {
-        return self.things[name]
     }
 }

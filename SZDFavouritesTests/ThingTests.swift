@@ -16,8 +16,10 @@ class ThingTests: XCTestCase {
     
     override func setUp() {
         let items1 = [Item(name: "Item1"), Item(name: "Item2"), Item(name: "Item3")]
+        // [1,2,3]
         thing1 = Thing(name: "Thing1", items: items1)
         let items2 = [Item(name: "Item1"), Item(name: "Item2"), Item(name: "Item3")]
+        // [1,2,3]
         thing2 = Thing(name: "Thing2", items: items2)
     }
 
@@ -54,10 +56,19 @@ class ThingTests: XCTestCase {
         XCTAssert(thing1.indexOfItem(with: "Item3") == 2)
         XCTAssert(thing1.indexOfItem(with: "ItemA") == nil)
         
+        // exists
+        XCTAssert(thing1.exists(item: "Item1"))
+        XCTAssert(!thing1.exists(item: "ItemA"))
+        
         // add item: [1, 2, 3, 4]
         thing1.addItem(name: "Item4")
         XCTAssert(thing1.itemCount() == 4)
         XCTAssert(thing1.item(at: 3).name == "Item4")
+        
+        // add item exists: [1, 2, 3, 4]
+        thing1.addItem(name: "Item1")
+        XCTAssert(thing1.itemCount() == 4)
+        XCTAssert(thing1.item(at: 0).name == "Item1")
         
         // insert item: [1, 1.5, 2, 3, 4]
         thing1.insert(item: Item(name: "Item1.5"), at: 1)
@@ -80,11 +91,16 @@ class ThingTests: XCTestCase {
     }
     
     func testEditItems() {
-        // edit name
-        thing1.edit(item: 1, with: "ThingB")
-        XCTAssert(thing1.item(at: 1).name == "ThingB")
+        // name [1,B,3]
+        thing1.edit(item: 1, with: "ItemB")
+        XCTAssert(thing1.item(at: 1).name == "ItemB")
         
-        // edit image
+        // existing name
+        thing1.edit(item: 0, with: "ItemB")
+        XCTAssert(thing1.item(at: 0).name == "Item1")
+        XCTAssert(thing1.item(at: 1).name == "ItemB")
+        
+        // image
         let image = UIImage()
         thing1.edit(item: 2, with: image)
         XCTAssert(thing1.item(at: 2).image == image)

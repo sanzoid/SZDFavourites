@@ -9,11 +9,24 @@
 import Foundation
 import UIKit
 
+enum ModelError: Error {
+    /// Attempt to add group that already exists
+    case groupExists
+    /// Attempt to add thing that already exists
+    case thingExists
+    /// Attempt to add item that already exists for a thing
+    case itemExists
+    
+    // TODO: all of these cases. Have not implemented yet.
+    /// Attempt to modify default group
+    case modifyingDefaultGroup
+}
+
 /**
     The **Model** is responsible for all data manipulation.
  
     - Outside: Methods to manage groups, things, and items. Groups are a mapping of Things. Things can be managed on their own. Items belong to Things.
-    - Inside: Manages a groupList and thingMap by calling their methods.
+    - Inside: Manages a groupList and thingMap by calling their methods. Not responsible for verifying existing values, but is responsible for verifying new values added are unique if required.
  */
 class Model: Codable {
     
@@ -54,8 +67,14 @@ class Model: Codable {
         return self.groupList.count()
     }
     
-    func add(group name: GroupName) {
+    func group(at index: Int) -> Group? {
+        return self.groupList[index]
+    }
+    
+    func add(group name: GroupName) -> ModelError? {
+        guard !self.groupExists(name: name) else { return .groupExists }
         self.groupList.add(group: name)
+        return nil
     }
     
     func remove(group name: GroupName) {
@@ -66,8 +85,10 @@ class Model: Codable {
         self.groupList.remove(group: index)
     }
     
-    func edit(group name: GroupName, with newName: GroupName) {
+    func edit(group name: GroupName, with newName: GroupName) -> ModelError? {
+        guard !self.groupExists(name: newName) else { return .groupExists }
         self.groupList.edit(group: name, with: newName)
+        return nil
     }
     
     func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {
@@ -78,39 +99,10 @@ class Model: Codable {
         self.groupList.move(thing: index, to: newIndex)
     }
     
-    func group(at index: Int) -> Group? {
-        return self.groupList[index]
-    }
-    
     // MARK: Thing
     
     func thingCount(in group: Int) -> Int {
         self.groupList.count(in: group)
-    }
-    
-    func add(thing name: ThingName) {
-        let thing = Thing(name: name)
-        self.add(thing: thing)
-    }
-    
-    func add(thing: Thing) {
-        self.thingMap.add(thing: thing)
-        self.groupList.add(thing: thing.name)
-    }
-    
-    func remove(thing name: ThingName) {
-        self.thingMap.remove(thing: name)
-        self.groupList.remove(thing: name)
-    }
-    
-    func edit(thing name: ThingName, with newName: ThingName) {
-        // edit in thingMap
-        self.thingMap.edit(thing: name, with: newName)
-        
-        // edit in groupList if needed 
-        if name != newName{
-            self.groupList.edit(thing: name, with: newName)
-        }
     }
     
     func thing(at index: ThingIndex) -> Thing? {
@@ -119,14 +111,51 @@ class Model: Codable {
         return thing
     }
     
-    // MARK: Item
-    
-    func add(item name: ItemName, to thing: Thing) {
-        self.thingMap[thing.name]?.addItem(name: name)
+    func add(thing name: ThingName) -> ModelError? {
+        let thing = Thing(name: name)
+        return self.add(thing: thing)
     }
     
-    func edit(item index: Int, for thing: Thing, with newName: ItemName) {
+    func add(thing: Thing) -> ModelError? {
+        guard !self.thingExists(name: thing.name) else { return .thingExists }
+        
+        self.thingMap.add(thing: thing)
+        self.groupList.add(thing: thing.name)
+        
+        return nil
+    }
+    
+    func remove(thing name: ThingName) {
+        self.thingMap.remove(thing: name)
+        self.groupList.remove(thing: name)
+    }
+    
+    func edit(thing name: ThingName, with newName: ThingName) -> ModelError? {
+        guard !self.thingExists(name: newName) else { return .thingExists }
+        
+        // edit in thingMap
+        self.thingMap.edit(thing: name, with: newName)
+        
+        // edit in groupList if needed 
+        if name != newName{
+            self.groupList.edit(thing: name, with: newName)
+        }
+        
+        return nil
+    }
+    
+    // MARK: Item
+    
+    func add(item name: ItemName, to thing: Thing) -> ModelError? {
+        guard !self.itemExists(name: name, for: thing.name) else { return .itemExists }
+        self.thingMap[thing.name]?.addItem(name: name)
+        return nil
+    }
+    
+    func edit(item index: Int, for thing: Thing, with newName: ItemName) -> ModelError? {
+        guard !self.itemExists(name: newName, for: thing.name) else { return .itemExists }
         self.thingMap[thing.name]?.edit(item: index, with: newName)
+        return nil
     }
     
     func edit(item index: Int, for thing: Thing, with newImage: UIImage?) {
@@ -139,6 +168,20 @@ class Model: Codable {
     
     func remove(item index: Int, for thing: Thing) {
         self.thingMap[thing.name]?.removeItem(at: index)
+    }
+    
+    // MARK: Helper
+    
+    private func groupExists(name: GroupName) -> Bool {
+        return self.groupList.exists(group: name)
+    }
+    
+    private func thingExists(name: ThingName) -> Bool {
+        return self.thingMap.exists(name: name) && self.groupList.thingExists(name: name)
+    }
+    
+    private func itemExists(name: ItemName, for thing: ThingName) -> Bool {
+        return self.thingMap[thing]!.exists(item: name)
     }
     
     // MARK: Peristence

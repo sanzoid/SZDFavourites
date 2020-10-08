@@ -15,7 +15,9 @@ import UIKit
    - Inside: Make data manipulations by calling Model methods.
 */
 class ListViewModel {
-
+    // TODO: Do validations here
+    //  Item - 100 char limit, non-empty 
+    
     let model: Model
     
     var selectedThing: Thing? 
@@ -65,6 +67,7 @@ class ListViewModel {
     }
     
     func add(thing: Thing) {
+        // TODO: return error 
         self.model.add(thing: thing)
         self.save()
     }
@@ -92,6 +95,7 @@ class ListViewModel {
     }
     
     func edit(item index: Int, for thing: Thing, with newName: ItemName) {
+        // TODO: return error
         self.model.edit(item: index, for: thing, with: newName)
         self.save()
     }

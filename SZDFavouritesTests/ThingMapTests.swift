@@ -15,6 +15,7 @@ class ThingMapTests: XCTestCase {
     var thingMap: ThingMap!
     
     override func setUp() {
+        // [1,2,3]
         thingMap = ThingMap(things: things)
     }
 
@@ -37,6 +38,10 @@ class ThingMapTests: XCTestCase {
         
         // subscript
         XCTAssert(thingMap["Thing2"]?.name == "Thing2")
+        
+        // exists
+        XCTAssert(thingMap.exists(name: "Thing1"))
+        XCTAssert(!thingMap.exists(name: "Thing4"))
         
         // remove
         // by thing [1, 3]
@@ -67,12 +72,26 @@ class ThingMapTests: XCTestCase {
         thingMap.add(thing: Thing(name: "Thing2"))
         XCTAssert(thingMap.count == 2)
         XCTAssert(thingMap["Thing2"]?.name == "Thing2")
+        // already exists
+        thingMap.add(thing: "Thing1")
+        XCTAssert(thingMap.count == 2)
     }
     
     func testEditThing() {
+        // [1,B,3]
         thingMap.edit(thing: "Thing2", with: "ThingB")
         XCTAssert(thingMap.count == 3)
         XCTAssert(thingMap["Thing2"] == nil)
         XCTAssert(thingMap["ThingB"]?.name == "ThingB")
+        
+        // doesn't exist
+        thingMap.edit(thing: "ThingX", with: "Thing4")
+        XCTAssert(thingMap["ThingX"] == nil)
+        XCTAssert(thingMap["Thing4"] == nil)
+        
+        // new exists
+        thingMap.edit(thing: "Thing1", with: "ThingB")
+        XCTAssert(thingMap["Thing1"] != nil)
+        XCTAssert(thingMap["Thing1"]?.name == "Thing1")
     }
 }
