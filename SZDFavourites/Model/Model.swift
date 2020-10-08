@@ -85,18 +85,12 @@ class Model: Codable {
         self.groupList.remove(group: index)
     }
     
+    // TODO: move(group index: Int, to newIndex: Int) 
+    
     func edit(group name: GroupName, with newName: GroupName) -> ModelError? {
         guard !self.groupExists(name: newName) else { return .groupExists }
         self.groupList.edit(group: name, with: newName)
         return nil
-    }
-    
-    func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {
-        self.groupList.move(thing: name, from: groupName, to: newGroupName)
-    }
-    
-    func move(thing index: ThingIndex, to newIndex: ThingIndex) {
-        self.groupList.move(thing: index, to: newIndex)
     }
     
     // MARK: Thing
@@ -105,9 +99,9 @@ class Model: Codable {
         self.groupList.count(in: group)
     }
     
-    func thing(at index: ThingIndex) -> Thing? {
+    func thing(at index: ThingIndex) -> Thing {
         let name = self.groupList.thingName(at: index)
-        let thing = self.thingMap[name]
+        let thing = self.thingMap[name]!
         return thing
     }
     
@@ -130,6 +124,14 @@ class Model: Codable {
         self.groupList.remove(thing: name)
     }
     
+    func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {
+        self.groupList.move(thing: name, from: groupName, to: newGroupName)
+    }
+    
+    func move(thing index: ThingIndex, to newIndex: ThingIndex) {
+        self.groupList.move(thing: index, to: newIndex)
+    }
+    
     func edit(thing name: ThingName, with newName: ThingName) -> ModelError? {
         guard !self.thingExists(name: newName) else { return .thingExists }
         
@@ -146,28 +148,28 @@ class Model: Codable {
     
     // MARK: Item
     
-    func add(item name: ItemName, to thing: Thing) -> ModelError? {
-        guard !self.itemExists(name: name, for: thing.name) else { return .itemExists }
-        self.thingMap[thing.name]?.addItem(name: name)
+    func add(item name: ItemName, to thing: ThingName) -> ModelError? {
+        guard !self.itemExists(name: name, for: thing) else { return .itemExists }
+        self.thingMap[thing]?.addItem(name: name)
         return nil
     }
     
-    func edit(item index: Int, for thing: Thing, with newName: ItemName) -> ModelError? {
-        guard !self.itemExists(name: newName, for: thing.name) else { return .itemExists }
-        self.thingMap[thing.name]?.edit(item: index, with: newName)
+    func remove(item index: Int, for thing: ThingName) {
+        self.thingMap[thing]?.removeItem(at: index)
+    }
+    
+    func move(item index: Int, for thing: ThingName, to newIndex: Int) {
+        self.thingMap[thing]?.move(item: index, to: newIndex)
+    }
+    
+    func edit(item index: Int, for thing: ThingName, with newName: ItemName) -> ModelError? {
+        guard !self.itemExists(name: newName, for: thing) else { return .itemExists }
+        self.thingMap[thing]?.edit(item: index, with: newName)
         return nil
     }
     
-    func edit(item index: Int, for thing: Thing, with newImage: UIImage?) {
-        self.thingMap[thing.name]?.edit(item: index, with: newImage)
-    }
-    
-    func move(item index: Int, for thing: Thing, to newIndex: Int) {
-        self.thingMap[thing.name]?.move(item: index, to: newIndex)
-    }
-    
-    func remove(item index: Int, for thing: Thing) {
-        self.thingMap[thing.name]?.removeItem(at: index)
+    func edit(item index: Int, for thing: ThingName, with newImage: UIImage?) {
+        self.thingMap[thing]?.edit(item: index, with: newImage)
     }
     
     // MARK: Helper

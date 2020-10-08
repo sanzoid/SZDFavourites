@@ -62,7 +62,7 @@ class ListViewModel {
         return self.model.thingCount(in: group)
     }
     
-    func thing(at index: ThingIndex) -> Thing? {
+    func thing(at index: ThingIndex) -> Thing {
         return self.model.thing(at: index)
     }
     
@@ -89,28 +89,28 @@ class ListViewModel {
     
     // MARK: Item
     
-    func add(item name: ItemName, to thing: Thing) {
+    func add(item name: ItemName, to thing: ThingName) {
         self.model.add(item: name, to: thing)
         self.save()
     }
     
-    func edit(item index: Int, for thing: Thing, with newName: ItemName) {
+    func edit(item index: Int, for thing: ThingName, with newName: ItemName) {
         // TODO: return error
         self.model.edit(item: index, for: thing, with: newName)
         self.save()
     }
     
-    func edit(item index: Int, for thing: Thing, with newImage: UIImage?) {
+    func edit(item index: Int, for thing: ThingName, with newImage: UIImage?) {
         self.model.edit(item: index, for: thing, with: newImage)
         self.save()
     }
     
-    func move(item index: Int, for thing: Thing, to newIndex: Int) {
+    func move(item index: Int, for thing: ThingName, to newIndex: Int) {
         self.model.move(item: index, for: thing, to: newIndex)
         self.save()
     }
     
-    func remove(item index: Int, for thing: Thing) {
+    func remove(item index: Int, for thing: ThingName) {
         self.model.remove(item: index, for: thing)
         self.save()
     }

@@ -177,7 +177,7 @@ class ListController: UIViewController {
     }
     
     func presentThingController(index: ThingIndex) {
-        let thing = self.viewModel.thing(at: index)!
+        let thing = self.viewModel.thing(at: index)
         // TODO: probably don't need thing here
         self.viewModel.selectedThing = thing 
         
@@ -220,22 +220,22 @@ extension ListController: ThingControllerDelegate {
     
     func shouldAddItem(name: String) {
         guard let thing = self.viewModel.selectedThing else { return }
-        self.viewModel.add(item: name, to: thing)
+        self.viewModel.add(item: name, to: thing.name)
     }
     
     func shouldEditItem(at index: Int, with newName: String) {
         guard let thing = self.viewModel.selectedThing else { return }
-        self.viewModel.edit(item: index, for: thing, with: newName)
+        self.viewModel.edit(item: index, for: thing.name, with: newName)
     }
     
     func shouldMoveItem(from index: Int, to newIndex: Int) {
         guard let thing = self.viewModel.selectedThing else { return }
-        self.viewModel.move(item: index, for: thing, to: newIndex)
+        self.viewModel.move(item: index, for: thing.name, to: newIndex)
     }
     
     func shouldDeleteItem(at index: Int) {
         guard let thing = self.viewModel.selectedThing else { return }
-        self.viewModel.remove(item: index, for: thing)
+        self.viewModel.remove(item: index, for: thing.name)
     }
     
     func close() {
@@ -250,7 +250,7 @@ extension ListController: UITableViewDataSource {
         
         // retrieve thing and item
         let index = ThingIndex(indexPath.section, indexPath.row)
-        let thing = self.viewModel.thing(at: index)! // FIXME:
+        let thing = self.viewModel.thing(at: index) // FIXME:
         let item = thing.topItem()
         
         cell.textLabel?.text = thing.name
