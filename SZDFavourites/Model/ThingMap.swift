@@ -14,7 +14,7 @@ import Foundation
    - Outside: Methods to manage things, accessors to properties.
    - Inside: Directly manages things and manages each Thing by calling its methods.
 */
-class ThingMap: Codable {
+final class ThingMap: Codable {
     
     private var things: [ThingName: Thing]
     
@@ -40,7 +40,6 @@ class ThingMap: Codable {
     }
     
     func add(thing: Thing) {
-        // check thing doesn't already exist
         guard !self.exists(name: thing.name) else { return }
         self.things[thing.name] = thing
     }
@@ -56,7 +55,6 @@ class ThingMap: Codable {
     }
     
     func edit(thing name: ThingName, with newName: ThingName) {
-        // check new name doesn't exist already
         guard !self.exists(name: newName) else { return }
         // remove and add back with new name
         if let thing = self.remove(thing: name) {

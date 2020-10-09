@@ -33,7 +33,7 @@ class ModelTests: XCTestCase {
                                            group2,
                                            group3])
         
-        // A; B [1]; C [2 (2.1,2.2), 3]
+        // A; B [1]; C [2 (2.1,2.2), 3], Default []
         model = Model(groupList: groupList, thingMap: thingMap)
     }
     
@@ -53,47 +53,68 @@ class ModelTests: XCTestCase {
         XCTAssert(model.groupCount() == 4)
         
         // group at
-        XCTAssert(model.group(at: 2)?.name == "GroupC")
+        XCTAssert(model.group(at: 2).name == "GroupC")
     }
     
     func testGroupAdd() {
         let add1 = model.add(group: "GroupD")
         XCTAssert(add1 == nil)
         XCTAssert(model.groupCount() == 5)
-        XCTAssert(model.group(at: 4)?.name == "GroupD")
+        XCTAssert(model.group(at: 4).name == "GroupD")
         
         // group already exists
         let add2 = model.add(group: "GroupB")
         XCTAssert(add2 == .groupExists)
         XCTAssert(model.groupCount() == 5)
-        XCTAssert(model.group(at: 1)?.name == "GroupB")
+        XCTAssert(model.group(at: 1).name == "GroupB")
     }
     
     func testGroupRemove() {
         // B[1] -> default
         XCTAssert(model.groupCount() == 4)
-        XCTAssert(model.group(at: 1)?.name == "GroupB")
+        XCTAssert(model.group(at: 1).name == "GroupB")
         XCTAssert(model.thingCount(in: 3) == 0)
-        model.remove(group: "GroupB")
+        let remove1 = model.remove(group: "GroupB")
+        XCTAssert(remove1 == nil)
         XCTAssert(model.groupCount() == 3)
         XCTAssert(model.thingCount(in: 2) == 1)
-        XCTAssert(model.group(at: 1)?.name != "GroupB")
+        XCTAssert(model.group(at: 1).name != "GroupB")
         
         // non-existent group
-        model.remove(group: "GroupD")
+        let remove2 = model.remove(group: "GroupD")
+        XCTAssert(remove2 == nil)
         XCTAssert(model.groupCount() == 3)
+        
+        // default
+        let remove3 = model.remove(group: GroupList.defaultGroupName)
+        XCTAssert(remove3 == .isDefault)
+        XCTAssert(model.groupCount() == 3)
+        XCTAssert(model.group(at: 2).name == GroupList.defaultGroupName)
+    }
+    
+    func testGroupMove() {
+        model.move(group: 1, to: 2)
+        XCTAssert(model.groupCount() == 4)
+        XCTAssert(model.group(at: 2).name == "GroupB")
+        XCTAssert(model.group(at: 1).name == "GroupC")
+        XCTAssert(model.group(at: 2).thing(at: 0) == "Thing1")
     }
     
     func testGroupEdit() {
         let edit1 = model.edit(group: "GroupB", with: "Group2")
         XCTAssert(edit1 == nil)
-        XCTAssert(model.group(at: 1)?.name == "Group2")
+        XCTAssert(model.group(at: 1).name == "Group2")
         
         // new name already exists
         let edit2 = model.edit(group: "GroupA", with: "Group2")
         XCTAssert(edit2 == .groupExists)
-        XCTAssert(model.group(at: 0)?.name == "GroupA")
-        XCTAssert(model.group(at: 1)?.name == "Group2")
+        XCTAssert(model.group(at: 0).name == "GroupA")
+        XCTAssert(model.group(at: 1).name == "Group2")
+        
+        // default
+        let edit3 = model.edit(group: GroupList.defaultGroupName, with: "GroupD")
+        XCTAssert(edit3 == .isDefault)
+        XCTAssert(model.group(at: 3).name == GroupList.defaultGroupName)
     }
     
     func testThingAccessors() {
@@ -109,13 +130,13 @@ class ModelTests: XCTestCase {
     func testThingAdd() {
         let add1 = model.add(thing: "Thing4")
         XCTAssert(add1 == nil)
-        XCTAssert(model.group(at: 3)?.thingCount == 1)
-        XCTAssert(model.group(at: 3)?.thing(at: 0) == "Thing4")
+        XCTAssert(model.group(at: 3).thingCount == 1)
+        XCTAssert(model.group(at: 3).thing(at: 0) == "Thing4")
         
         // already exists
         let add2 = model.add(thing: "Thing2")
         XCTAssert(add2 == .thingExists)
-        XCTAssert(model.group(at: 3)?.thingCount == 1)
+        XCTAssert(model.group(at: 3).thingCount == 1)
     }
     
     func testThingRemove() {
@@ -135,14 +156,14 @@ class ModelTests: XCTestCase {
     func testThingMove() {
         // by name
         model.move(thing: "Thing1", from: "GroupB", to: "GroupC")
-        XCTAssert(model.group(at: 1)?.thingCount == 0)
-        XCTAssert(model.group(at: 2)?.thingCount == 3)
-        XCTAssert(model.group(at: 2)?.thing(at: 2) == "Thing1")
+        XCTAssert(model.group(at: 1).thingCount == 0)
+        XCTAssert(model.group(at: 2).thingCount == 3)
+        XCTAssert(model.group(at: 2).thing(at: 2) == "Thing1")
         
         // by index
         model.move(thing: (2,2), to: (2,0))
-        XCTAssert(model.group(at: 2)?.thingCount == 3)
-        XCTAssert(model.group(at: 2)?.thing(at: 0) == "Thing1")
+        XCTAssert(model.group(at: 2).thingCount == 3)
+        XCTAssert(model.group(at: 2).thing(at: 0) == "Thing1")
     }
     
     func testThingEdit() {

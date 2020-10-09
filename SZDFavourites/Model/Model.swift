@@ -16,10 +16,8 @@ enum ModelError: Error {
     case thingExists
     /// Attempt to add item that already exists for a thing
     case itemExists
-    
-    // TODO: all of these cases. Have not implemented yet.
     /// Attempt to modify default group
-    case modifyingDefaultGroup
+    case isDefault
 }
 
 /**
@@ -28,7 +26,7 @@ enum ModelError: Error {
     - Outside: Methods to manage groups, things, and items. Groups are a mapping of Things. Things can be managed on their own. Items belong to Things.
     - Inside: Manages a groupList and thingMap by calling their methods. Not responsible for verifying existing values, but is responsible for verifying new values added are unique if required.
  */
-class Model: Codable {
+final class Model: Codable {
     
     /**
         **GroupList**
@@ -67,8 +65,8 @@ class Model: Codable {
         return self.groupList.count()
     }
     
-    func group(at index: Int) -> Group? {
-        return self.groupList[index]
+    func group(at index: Int) -> Group {
+        return self.groupList.group(at: index)
     }
     
     func add(group name: GroupName) -> ModelError? {
@@ -77,17 +75,24 @@ class Model: Codable {
         return nil
     }
     
-    func remove(group name: GroupName) {
+    func remove(group name: GroupName) -> ModelError? {
+        guard !self.isDefault(group: name) else { return .isDefault }
         self.groupList.remove(group: name)
+        return nil 
     }
     
-    func remove(group index: Int) {
+    func remove(group index: Int) -> ModelError? {
+        guard !self.isDefault(group: index) else { return .isDefault }
         self.groupList.remove(group: index)
+        return nil
     }
     
-    // TODO: move(group index: Int, to newIndex: Int) 
+    func move(group index: Int, to newIndex: Int) {
+        self.groupList.move(group: index, to: newIndex)
+    }
     
     func edit(group name: GroupName, with newName: GroupName) -> ModelError? {
+        guard !self.isDefault(group: name) else { return .isDefault }
         guard !self.groupExists(name: newName) else { return .groupExists }
         self.groupList.edit(group: name, with: newName)
         return nil
@@ -184,6 +189,14 @@ class Model: Codable {
     
     private func itemExists(name: ItemName, for thing: ThingName) -> Bool {
         return self.thingMap[thing]!.exists(item: name)
+    }
+    
+    private func isDefault(group name: GroupName) -> Bool {
+        return self.groupList.defaultGroup.name == name
+    }
+    
+    private func isDefault(group index: Int) -> Bool {
+        return self.groupList.defaultGroupIndex == index
     }
     
     // MARK: Peristence

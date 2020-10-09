@@ -16,7 +16,7 @@ typealias GroupName = String
     - Outside: Methods to manage name and things, accessors to properties.
     - Inside: Directly manages properties.
  */
-class Group: Codable {
+final class Group: Codable {
     
     private(set) var name: GroupName
     private(set) var things: [ThingName]

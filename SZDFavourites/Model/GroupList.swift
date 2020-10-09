@@ -18,23 +18,26 @@ typealias ThingIndex = (groupIndex: Int, thingIndex: Int)
     - Outside: Methods to manage groups, accessor to properties.
     - Inside: Directly manages groups and manages each Group by calling its methods. 
  */
-class GroupList: Codable {
+final class GroupList: Codable {
     
     static let defaultGroupName = "default"
     
     private(set) var groups: [Group]
     
+    var defaultGroupIndex: Int {
+        return self.indexOf(group: GroupList.defaultGroupName)!
+    }
+    
     var defaultGroup: Group {
-        return self.groups[self.indexOf(group: GroupList.defaultGroupName)!]
+        return self.groups[self.defaultGroupIndex]
     }
     
     init(groups: [Group] = [Group]()) {
         self.groups = groups
         
-        // must always have default
-        if self.groups.isEmpty || self.indexOf(group: GroupList.defaultGroupName) == nil {
-            let defaultGroup = Group(name: GroupList.defaultGroupName)
-            self.groups.append(defaultGroup)
+        // add default group if doesn't exist
+        if self.groups.isEmpty || self.group(with: GroupList.defaultGroupName) == nil {
+            self.add(group: GroupList.defaultGroupName)
         }
     }
     
@@ -48,14 +51,12 @@ class GroupList: Codable {
         return self.groups.firstIndex{ $0.name == name }
     }
     
-    // TODO: figure out if this could be used elsewhere. This was added after everything was implemented.
     func group(with name: GroupName) -> Group? {
         guard let index = self.indexOf(group: name) else { return nil }
         return self.groups[index]
     }
     
-    // TODO: group(at index)
-    subscript(index: Int) -> Group {
+    func group(at index: Int) -> Group{
         return self.groups[index]
     }
     
@@ -95,8 +96,12 @@ class GroupList: Codable {
         return true
     }
     
+    func move(group index: Int, to newIndex: Int) {
+        let group = self.groups.remove(at: index)
+        self.groups.insert(group, at: newIndex)
+    }
+    
     func edit(group name: GroupName, with newName: GroupName) {
-        // check newName doesn't already exist
         guard !self.exists(group: newName) else { return }
         
         // check not editing default group
@@ -171,8 +176,8 @@ class GroupList: Codable {
     }
     
     func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {
-        // make sure current and new group exists
-        guard self.exists(group: groupName) && self.exists(group: newGroupName) else { return }
+        guard self.exists(group: groupName),
+            self.exists(group: newGroupName) else { return }
         // remove from old group and add to new group
         if let thing = self.remove(thing: name) {
             self.add(thing: thing, group: newGroupName)
@@ -187,7 +192,6 @@ class GroupList: Codable {
     }
     
     func edit(thing name: ThingName, with newName: ThingName) {
-        // check newName doesn't exist already
         guard !self.thingExists(name: newName) else { return }
         // find it and change the name
         if let index = self.indexOfThing(name: name) {

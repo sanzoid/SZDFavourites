@@ -17,7 +17,7 @@ typealias ThingName = String
    - Outside: Methods to manage name and items, accessors to properties.
    - Inside: Directly manages properties.
 */
-class Thing: Codable {
+final class Thing: Codable {
     
     private(set) var name: ThingName
     private(set) var items: [Item]
@@ -50,7 +50,6 @@ class Thing: Codable {
     }
     
     func addItem(name: ItemName, image: UIImage? = nil) {
-        // check item doesn't already exist
         guard !self.exists(item: name) else { return }
         let item = Item(name: name, image: image)
         self.items.append(item)
@@ -71,7 +70,6 @@ class Thing: Codable {
     }
     
     func edit(item index: Int, with newName: ItemName) {
-        // check newName doesn't already exist
         guard !self.exists(item: newName) else { return }
         self.items[index].edit(name: newName)
     }
