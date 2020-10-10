@@ -35,12 +35,8 @@ final class ThingMap: Codable {
     }
     
     func add(thing name: ThingName) {
+        guard !self.exists(name: name) else { return }
         let thing = Thing(name: name)
-        self.add(thing: thing)
-    }
-    
-    func add(thing: Thing) {
-        guard !self.exists(name: thing.name) else { return }
         self.things[thing.name] = thing
     }
     

@@ -153,8 +153,7 @@ class ListController: UIViewController {
             title = "Add Thing"
             actionTitle = "Add"
             actionBlock = { thingText in
-                let thing = Thing(name: thingText)
-                self.viewModel.add(thing: thing)
+                self.viewModel.add(thing: thingText)
                 
                 // TODO: consider having the view model tell it when it should reload
                 self.tableView.reloadData()

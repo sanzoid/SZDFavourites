@@ -68,13 +68,9 @@ class ThingMapTests: XCTestCase {
         thingMap.add(thing: "Thing1")
         XCTAssert(thingMap.count == 1)
         XCTAssert(thingMap["Thing1"]?.name == "Thing1")
-        // by thing [1, 2]
-        thingMap.add(thing: Thing(name: "Thing2"))
-        XCTAssert(thingMap.count == 2)
-        XCTAssert(thingMap["Thing2"]?.name == "Thing2")
         // already exists
         thingMap.add(thing: "Thing1")
-        XCTAssert(thingMap.count == 2)
+        XCTAssert(thingMap.count == 1)
     }
     
     func testEditThing() {

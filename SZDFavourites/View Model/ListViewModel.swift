@@ -8,6 +8,48 @@
 
 import UIKit
 
+enum ListError {
+    case groupExists
+    case thingExists
+    case itemExists
+    case isDefault
+    
+    // name character limit
+    case groupNameCharMax
+    case thingNameCharMax
+    case itemNameCharMax
+    // name must not be empty
+    case groupNameCharMin
+    case thingNameCharMin
+    case itemNameCharMin
+    
+    /// reached max number of groups
+    case groupMax
+    /// reached max number of things
+    case thingMax
+    /// reached item max for thing
+    case itemMax
+    
+    func message() -> String {
+        switch self {
+        case .groupExists:
+            return "Group already exists."
+        case .thingExists:
+            return "Thing already exists."
+        case .itemExists:
+            return "Item already exists."
+        case .groupNameCharMax, .thingNameCharMax, .itemNameCharMax:
+            return "Name is too long."
+        case .groupNameCharMin, .thingNameCharMin, .itemNameCharMin:
+            return "Name is required."
+        case .isDefault:
+            return "Default group cannot be modified."
+        default:
+            return "An error has occurred."
+        }
+    }
+}
+
 /**
    The **ListViewModel** is the main view model to manipulate the model. It should be the only one making Model calls.
 
@@ -15,8 +57,14 @@ import UIKit
    - Inside: Make data manipulations by calling Model methods.
 */
 class ListViewModel {
-    // TODO: Do validations here
-    //  Item - 100 char limit, non-empty 
+    
+    let groupNameMax = 64
+    let thingNameMax = 64
+    let itemNameMax = 128
+    
+    let groupMax = 5
+    let thingMax = 20
+    let itemMax = 10
     
     let model: Model
     
@@ -36,27 +84,52 @@ class ListViewModel {
         return self.model.group(at: index)
     }
     
-    func add(group name: GroupName) {
-        self.model.add(group: name)
+    func add(group name: GroupName) -> ListError? {
+        if self.groupLimitReached() {
+            return .groupMax
+        }
+        if let error = self.validateGroup(name: name) {
+            return error
+        }
+        if let error = self.model.add(group: name) {
+            return error == .groupExists ? .groupExists : nil
+        }
         self.save()
+        return nil
     }
     
-    func remove(group: GroupName) {
-        self.model.remove(group: group)
+    func remove(group: GroupName) -> ListError? {
+        if let error = self.model.remove(group: group) {
+            return error == .isDefault ? .isDefault : nil
+        }
         self.save()
+        return nil
     }
     
-    func remove(group index: Int) {
-        self.model.remove(group: index)
+    func remove(group index: Int) -> ListError? {
+        if let error = self.model.remove(group: index) {
+            return error == .isDefault ? .isDefault : nil
+        }
         self.save()
+        return nil
     }
     
-    func edit(group name: GroupName, with newName: GroupName) {
-        self.model.edit(group: name, with: newName)
+    func edit(group name: GroupName, with newName: GroupName) -> ListError? {
+        if let error = self.validateGroup(name: newName) {
+            return error
+        }
+        if let error = self.model.edit(group: name, with: newName) {
+            return error == .groupExists ? .groupExists : nil
+        }
         self.save()
+        return nil
     }
     
     // MARK: Thing
+    
+    func thingCount() -> Int {
+        return self.model.thingCount()
+    }
     
     func thingCount(group: Int) -> Int {
         return self.model.thingCount(in: group)
@@ -66,10 +139,18 @@ class ListViewModel {
         return self.model.thing(at: index)
     }
     
-    func add(thing: Thing) {
-        // TODO: return error 
-        self.model.add(thing: thing)
+    func add(thing name: ThingName) -> ListError? {
+        if self.thingLimitReached() {
+            return .thingMax
+        }
+        if let error = self.validateThing(name: name) {
+            return error
+        }
+        if let error = self.model.add(thing: name) {
+            return error == .thingExists ? .thingExists : nil
+        }
         self.save()
+        return nil
     }
     
     func remove(thing: Thing) {
@@ -77,9 +158,15 @@ class ListViewModel {
         self.save()
     }
 
-    func edit(thing name: ThingName, with newName: ThingName) {
-        self.model.edit(thing: name, with: newName)
+    func edit(thing name: ThingName, with newName: ThingName) -> ListError? {
+        if let error = self.validateThing(name: newName) {
+            return error
+        }
+        if let error = self.model.edit(thing: name, with: newName) {
+            return error == .thingExists ? .thingExists : nil
+        }
         self.save()
+        return nil
     }
     
     func move(thing index: ThingIndex, to newIndex: ThingIndex) {
@@ -89,15 +176,33 @@ class ListViewModel {
     
     // MARK: Item
     
-    func add(item name: ItemName, to thing: ThingName) {
-        self.model.add(item: name, to: thing)
-        self.save()
+    func itemCount(for thing: ThingName) -> Int {
+        return self.model.itemCount(for: thing)
     }
     
-    func edit(item index: Int, for thing: ThingName, with newName: ItemName) {
-        // TODO: return error
-        self.model.edit(item: index, for: thing, with: newName)
+    func add(item name: ItemName, to thing: ThingName) -> ListError? {
+        if self.itemLimitReached(for: thing) {
+            return .itemMax
+        }
+        if let error = self.validateItem(name: name) {
+            return error
+        }
+        if let error = self.model.add(item: name, to: thing) {
+            return error == .itemExists ? .itemExists : nil
+        }
         self.save()
+        return nil
+    }
+    
+    func edit(item index: Int, for thing: ThingName, with newName: ItemName) -> ListError? {
+        if let error = self.validateItem(name: newName) {
+            return error
+        }
+        if let error = self.model.edit(item: index, for: thing, with: newName) {
+            return error == .itemExists ? .itemExists : nil
+        }
+        self.save()
+        return nil
     }
     
     func edit(item index: Int, for thing: ThingName, with newImage: UIImage?) {
@@ -113,6 +218,38 @@ class ListViewModel {
     func remove(item index: Int, for thing: ThingName) {
         self.model.remove(item: index, for: thing)
         self.save()
+    }
+    
+    // MARK: Validation
+    
+    private func validateGroup(name: String) -> ListError? {
+        guard !name.isEmpty else { return .groupNameCharMin }
+        guard name.count <= groupNameMax else { return .groupNameCharMax }
+        return nil
+    }
+    
+    private func validateThing(name: String) -> ListError? {
+        guard !name.isEmpty else { return .thingNameCharMin }
+        guard name.count <= thingNameMax else { return .thingNameCharMax }
+        return nil
+    }
+    
+    private func validateItem(name: String) -> ListError? {
+        guard !name.isEmpty else { return .itemNameCharMin }
+        guard name.count <= itemNameMax else { return .itemNameCharMax }
+        return nil
+    }
+    
+    private func groupLimitReached() -> Bool {
+        return self.groupCount() >= groupMax
+    }
+    
+    private func thingLimitReached() -> Bool {
+        return self.thingCount() >= thingMax
+    }
+    
+    private func itemLimitReached(for thing: ThingName) -> Bool {
+        return self.itemCount(for: thing) >= itemMax
     }
     
     // MARK: Save

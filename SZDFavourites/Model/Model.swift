@@ -100,6 +100,11 @@ final class Model: Codable {
     
     // MARK: Thing
     
+    // TODO: unit tests, may need to add the check in some other tests
+    func thingCount() -> Int {
+        return self.thingMap.count
+    }
+    
     func thingCount(in group: Int) -> Int {
         self.groupList.count(in: group)
     }
@@ -111,15 +116,10 @@ final class Model: Codable {
     }
     
     func add(thing name: ThingName) -> ModelError? {
-        let thing = Thing(name: name)
-        return self.add(thing: thing)
-    }
-    
-    func add(thing: Thing) -> ModelError? {
-        guard !self.thingExists(name: thing.name) else { return .thingExists }
+        guard !self.thingExists(name: name) else { return .thingExists }
         
-        self.thingMap.add(thing: thing)
-        self.groupList.add(thing: thing.name)
+        self.thingMap.add(thing: name)
+        self.groupList.add(thing: name)
         
         return nil
     }
@@ -152,6 +152,15 @@ final class Model: Codable {
     }
     
     // MARK: Item
+    
+    func itemCount(for thing: ThingName) -> Int {
+        return self.thingMap[thing]!.itemCount()
+    }
+    
+    // TODO: unit tests
+    func item(at index: Int, for thing: ThingName) -> Item {
+        return self.thingMap[thing]!.item(at: index)
+    }
     
     func add(item name: ItemName, to thing: ThingName) -> ModelError? {
         guard !self.itemExists(name: name, for: thing) else { return .itemExists }
