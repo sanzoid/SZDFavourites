@@ -129,6 +129,12 @@ final class Model: Codable {
         self.groupList.remove(thing: name)
     }
     
+    // TODO: unit test 
+    func remove(thing index: ThingIndex) {
+        let name = self.thing(at: index).name
+        self.remove(thing: name)
+    }
+    
     func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {
         self.groupList.move(thing: name, from: groupName, to: newGroupName)
     }

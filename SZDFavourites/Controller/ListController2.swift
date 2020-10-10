@@ -34,10 +34,10 @@ protocol ListControllerDataSource2: class {
 }
 
 protocol ListControllerDelegate2: class {
-    // move from group,thing index to group,thing index
-    // select group,thing index
-    // add
-    // remove group,thing index
+    func move(from index: ThingIndex, to newIndex: ThingIndex)
+    func selectThing(at index: ThingIndex)
+    func addThing()
+    func removeThing(at index: ThingIndex)
 }
 
 class ListController2: UIViewController {
@@ -65,6 +65,14 @@ class ListController2: UIViewController {
         
         self.view.addSubviews(self.tableView)
         self.tableView.constrainTo(view: self.view, on: .all)
+    }
+    
+    func refresh() {
+        self.tableView.reloadData()
+    }
+    
+    func toggleEdit() {
+        self.tableView.setEditing(!self.tableView.isEditing, animated: true)
     }
     
     // actions
@@ -96,5 +104,28 @@ extension ListController2: UITableViewDataSource {
 }
 
 extension ListController2: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: Make ThingIndex a struct
+        let index = ThingIndex(indexPath.section, indexPath.row)
+        self.delegate?.selectThing(at: index)
+    }
     
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let index = ThingIndex(sourceIndexPath.section, sourceIndexPath.row)
+        let newIndex = ThingIndex(destinationIndexPath.section, destinationIndexPath.row)
+        self.delegate?.move(from: index, to: newIndex)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let index = ThingIndex(indexPath.section, indexPath.row)
+            // TODO: may want to do validation first before deleting from table 
+            self.delegate?.removeThing(at: index)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
 }

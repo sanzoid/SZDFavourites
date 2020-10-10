@@ -157,6 +157,11 @@ class ListViewModel {
         self.model.remove(thing: thing.name)
         self.save()
     }
+    
+    func remove(thing index: ThingIndex) {
+        self.model.remove(thing: index)
+        self.save()
+    }
 
     func edit(thing name: ThingName, with newName: ThingName) -> ListError? {
         if let error = self.validateThing(name: newName) {
