@@ -13,7 +13,7 @@ class ListTableView: UITableView {
     let reuseIdentifier = "ListTableView" 
     
     init() {
-        super.init(frame: .zero, style: .plain)
+        super.init(frame: .zero, style: .grouped)
         
         self.separatorStyle = .none
         self.bounces = false

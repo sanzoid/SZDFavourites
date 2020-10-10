@@ -271,7 +271,7 @@ extension ListController: UITableViewDataSource {
         
         view.section = section
         view.delegate = self
-        view.nameLabel.text = self.viewModel.group(at: section)?.name
+        view.nameLabel.text = self.viewModel.group(at: section).name
         
         return view
     }

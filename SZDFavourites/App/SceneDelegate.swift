@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // root view controller
         let model = Model.retrieve()
-        let viewController = ListController(model: model)
+        let viewController = MainController(model: model)
         let navigationController = UINavigationController(rootViewController: viewController)
         window.rootViewController = navigationController
         

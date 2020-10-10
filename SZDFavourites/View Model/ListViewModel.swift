@@ -80,7 +80,7 @@ class ListViewModel {
         return self.model.groupCount()
     }
     
-    func group(at index: Int) -> Group? {
+    func group(at index: Int) -> Group {
         return self.model.group(at: index)
     }
     
