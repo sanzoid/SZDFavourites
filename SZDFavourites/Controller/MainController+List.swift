@@ -15,18 +15,14 @@ extension MainController: ListControllerDataSource {
         return self.viewModel.thingCount(group: group)
     }
     
-    func dataForThing(at thingIndex: Int, in groupIndex: Int) -> DataListThing {
+    func dataForThing(at thingIndex: Int, in groupIndex: Int) -> ViewDataThing {
         let thing = self.viewModel.thing(at: (groupIndex, thingIndex))
-        let data = DataListThing(name: thing.name,
-                                 topItemName: thing.topItem()?.name,
-                                 topItemImage: thing.topItem()?.image)
-        return data
+        return ViewDataThing(thing: thing)
     }
     
-    func dataForGroup(at index: Int) -> DataListGroup {
+    func dataForGroupHeader(at index: Int) -> ViewDataGroup {
         let group = self.viewModel.group(at: index)
-        let data = DataListGroup(name: group.name)
-        return data
+        return ViewDataGroup(group: group)
     }
 }
 

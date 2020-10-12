@@ -34,23 +34,21 @@
 		5A2FC6532534BFA700002DBC /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC6522534BFA700002DBC /* GroupController.swift */; };
 		5A2FC6562534C0BA00002DBC /* ListControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC6552534C0BA00002DBC /* ListControllerDataSource.swift */; };
 		5A2FC6582534C0C600002DBC /* ListControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC6572534C0C600002DBC /* ListControllerDelegate.swift */; };
-		5A2FC65A2534C0EE00002DBC /* DataListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC6592534C0EE00002DBC /* DataListModel.swift */; };
 		5A2FC65C2534C10A00002DBC /* ListTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC65B2534C10A00002DBC /* ListTableCell.swift */; };
 		5A2FC65E2534C11900002DBC /* ListTableGroupHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC65D2534C11900002DBC /* ListTableGroupHeader.swift */; };
 		5A670C692534C2E500C769D3 /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C682534C2E400C769D3 /* ListController.swift */; };
 		5A670C6B2534C2ED00C769D3 /* ListControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C6A2534C2ED00C769D3 /* ListControllerOld.swift */; };
 		5A670C6E2534C34400C769D3 /* GroupControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C6D2534C34400C769D3 /* GroupControllerDataSource.swift */; };
 		5A670C712534C35900C769D3 /* GroupControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C702534C35900C769D3 /* GroupControllerDelegate.swift */; };
-		5A670C732534C38100C769D3 /* DataGroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C722534C38100C769D3 /* DataGroupModel.swift */; };
 		5A670C752534C84300C769D3 /* MainController+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C742534C84300C769D3 /* MainController+Group.swift */; };
 		5A670C782534CAB100C769D3 /* ThingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C772534CAB100C769D3 /* ThingController.swift */; };
 		5A670C7A2534CAC300C769D3 /* ThingControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C792534CAC300C769D3 /* ThingControllerDataSource.swift */; };
 		5A670C7C2534CAD100C769D3 /* ThingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C7B2534CAD100C769D3 /* ThingControllerDelegate.swift */; };
-		5A670C7E2534CADC00C769D3 /* DataThingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C7D2534CADC00C769D3 /* DataThingModel.swift */; };
 		5A670C812534CCC200C769D3 /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C802534CCC200C769D3 /* ItemController.swift */; };
 		5A670C832534CCE100C769D3 /* ItemControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C822534CCE100C769D3 /* ItemControllerDataSource.swift */; };
 		5A670C852534CCEA00C769D3 /* ItemControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C842534CCEA00C769D3 /* ItemControllerDelegate.swift */; };
 		5A670C882534CD6D00C769D3 /* ViewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C872534CD6D00C769D3 /* ViewDataModel.swift */; };
+		5A670C8A2534DD8100C769D3 /* MainController+Thing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C892534DD8100C769D3 /* MainController+Thing.swift */; };
 		5AA479B1251BDE76004415DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B0251BDE76004415DC /* AppDelegate.swift */; };
 		5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B2251BDE76004415DC /* SceneDelegate.swift */; };
 		5AA479BA251BDE79004415DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AA479B9251BDE79004415DC /* Assets.xcassets */; };
@@ -100,23 +98,21 @@
 		5A2FC6522534BFA700002DBC /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		5A2FC6552534C0BA00002DBC /* ListControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListControllerDataSource.swift; sourceTree = "<group>"; };
 		5A2FC6572534C0C600002DBC /* ListControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListControllerDelegate.swift; sourceTree = "<group>"; };
-		5A2FC6592534C0EE00002DBC /* DataListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataListModel.swift; sourceTree = "<group>"; };
 		5A2FC65B2534C10A00002DBC /* ListTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableCell.swift; sourceTree = "<group>"; };
 		5A2FC65D2534C11900002DBC /* ListTableGroupHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableGroupHeader.swift; sourceTree = "<group>"; };
 		5A670C682534C2E400C769D3 /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
 		5A670C6A2534C2ED00C769D3 /* ListControllerOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListControllerOld.swift; sourceTree = "<group>"; };
 		5A670C6D2534C34400C769D3 /* GroupControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupControllerDataSource.swift; sourceTree = "<group>"; };
 		5A670C702534C35900C769D3 /* GroupControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupControllerDelegate.swift; sourceTree = "<group>"; };
-		5A670C722534C38100C769D3 /* DataGroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataGroupModel.swift; sourceTree = "<group>"; };
 		5A670C742534C84300C769D3 /* MainController+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainController+Group.swift"; sourceTree = "<group>"; };
 		5A670C772534CAB100C769D3 /* ThingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingController.swift; sourceTree = "<group>"; };
 		5A670C792534CAC300C769D3 /* ThingControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingControllerDataSource.swift; sourceTree = "<group>"; };
 		5A670C7B2534CAD100C769D3 /* ThingControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingControllerDelegate.swift; sourceTree = "<group>"; };
-		5A670C7D2534CADC00C769D3 /* DataThingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataThingModel.swift; sourceTree = "<group>"; };
 		5A670C802534CCC200C769D3 /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
 		5A670C822534CCE100C769D3 /* ItemControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemControllerDataSource.swift; sourceTree = "<group>"; };
 		5A670C842534CCEA00C769D3 /* ItemControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemControllerDelegate.swift; sourceTree = "<group>"; };
 		5A670C872534CD6D00C769D3 /* ViewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDataModel.swift; sourceTree = "<group>"; };
+		5A670C892534DD8100C769D3 /* MainController+Thing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainController+Thing.swift"; sourceTree = "<group>"; };
 		5AA479AD251BDE76004415DC /* SZDFavourites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SZDFavourites.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AA479B0251BDE76004415DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5AA479B2251BDE76004415DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -181,10 +177,11 @@
 			isa = PBXGroup;
 			children = (
 				5A2FC64E2531F7B500002DBC /* MainController.swift */,
-				5A670C742534C84300C769D3 /* MainController+Group.swift */,
 				5A2FC6502532053100002DBC /* MainController+List.swift */,
-				5A670C6C2534C32200C769D3 /* Group */,
+				5A670C742534C84300C769D3 /* MainController+Group.swift */,
+				5A670C892534DD8100C769D3 /* MainController+Thing.swift */,
 				5A2FC6542534C09B00002DBC /* List */,
+				5A670C6C2534C32200C769D3 /* Group */,
 				5A670C762534CA3000C769D3 /* Thing */,
 				5A2FC634251E8F7800002DBC /* ThingController2.swift */,
 				5A670C6A2534C2ED00C769D3 /* ListControllerOld.swift */,
@@ -229,7 +226,6 @@
 				5A670C682534C2E400C769D3 /* ListController.swift */,
 				5A2FC6552534C0BA00002DBC /* ListControllerDataSource.swift */,
 				5A2FC6572534C0C600002DBC /* ListControllerDelegate.swift */,
-				5A2FC6592534C0EE00002DBC /* DataListModel.swift */,
 				5A2FC65B2534C10A00002DBC /* ListTableCell.swift */,
 				5A2FC65D2534C11900002DBC /* ListTableGroupHeader.swift */,
 			);
@@ -242,7 +238,6 @@
 				5A2FC6522534BFA700002DBC /* GroupController.swift */,
 				5A670C6D2534C34400C769D3 /* GroupControllerDataSource.swift */,
 				5A670C702534C35900C769D3 /* GroupControllerDelegate.swift */,
-				5A670C722534C38100C769D3 /* DataGroupModel.swift */,
 			);
 			path = Group;
 			sourceTree = "<group>";
@@ -253,7 +248,6 @@
 				5A670C772534CAB100C769D3 /* ThingController.swift */,
 				5A670C792534CAC300C769D3 /* ThingControllerDataSource.swift */,
 				5A670C7B2534CAD100C769D3 /* ThingControllerDelegate.swift */,
-				5A670C7D2534CADC00C769D3 /* DataThingModel.swift */,
 				5A670C7F2534CCB200C769D3 /* Item */,
 			);
 			path = Thing;
@@ -515,7 +509,6 @@
 				5A2FC6512532053100002DBC /* MainController+List.swift in Sources */,
 				5A2FC627251E4B4A00002DBC /* Asset.swift in Sources */,
 				5A670C7C2534CAD100C769D3 /* ThingControllerDelegate.swift in Sources */,
-				5A670C732534C38100C769D3 /* DataGroupModel.swift in Sources */,
 				5A670C692534C2E500C769D3 /* ListController.swift in Sources */,
 				5A2FC64F2531F7B500002DBC /* MainController.swift in Sources */,
 				5A2FC65E2534C11900002DBC /* ListTableGroupHeader.swift in Sources */,
@@ -525,6 +518,7 @@
 				5A2FC63725221EFF00002DBC /* ThingMap.swift in Sources */,
 				5A2FC63F2528B89200002DBC /* ItemListController.swift in Sources */,
 				5A2FC63D2528B82700002DBC /* ItemListTableView.swift in Sources */,
+				5A670C8A2534DD8100C769D3 /* MainController+Thing.swift in Sources */,
 				5A670C6B2534C2ED00C769D3 /* ListControllerOld.swift in Sources */,
 				5A670C712534C35900C769D3 /* GroupControllerDelegate.swift in Sources */,
 				5A2FC618251E432B00002DBC /* Thing.swift in Sources */,
@@ -537,7 +531,6 @@
 				5A2FC61A251E434A00002DBC /* Group.swift in Sources */,
 				5A2FC63B2524C55700002DBC /* ListTableHeader.swift in Sources */,
 				5A2FC61C251E436C00002DBC /* Item.swift in Sources */,
-				5A670C7E2534CADC00C769D3 /* DataThingModel.swift in Sources */,
 				5A670C852534CCEA00C769D3 /* ItemControllerDelegate.swift in Sources */,
 				5A670C752534C84300C769D3 /* MainController+Group.swift in Sources */,
 				5A670C882534CD6D00C769D3 /* ViewDataModel.swift in Sources */,
@@ -545,7 +538,6 @@
 				5A2FC633251E8F5400002DBC /* ThingView.swift in Sources */,
 				5A2FC635251E8F7800002DBC /* ThingController2.swift in Sources */,
 				5A670C6E2534C34400C769D3 /* GroupControllerDataSource.swift in Sources */,
-				5A2FC65A2534C0EE00002DBC /* DataListModel.swift in Sources */,
 				5A2FC6562534C0BA00002DBC /* ListControllerDataSource.swift in Sources */,
 				5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */,
 				5A2FC625251E4B3800002DBC /* Style.swift in Sources */,

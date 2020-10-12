@@ -9,7 +9,7 @@
 extension MainController: GroupControllerDataSource {
     func dataForGroup(at index: Int) -> ViewDataGroup {
         let group = self.viewModel.group(at: index)
-        let data = ViewDataGroup(name: group.name)
+        let data = ViewDataGroup(group: group)
         return data
     }
 }

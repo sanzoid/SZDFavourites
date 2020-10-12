@@ -53,21 +53,21 @@ extension ListController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource?.numberOfThings(in: section) ?? 0
-    }    
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
         
         if let cellData = self.dataSource?.dataForThing(at: indexPath.row, in: indexPath.section) {
             cell.textLabel?.text = cellData.name
-            cell.detailTextLabel?.text = cellData.topItemName ?? "-"
+            cell.detailTextLabel?.text = cellData.top?.name ?? "-"
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.dataSource?.dataForGroup(at: section).name
+        return self.dataSource?.dataForGroupHeader(at: section).name
     }
 }
 

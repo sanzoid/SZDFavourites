@@ -10,7 +10,6 @@ import Foundation
 
 protocol ThingControllerDataSource: class {
     var numberOfItems: Int { get }
-    func item(at index: Int) -> Item
     func dataForThing() -> ViewDataThing
     func dataForItem(at index: Int) -> ViewDataItem
 }

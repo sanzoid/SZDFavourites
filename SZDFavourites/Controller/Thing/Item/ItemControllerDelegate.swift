@@ -9,8 +9,8 @@
 import Foundation
 
 protocol ItemControllerDelegate: class {
+    func selectItem(index: Int)
     func addItem()
-    func editItem(index: Int)
     func removeItem(at index: Int)
     func moveItem(from index: Int, to newIndex: Int)
 }

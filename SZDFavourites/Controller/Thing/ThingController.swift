@@ -10,8 +10,8 @@ import UIKit
 
 class ThingController: UIViewController {
     
-    weak var dataSource: ThingControllerDelegate?
-    weak var delegate: ThingControllerDataSource?
+    weak var dataSource: ThingControllerDataSource?
+    weak var delegate: ThingControllerDelegate?
     
     init() {
         
@@ -29,5 +29,33 @@ class ThingController: UIViewController {
     
     func toggleEdit() {
         
+    }
+}
+
+extension ThingController: ItemControllerDataSource {
+    var numberOfItems: Int {
+        return self.dataSource?.numberOfItems ?? 0
+    }
+    
+    func dataForItem(at index: Int) -> ViewDataItem {
+        return self.dataSource!.dataForItem(at: index)
+    }
+}
+
+extension ThingController: ItemControllerDelegate {
+    func selectItem(index: Int) {
+        // TODO:
+    }
+    
+    func addItem() {
+        // TODO:
+    }
+    
+    func removeItem(at index: Int) {
+        self.delegate?.removeItem(at: index)
+    }
+    
+    func moveItem(from index: Int, to newIndex: Int) {
+        self.delegate?.moveItem(from: index, to: newIndex)
     }
 }

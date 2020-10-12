@@ -13,11 +13,14 @@ class MainController: UIViewController {
     
     let model: Model
     let viewModel: ListViewModel
-    let listController = ListController()
+    let listController: ListController
+    var groupController: GroupController?
+    var thingController: ThingController?
     
     init(model: Model) {
         self.model = model
         self.viewModel = ListViewModel(model: model)
+        self.listController = ListController()
         
         super.init(nibName: nil, bundle: nil)
         
