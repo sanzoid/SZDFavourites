@@ -11,6 +11,6 @@ import Foundation
 protocol ListControllerDataSource: class {
     func numberOfGroups() -> Int
     func numberOfThings(in group: Int) -> Int
-    func dataForThing(at thingIndex: Int, in groupIndex: Int) -> ListThingData
-    func dataForGroup(at index: Int) -> ListGroupData
+    func dataForThing(at thingIndex: Int, in groupIndex: Int) -> DataListThing
+    func dataForGroup(at index: Int) -> DataListGroup
 }

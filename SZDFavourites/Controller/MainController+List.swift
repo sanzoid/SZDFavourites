@@ -15,23 +15,23 @@ extension MainController: ListControllerDataSource {
         return self.viewModel.thingCount(group: group)
     }
     
-    func dataForThing(at thingIndex: Int, in groupIndex: Int) -> ListThingData {
+    func dataForThing(at thingIndex: Int, in groupIndex: Int) -> DataListThing {
         let thing = self.viewModel.thing(at: (groupIndex, thingIndex))
-        let data = ListThingData(name: thing.name,
+        let data = DataListThing(name: thing.name,
                                  topItemName: thing.topItem()?.name,
                                  topItemImage: thing.topItem()?.image)
         return data
     }
     
-    func dataForGroup(at index: Int) -> ListGroupData {
+    func dataForGroup(at index: Int) -> DataListGroup {
         let group = self.viewModel.group(at: index)
-        let data = ListGroupData(name: group.name)
+        let data = DataListGroup(name: group.name)
         return data
     }
 }
 
 extension MainController: ListControllerDelegate {
-    func move(from index: ThingIndex, to newIndex: ThingIndex) {
+    func moveThing(from index: ThingIndex, to newIndex: ThingIndex) {
         self.viewModel.move(thing: index, to: newIndex)
     }
     

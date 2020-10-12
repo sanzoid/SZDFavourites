@@ -47,13 +47,13 @@ class ListController: UIViewController {
 }
 
 extension ListController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource?.numberOfThings(in: section) ?? 0
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.dataSource?.numberOfGroups() ?? 0
     }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.dataSource?.numberOfThings(in: section) ?? 0
+    }    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
@@ -85,7 +85,7 @@ extension ListController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let index = ThingIndex(sourceIndexPath.section, sourceIndexPath.row)
         let newIndex = ThingIndex(destinationIndexPath.section, destinationIndexPath.row)
-        self.delegate?.move(from: index, to: newIndex)
+        self.delegate?.moveThing(from: index, to: newIndex)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

@@ -1,5 +1,5 @@
 //
-//  ListDataModel.swift
+//  DataListModel.swift
 //  SZDFavourites
 //
 //  Created by Sandy House on 2020-10-12.
@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-struct ListThingData {
+struct DataListThing {
     var name: String
     var topItemName: String?
     var topItemImage: UIImage?
 }
 
-struct ListGroupData {
+struct DataListGroup {
     var name: String
 }

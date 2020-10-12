@@ -114,6 +114,11 @@ class ListViewModel {
         return nil
     }
     
+    func move(group index: Int, to newIndex: Int) {
+        self.model.move(group: index, to: newIndex)
+        self.save()
+    }
+    
     func edit(group name: GroupName, with newName: GroupName) -> ListError? {
         if let error = self.validateGroup(name: newName) {
             return error
