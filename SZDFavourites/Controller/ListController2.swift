@@ -59,7 +59,7 @@ class ListController2: UIViewController {
     }
     
     // setup
-    func setup() {
+    private func setup() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
