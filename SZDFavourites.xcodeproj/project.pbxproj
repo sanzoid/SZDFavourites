@@ -10,7 +10,6 @@
 		5A2FC618251E432B00002DBC /* Thing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC617251E432B00002DBC /* Thing.swift */; };
 		5A2FC61A251E434A00002DBC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC619251E434A00002DBC /* Group.swift */; };
 		5A2FC61C251E436C00002DBC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC61B251E436C00002DBC /* Item.swift */; };
-		5A2FC620251E49C400002DBC /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC61F251E49C400002DBC /* ListController.swift */; };
 		5A2FC623251E4B2A00002DBC /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC622251E4B2A00002DBC /* Color.swift */; };
 		5A2FC625251E4B3800002DBC /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC624251E4B3800002DBC /* Style.swift */; };
 		5A2FC627251E4B4A00002DBC /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC626251E4B4A00002DBC /* Asset.swift */; };
@@ -30,9 +29,16 @@
 		5A2FC647252DFFF100002DBC /* ThingMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC646252DFFF100002DBC /* ThingMapTests.swift */; };
 		5A2FC649252E08AF00002DBC /* GroupListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC648252E08AF00002DBC /* GroupListTests.swift */; };
 		5A2FC64B252F5EF300002DBC /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC64A252F5EF300002DBC /* ModelTests.swift */; };
-		5A2FC64D2531048700002DBC /* ListController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC64C2531048700002DBC /* ListController2.swift */; };
 		5A2FC64F2531F7B500002DBC /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC64E2531F7B500002DBC /* MainController.swift */; };
 		5A2FC6512532053100002DBC /* MainController+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC6502532053100002DBC /* MainController+List.swift */; };
+		5A2FC6532534BFA700002DBC /* GroupCountroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC6522534BFA700002DBC /* GroupCountroller.swift */; };
+		5A2FC6562534C0BA00002DBC /* ListControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC6552534C0BA00002DBC /* ListControllerDataSource.swift */; };
+		5A2FC6582534C0C600002DBC /* ListControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC6572534C0C600002DBC /* ListControllerDelegate.swift */; };
+		5A2FC65A2534C0EE00002DBC /* ListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC6592534C0EE00002DBC /* ListDataModel.swift */; };
+		5A2FC65C2534C10A00002DBC /* ListTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC65B2534C10A00002DBC /* ListTableCell.swift */; };
+		5A2FC65E2534C11900002DBC /* ListTableGroupHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC65D2534C11900002DBC /* ListTableGroupHeader.swift */; };
+		5A670C692534C2E500C769D3 /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C682534C2E400C769D3 /* ListController.swift */; };
+		5A670C6B2534C2ED00C769D3 /* ListControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C6A2534C2ED00C769D3 /* ListControllerOld.swift */; };
 		5AA479B1251BDE76004415DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B0251BDE76004415DC /* AppDelegate.swift */; };
 		5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B2251BDE76004415DC /* SceneDelegate.swift */; };
 		5AA479BA251BDE79004415DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AA479B9251BDE79004415DC /* Assets.xcassets */; };
@@ -58,7 +64,6 @@
 		5A2FC617251E432B00002DBC /* Thing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thing.swift; sourceTree = "<group>"; };
 		5A2FC619251E434A00002DBC /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		5A2FC61B251E436C00002DBC /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		5A2FC61F251E49C400002DBC /* ListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
 		5A2FC622251E4B2A00002DBC /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		5A2FC624251E4B3800002DBC /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		5A2FC626251E4B4A00002DBC /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
@@ -78,9 +83,16 @@
 		5A2FC646252DFFF100002DBC /* ThingMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingMapTests.swift; sourceTree = "<group>"; };
 		5A2FC648252E08AF00002DBC /* GroupListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTests.swift; sourceTree = "<group>"; };
 		5A2FC64A252F5EF300002DBC /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
-		5A2FC64C2531048700002DBC /* ListController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListController2.swift; sourceTree = "<group>"; };
 		5A2FC64E2531F7B500002DBC /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		5A2FC6502532053100002DBC /* MainController+List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainController+List.swift"; sourceTree = "<group>"; };
+		5A2FC6522534BFA700002DBC /* GroupCountroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCountroller.swift; sourceTree = "<group>"; };
+		5A2FC6552534C0BA00002DBC /* ListControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListControllerDataSource.swift; sourceTree = "<group>"; };
+		5A2FC6572534C0C600002DBC /* ListControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListControllerDelegate.swift; sourceTree = "<group>"; };
+		5A2FC6592534C0EE00002DBC /* ListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDataModel.swift; sourceTree = "<group>"; };
+		5A2FC65B2534C10A00002DBC /* ListTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableCell.swift; sourceTree = "<group>"; };
+		5A2FC65D2534C11900002DBC /* ListTableGroupHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableGroupHeader.swift; sourceTree = "<group>"; };
+		5A670C682534C2E400C769D3 /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
+		5A670C6A2534C2ED00C769D3 /* ListControllerOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListControllerOld.swift; sourceTree = "<group>"; };
 		5AA479AD251BDE76004415DC /* SZDFavourites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SZDFavourites.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AA479B0251BDE76004415DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5AA479B2251BDE76004415DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -146,10 +158,11 @@
 			children = (
 				5A2FC64E2531F7B500002DBC /* MainController.swift */,
 				5A2FC6502532053100002DBC /* MainController+List.swift */,
-				5A2FC61F251E49C400002DBC /* ListController.swift */,
+				5A2FC6542534C09B00002DBC /* ListController */,
 				5A2FC634251E8F7800002DBC /* ThingController.swift */,
+				5A670C6A2534C2ED00C769D3 /* ListControllerOld.swift */,
 				5A2FC63E2528B89200002DBC /* ItemListController.swift */,
-				5A2FC64C2531048700002DBC /* ListController2.swift */,
+				5A2FC6522534BFA700002DBC /* GroupCountroller.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -181,6 +194,19 @@
 				5A2FC62B251E4E4800002DBC /* ListViewModel.swift */,
 			);
 			path = "View Model";
+			sourceTree = "<group>";
+		};
+		5A2FC6542534C09B00002DBC /* ListController */ = {
+			isa = PBXGroup;
+			children = (
+				5A670C682534C2E400C769D3 /* ListController.swift */,
+				5A2FC6552534C0BA00002DBC /* ListControllerDataSource.swift */,
+				5A2FC6572534C0C600002DBC /* ListControllerDelegate.swift */,
+				5A2FC6592534C0EE00002DBC /* ListDataModel.swift */,
+				5A2FC65B2534C10A00002DBC /* ListTableCell.swift */,
+				5A2FC65D2534C11900002DBC /* ListTableGroupHeader.swift */,
+			);
+			path = ListController;
 			sourceTree = "<group>";
 		};
 		5A77EC43C233556EB6A5E653 /* Frameworks */ = {
@@ -420,23 +446,29 @@
 			files = (
 				5A2FC6512532053100002DBC /* MainController+List.swift in Sources */,
 				5A2FC627251E4B4A00002DBC /* Asset.swift in Sources */,
+				5A670C692534C2E500C769D3 /* ListController.swift in Sources */,
 				5A2FC64F2531F7B500002DBC /* MainController.swift in Sources */,
+				5A2FC65E2534C11900002DBC /* ListTableGroupHeader.swift in Sources */,
+				5A2FC6582534C0C600002DBC /* ListControllerDelegate.swift in Sources */,
 				5A2FC63725221EFF00002DBC /* ThingMap.swift in Sources */,
 				5A2FC63F2528B89200002DBC /* ItemListController.swift in Sources */,
 				5A2FC63D2528B82700002DBC /* ItemListTableView.swift in Sources */,
+				5A670C6B2534C2ED00C769D3 /* ListControllerOld.swift in Sources */,
 				5A2FC618251E432B00002DBC /* Thing.swift in Sources */,
 				5A2FC62C251E4E4800002DBC /* ListViewModel.swift in Sources */,
-				5A2FC620251E49C400002DBC /* ListController.swift in Sources */,
 				5A2FC62A251E4DBB00002DBC /* ListTableView.swift in Sources */,
 				5A2FC623251E4B2A00002DBC /* Color.swift in Sources */,
+				5A2FC6532534BFA700002DBC /* GroupCountroller.swift in Sources */,
 				5AA479B1251BDE76004415DC /* AppDelegate.swift in Sources */,
-				5A2FC64D2531048700002DBC /* ListController2.swift in Sources */,
 				5A2FC62E251E4E9900002DBC /* GroupList.swift in Sources */,
 				5A2FC61A251E434A00002DBC /* Group.swift in Sources */,
 				5A2FC63B2524C55700002DBC /* ListTableHeader.swift in Sources */,
 				5A2FC61C251E436C00002DBC /* Item.swift in Sources */,
+				5A2FC65C2534C10A00002DBC /* ListTableCell.swift in Sources */,
 				5A2FC633251E8F5400002DBC /* ThingView.swift in Sources */,
 				5A2FC635251E8F7800002DBC /* ThingController.swift in Sources */,
+				5A2FC65A2534C0EE00002DBC /* ListDataModel.swift in Sources */,
+				5A2FC6562534C0BA00002DBC /* ListControllerDataSource.swift in Sources */,
 				5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */,
 				5A2FC625251E4B3800002DBC /* Style.swift in Sources */,
 				5A2FC6392522214A00002DBC /* Model.swift in Sources */,

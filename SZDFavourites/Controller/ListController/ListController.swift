@@ -1,5 +1,5 @@
 //
-//  ListController2.swift
+//  ListController.swift
 //  SZDFavourites
 //
 //  Created by Sandy House on 2020-10-09.
@@ -8,42 +8,10 @@
 
 import UIKit
 
-class ListTableGroupHeader2 {
-    // view for a list table group header
-}
-
-class ListCell: UITableViewCell {
-    // view for a list table thing cell
-}
-
-struct ListThingData {
-    var name: String
-    var topItemName: String?
-    var topItemImage: UIImage?
-}
-
-struct ListGroupData {
-    var name: String
-}
-
-protocol ListControllerDataSource2: class {
-    func numberOfGroups() -> Int
-    func numberOfThings(in group: Int) -> Int
-    func dataForThing(at thingIndex: Int, in groupIndex: Int) -> ListThingData
-    func dataForGroup(at index: Int) -> ListGroupData
-}
-
-protocol ListControllerDelegate2: class {
-    func move(from index: ThingIndex, to newIndex: ThingIndex)
-    func selectThing(at index: ThingIndex)
-    func addThing()
-    func removeThing(at index: ThingIndex)
-}
-
-class ListController2: UIViewController {
+class ListController: UIViewController {
     
-    weak var dataSource: ListControllerDataSource2?
-    weak var delegate: ListControllerDelegate2?
+    weak var dataSource: ListControllerDataSource?
+    weak var delegate: ListControllerDelegate?
     var tableView: UITableView
     
     init() {
@@ -78,7 +46,7 @@ class ListController2: UIViewController {
     // actions
 }
 
-extension ListController2: UITableViewDataSource {
+extension ListController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource?.numberOfThings(in: section) ?? 0
     }
@@ -103,7 +71,7 @@ extension ListController2: UITableViewDataSource {
     }
 }
 
-extension ListController2: UITableViewDelegate {
+extension ListController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: Make ThingIndex a struct
         let index = ThingIndex(indexPath.section, indexPath.row)

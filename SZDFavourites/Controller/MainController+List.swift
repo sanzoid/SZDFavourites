@@ -6,7 +6,7 @@
 //  Copyright © 2020 sandzapps. All rights reserved.
 //
 
-extension MainController: ListControllerDataSource2 {
+extension MainController: ListControllerDataSource {
     func numberOfGroups() -> Int {
         return self.viewModel.groupCount()
     }
@@ -30,7 +30,7 @@ extension MainController: ListControllerDataSource2 {
     }
 }
 
-extension MainController: ListControllerDelegate2 {
+extension MainController: ListControllerDelegate {
     func move(from index: ThingIndex, to newIndex: ThingIndex) {
         self.viewModel.move(thing: index, to: newIndex)
     }

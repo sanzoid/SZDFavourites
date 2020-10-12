@@ -25,7 +25,7 @@ import UIKit
     - Outside: Pass in a Model object, intended to be the persisted model across app sessions.
     - Inside: Present views, handle user interactions, tell viewModel to update model.
  */
-class ListController: UIViewController {
+class ListControllerOld: UIViewController {
     
     let model: Model
     let viewModel: ListViewModel
@@ -191,7 +191,7 @@ class ListController: UIViewController {
     }
 }
 
-extension ListController: ThingControllerDataSource {
+extension ListControllerOld: ThingControllerDataSource {
     var numberOfItems: Int? {
         return self.viewModel.selectedThing?.itemCount()
     }
@@ -205,7 +205,7 @@ extension ListController: ThingControllerDataSource {
     }
 }
 
-extension ListController: ThingControllerDelegate {
+extension ListControllerOld: ThingControllerDelegate {
     func shouldEdit() {
         guard let thing = self.viewModel.selectedThing else { return }
         self.editThing(thing)
@@ -242,7 +242,7 @@ extension ListController: ThingControllerDelegate {
     }
 }
 
-extension ListController: UITableViewDataSource {
+extension ListControllerOld: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // TODO: use withIdentifier:for: when registering custom cell 
         let cell = tableView.dequeueReusableCell(withIdentifier: self.tableView.reuseIdentifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: self.tableView.reuseIdentifier)
@@ -277,7 +277,7 @@ extension ListController: UITableViewDataSource {
     }
 }
 
-extension ListController: UITableViewDelegate {
+extension ListControllerOld: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.presentThingController(index: ThingIndex(indexPath.section, indexPath.row))
     }
@@ -293,7 +293,7 @@ extension ListController: UITableViewDelegate {
     }
 }
 
-extension ListController: ListTableHeaderDelegate {
+extension ListControllerOld: ListTableHeaderDelegate {
     func didPressEdit(section: Int) {
         self.presentEditGroupController(isAdd: false, group: self.viewModel.group(at: section))
     }

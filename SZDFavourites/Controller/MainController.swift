@@ -13,7 +13,7 @@ class MainController: UIViewController {
     
     let model: Model
     let viewModel: ListViewModel
-    let listController = ListController2()
+    let listController = ListController()
     
     init(model: Model) {
         self.model = model
