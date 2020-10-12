@@ -180,7 +180,7 @@ class ListControllerOld: UIViewController {
         // TODO: probably don't need thing here
         self.viewModel.selectedThing = thing 
         
-        let controller = ThingController()
+        let controller = ThingController2()
         controller.dataSource = self
         controller.delegate = self
         
@@ -191,7 +191,7 @@ class ListControllerOld: UIViewController {
     }
 }
 
-extension ListControllerOld: ThingControllerDataSource {
+extension ListControllerOld: ThingController2DataSource {
     var numberOfItems: Int? {
         return self.viewModel.selectedThing?.itemCount()
     }
@@ -205,7 +205,7 @@ extension ListControllerOld: ThingControllerDataSource {
     }
 }
 
-extension ListControllerOld: ThingControllerDelegate {
+extension ListControllerOld: ThingController2Delegate {
     func shouldEdit() {
         guard let thing = self.viewModel.selectedThing else { return }
         self.editThing(thing)

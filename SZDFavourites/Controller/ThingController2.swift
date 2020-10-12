@@ -11,13 +11,13 @@
 import UIKit
 import SZDCommons
 
-protocol ThingControllerDataSource: class {
+protocol ThingController2DataSource: class {
     var numberOfItems: Int? { get }
     func name() -> ThingName?
     func item(at index: Int) -> Item?
 }
 
-protocol ThingControllerDelegate: class {
+protocol ThingController2Delegate: class {
     func shouldEdit()
     func shouldDelete()
     func shouldAddItem(name: String)
@@ -33,10 +33,10 @@ protocol ThingControllerDelegate: class {
    - Outside: Set dataSource and delegate and implement methods to pass in data and handle actions.
    - Inside: Present views, handle user interactions, tell delegate to make updates.
 */
-class ThingController: UIViewController {
+class ThingController2: UIViewController {
     
-    weak var dataSource: ThingControllerDataSource?
-    weak var delegate: ThingControllerDelegate?
+    weak var dataSource: ThingController2DataSource?
+    weak var delegate: ThingController2Delegate?
     
     let thingView: ThingView
     
@@ -161,20 +161,20 @@ class ThingController: UIViewController {
     }
 }
 
-extension ThingController: UIGestureRecognizerDelegate {
+extension ThingController2: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         // limit only to the view with the gesture recognizer and not its subviews
         return touch.view == gestureRecognizer.view
     }
 }
 
-extension ThingController: ThingViewDataSource {
+extension ThingController2: ThingViewDataSource {
     var name: String? {
         return self.dataSource?.name()
     }
 }
 
-extension ThingController: ThingViewDelegate {
+extension ThingController2: ThingViewDelegate {
     func didEdit() {
         self.edit()
     }
@@ -188,7 +188,7 @@ extension ThingController: ThingViewDelegate {
     }
 }
 
-extension ThingController: ItemListDataSource {
+extension ThingController2: ItemListDataSource {
     var numberOfItems: Int? {
         return self.dataSource?.numberOfItems
     }
@@ -198,7 +198,7 @@ extension ThingController: ItemListDataSource {
     }
 }
 
-extension ThingController: ItemListDelegate {
+extension ThingController2: ItemListDelegate {
     func didPressAddItem() {
         self.editItem(isAdd: true)
     }

@@ -17,7 +17,7 @@
 		5A2FC62C251E4E4800002DBC /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC62B251E4E4800002DBC /* ListViewModel.swift */; };
 		5A2FC62E251E4E9900002DBC /* GroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC62D251E4E9900002DBC /* GroupList.swift */; };
 		5A2FC633251E8F5400002DBC /* ThingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC632251E8F5400002DBC /* ThingView.swift */; };
-		5A2FC635251E8F7800002DBC /* ThingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC634251E8F7800002DBC /* ThingController.swift */; };
+		5A2FC635251E8F7800002DBC /* ThingController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC634251E8F7800002DBC /* ThingController2.swift */; };
 		5A2FC63725221EFF00002DBC /* ThingMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC63625221EFF00002DBC /* ThingMap.swift */; };
 		5A2FC6392522214A00002DBC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC6382522214A00002DBC /* Model.swift */; };
 		5A2FC63B2524C55700002DBC /* ListTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC63A2524C55700002DBC /* ListTableHeader.swift */; };
@@ -75,7 +75,7 @@
 		5A2FC62B251E4E4800002DBC /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		5A2FC62D251E4E9900002DBC /* GroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupList.swift; sourceTree = "<group>"; };
 		5A2FC632251E8F5400002DBC /* ThingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingView.swift; sourceTree = "<group>"; };
-		5A2FC634251E8F7800002DBC /* ThingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingController.swift; sourceTree = "<group>"; };
+		5A2FC634251E8F7800002DBC /* ThingController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingController2.swift; sourceTree = "<group>"; };
 		5A2FC63625221EFF00002DBC /* ThingMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingMap.swift; sourceTree = "<group>"; };
 		5A2FC6382522214A00002DBC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		5A2FC63A2524C55700002DBC /* ListTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableHeader.swift; sourceTree = "<group>"; };
@@ -169,7 +169,8 @@
 				5A2FC6502532053100002DBC /* MainController+List.swift */,
 				5A670C6C2534C32200C769D3 /* Group */,
 				5A2FC6542534C09B00002DBC /* List */,
-				5A2FC634251E8F7800002DBC /* ThingController.swift */,
+				5A670C762534CA3000C769D3 /* Thing */,
+				5A2FC634251E8F7800002DBC /* ThingController2.swift */,
 				5A670C6A2534C2ED00C769D3 /* ListControllerOld.swift */,
 				5A2FC63E2528B89200002DBC /* ItemListController.swift */,
 			);
@@ -227,6 +228,13 @@
 				5A670C722534C38100C769D3 /* DataGroupModel.swift */,
 			);
 			path = Group;
+			sourceTree = "<group>";
+		};
+		5A670C762534CA3000C769D3 /* Thing */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Thing;
 			sourceTree = "<group>";
 		};
 		5A77EC43C233556EB6A5E653 /* Frameworks */ = {
@@ -489,7 +497,7 @@
 				5A670C752534C84300C769D3 /* MainController+Group.swift in Sources */,
 				5A2FC65C2534C10A00002DBC /* ListTableCell.swift in Sources */,
 				5A2FC633251E8F5400002DBC /* ThingView.swift in Sources */,
-				5A2FC635251E8F7800002DBC /* ThingController.swift in Sources */,
+				5A2FC635251E8F7800002DBC /* ThingController2.swift in Sources */,
 				5A670C6E2534C34400C769D3 /* GroupControllerDataSource.swift in Sources */,
 				5A2FC65A2534C0EE00002DBC /* DataListModel.swift in Sources */,
 				5A2FC6562534C0BA00002DBC /* ListControllerDataSource.swift in Sources */,
