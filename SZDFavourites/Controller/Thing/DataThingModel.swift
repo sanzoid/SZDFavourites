@@ -1,5 +1,5 @@
 //
-//  GroupDataModel.swift
+//  DataThingModel.swift
 //  SZDFavourites
 //
 //  Created by Sandy House on 2020-10-12.
@@ -7,4 +7,5 @@
 //
 
 import Foundation
+import UIKit
 

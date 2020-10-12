@@ -7,9 +7,9 @@
 //
 
 extension MainController: GroupControllerDataSource {
-    func dataForGroup(at index: Int) -> DataGroup {
+    func dataForGroup(at index: Int) -> ViewDataGroup {
         let group = self.viewModel.group(at: index)
-        let data = DataGroup(name: group.name)
+        let data = ViewDataGroup(name: group.name)
         return data
     }
 }
@@ -25,7 +25,7 @@ extension MainController: GroupControllerDelegate {
     
     func removeGroup(at index: Int) -> Bool {
         if let error = self.viewModel.remove(group: index) {
-            return false 
+            return false
         } else {
             return true
         }

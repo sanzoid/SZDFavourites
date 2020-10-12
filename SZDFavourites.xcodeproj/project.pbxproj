@@ -43,6 +43,14 @@
 		5A670C712534C35900C769D3 /* GroupControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C702534C35900C769D3 /* GroupControllerDelegate.swift */; };
 		5A670C732534C38100C769D3 /* DataGroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C722534C38100C769D3 /* DataGroupModel.swift */; };
 		5A670C752534C84300C769D3 /* MainController+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C742534C84300C769D3 /* MainController+Group.swift */; };
+		5A670C782534CAB100C769D3 /* ThingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C772534CAB100C769D3 /* ThingController.swift */; };
+		5A670C7A2534CAC300C769D3 /* ThingControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C792534CAC300C769D3 /* ThingControllerDataSource.swift */; };
+		5A670C7C2534CAD100C769D3 /* ThingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C7B2534CAD100C769D3 /* ThingControllerDelegate.swift */; };
+		5A670C7E2534CADC00C769D3 /* DataThingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C7D2534CADC00C769D3 /* DataThingModel.swift */; };
+		5A670C812534CCC200C769D3 /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C802534CCC200C769D3 /* ItemController.swift */; };
+		5A670C832534CCE100C769D3 /* ItemControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C822534CCE100C769D3 /* ItemControllerDataSource.swift */; };
+		5A670C852534CCEA00C769D3 /* ItemControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C842534CCEA00C769D3 /* ItemControllerDelegate.swift */; };
+		5A670C882534CD6D00C769D3 /* ViewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C872534CD6D00C769D3 /* ViewDataModel.swift */; };
 		5AA479B1251BDE76004415DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B0251BDE76004415DC /* AppDelegate.swift */; };
 		5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B2251BDE76004415DC /* SceneDelegate.swift */; };
 		5AA479BA251BDE79004415DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AA479B9251BDE79004415DC /* Assets.xcassets */; };
@@ -101,6 +109,14 @@
 		5A670C702534C35900C769D3 /* GroupControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupControllerDelegate.swift; sourceTree = "<group>"; };
 		5A670C722534C38100C769D3 /* DataGroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataGroupModel.swift; sourceTree = "<group>"; };
 		5A670C742534C84300C769D3 /* MainController+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainController+Group.swift"; sourceTree = "<group>"; };
+		5A670C772534CAB100C769D3 /* ThingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingController.swift; sourceTree = "<group>"; };
+		5A670C792534CAC300C769D3 /* ThingControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingControllerDataSource.swift; sourceTree = "<group>"; };
+		5A670C7B2534CAD100C769D3 /* ThingControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingControllerDelegate.swift; sourceTree = "<group>"; };
+		5A670C7D2534CADC00C769D3 /* DataThingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataThingModel.swift; sourceTree = "<group>"; };
+		5A670C802534CCC200C769D3 /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
+		5A670C822534CCE100C769D3 /* ItemControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemControllerDataSource.swift; sourceTree = "<group>"; };
+		5A670C842534CCEA00C769D3 /* ItemControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemControllerDelegate.swift; sourceTree = "<group>"; };
+		5A670C872534CD6D00C769D3 /* ViewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDataModel.swift; sourceTree = "<group>"; };
 		5AA479AD251BDE76004415DC /* SZDFavourites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SZDFavourites.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AA479B0251BDE76004415DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5AA479B2251BDE76004415DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -201,6 +217,7 @@
 		5A2FC631251E510400002DBC /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				5A670C862534CD3B00C769D3 /* Data */,
 				5A2FC62B251E4E4800002DBC /* ListViewModel.swift */,
 			);
 			path = "View Model";
@@ -233,8 +250,31 @@
 		5A670C762534CA3000C769D3 /* Thing */ = {
 			isa = PBXGroup;
 			children = (
+				5A670C772534CAB100C769D3 /* ThingController.swift */,
+				5A670C792534CAC300C769D3 /* ThingControllerDataSource.swift */,
+				5A670C7B2534CAD100C769D3 /* ThingControllerDelegate.swift */,
+				5A670C7D2534CADC00C769D3 /* DataThingModel.swift */,
+				5A670C7F2534CCB200C769D3 /* Item */,
 			);
 			path = Thing;
+			sourceTree = "<group>";
+		};
+		5A670C7F2534CCB200C769D3 /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				5A670C802534CCC200C769D3 /* ItemController.swift */,
+				5A670C822534CCE100C769D3 /* ItemControllerDataSource.swift */,
+				5A670C842534CCEA00C769D3 /* ItemControllerDelegate.swift */,
+			);
+			path = Item;
+			sourceTree = "<group>";
+		};
+		5A670C862534CD3B00C769D3 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				5A670C872534CD6D00C769D3 /* ViewDataModel.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		5A77EC43C233556EB6A5E653 /* Frameworks */ = {
@@ -474,10 +514,13 @@
 			files = (
 				5A2FC6512532053100002DBC /* MainController+List.swift in Sources */,
 				5A2FC627251E4B4A00002DBC /* Asset.swift in Sources */,
+				5A670C7C2534CAD100C769D3 /* ThingControllerDelegate.swift in Sources */,
 				5A670C732534C38100C769D3 /* DataGroupModel.swift in Sources */,
 				5A670C692534C2E500C769D3 /* ListController.swift in Sources */,
 				5A2FC64F2531F7B500002DBC /* MainController.swift in Sources */,
 				5A2FC65E2534C11900002DBC /* ListTableGroupHeader.swift in Sources */,
+				5A670C812534CCC200C769D3 /* ItemController.swift in Sources */,
+				5A670C782534CAB100C769D3 /* ThingController.swift in Sources */,
 				5A2FC6582534C0C600002DBC /* ListControllerDelegate.swift in Sources */,
 				5A2FC63725221EFF00002DBC /* ThingMap.swift in Sources */,
 				5A2FC63F2528B89200002DBC /* ItemListController.swift in Sources */,
@@ -494,7 +537,10 @@
 				5A2FC61A251E434A00002DBC /* Group.swift in Sources */,
 				5A2FC63B2524C55700002DBC /* ListTableHeader.swift in Sources */,
 				5A2FC61C251E436C00002DBC /* Item.swift in Sources */,
+				5A670C7E2534CADC00C769D3 /* DataThingModel.swift in Sources */,
+				5A670C852534CCEA00C769D3 /* ItemControllerDelegate.swift in Sources */,
 				5A670C752534C84300C769D3 /* MainController+Group.swift in Sources */,
+				5A670C882534CD6D00C769D3 /* ViewDataModel.swift in Sources */,
 				5A2FC65C2534C10A00002DBC /* ListTableCell.swift in Sources */,
 				5A2FC633251E8F5400002DBC /* ThingView.swift in Sources */,
 				5A2FC635251E8F7800002DBC /* ThingController2.swift in Sources */,
@@ -504,6 +550,8 @@
 				5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */,
 				5A2FC625251E4B3800002DBC /* Style.swift in Sources */,
 				5A2FC6392522214A00002DBC /* Model.swift in Sources */,
+				5A670C7A2534CAC300C769D3 /* ThingControllerDataSource.swift in Sources */,
+				5A670C832534CCE100C769D3 /* ItemControllerDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
