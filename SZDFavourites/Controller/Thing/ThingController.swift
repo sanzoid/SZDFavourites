@@ -17,10 +17,48 @@ class ThingController: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
+        self.setup()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setup() {
+        self.view.backgroundColor = UIColor.black.alpha(0.1)
+        
+        // view init
+        let containerView = UIView()
+        let stackView: UIStackView = {
+            let view = UIStackView()
+            view.axis = .vertical
+            view.distribution = .equalSpacing
+            view.alignment = .fill
+            return view
+        }()
+        let groupField = TextPicker()
+        let thingField = TextField()
+        
+        // view hierarchy
+        self.view.addSubviews(containerView)
+        containerView.addSubviews(stackView)
+        stackView.addArrangedSubview(groupField)
+        stackView.addArrangedSubview(thingField)
+        
+        // view constraints
+        containerView.constrainTo(view: self.view, on: .center)
+        containerView.constrainToHeight(constant: 600)
+        containerView.constrainToHorizontal(of: self.view, axis: .both, constant: 0)
+        
+        stackView.constrainTo(view: containerView, on: .horizontal, constant: 50)
+        stackView.constrainToVertical(of: containerView, axis: .top, constant: 50)
+        
+        // view values
+        containerView.backgroundColor = UIColor.white.alpha(0.6)
+        groupField.label.text = "Group"
+        thingField.textField.text = "Thing"
+        groupField.backgroundColor = .cyan
+        thingField.backgroundColor = .purple
     }
     
     func refresh() {

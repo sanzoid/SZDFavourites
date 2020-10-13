@@ -32,7 +32,8 @@ extension MainController: ListControllerDelegate {
     }
     
     func selectThing(at index: ThingIndex) {
-        self.editThing(at: index)
+//        self.editThing(at: index)
+        self.presentThingController(at: index)
     }
     
     func addThing() {

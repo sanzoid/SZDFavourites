@@ -11,14 +11,12 @@ import UIKit
 
 class MainController: UIViewController {
     
-    let model: Model
     let viewModel: ListViewModel
     let listController: ListController
     var groupController: GroupController?
     var thingController: ThingController?
     
     init(model: Model) {
-        self.model = model
         self.viewModel = ListViewModel(model: model)
         self.listController = ListController()
         
@@ -60,8 +58,21 @@ class MainController: UIViewController {
     }
     
     func editThing(at index: ThingIndex) {
-        let thing = self.model.thing(at: index)
+        let thing = self.viewModel.thing(at: index)
         self.presentEditThingController(isAdd: false, thing: thing)
+    }
+    
+    func presentThingController(at index: ThingIndex) {
+        let thing = self.viewModel.thing(at: index)
+        self.viewModel.selectedThing = thing
+        
+        let thingController = ThingController()
+        thingController.delegate = self
+        thingController.dataSource = self
+        
+        self.thingController = thingController
+        
+        self.present(thingController, animated: true, completion: nil)
     }
 }
 
