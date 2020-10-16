@@ -11,6 +11,7 @@ import Foundation
 protocol ThingControllerDelegate: class {
     // thing
     func editThing()
+    func editThing(name: String)
     func removeThing()
     
     // item

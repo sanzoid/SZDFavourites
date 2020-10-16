@@ -9,8 +9,8 @@
 
 import UIKit
 
-protocol TextFieldDelegate {
-    
+protocol TextFieldDelegate: class {
+    func didEndEditing(text: String?)
 }
 
 enum TextFieldMode {
@@ -19,6 +19,8 @@ enum TextFieldMode {
 }
 
 class TextField: UIView {
+    
+    weak var delegate: TextFieldDelegate?
     
     var mode: TextFieldMode
     var textField = UITextField()
@@ -40,9 +42,30 @@ class TextField: UIView {
         
         self.textField.constrainToHeight(constant: 50)
         self.textField.constrainTo(view: self, on: .all)
+        
+        // textfield properties
+        self.textField.delegate = self
+        self.textField.returnKeyType = .done
     }
     
     func setMode(_ mode: TextFieldMode) {
         self.mode = mode 
+    }
+    
+    func setText(_ text: String?, placeholder: String?) {
+        self.textField.placeholder = placeholder
+        self.textField.text = text
+    }
+}
+
+extension TextField: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // dismiss keyboard on return
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.delegate?.didEndEditing(text: textField.text)
     }
 }

@@ -13,8 +13,10 @@ class ThingController: UIViewController {
     weak var dataSource: ThingControllerDataSource?
     weak var delegate: ThingControllerDelegate?
     
+    let groupField = TextPicker()
+    let thingField = TextField()
+    
     init() {
-        
         super.init(nibName: nil, bundle: nil)
         
         self.setup()
@@ -25,6 +27,8 @@ class ThingController: UIViewController {
     }
     
     func setup() {
+        self.thingField.delegate = self
+        
         self.view.backgroundColor = UIColor.black.alpha(0.1)
         
         // view init
@@ -36,8 +40,6 @@ class ThingController: UIViewController {
             view.alignment = .fill
             return view
         }()
-        let groupField = TextPicker()
-        let thingField = TextField()
         
         // view hierarchy
         self.view.addSubviews(containerView)
@@ -62,7 +64,9 @@ class ThingController: UIViewController {
     }
     
     func refresh() {
-        
+        if let thing = self.dataSource?.dataForThing() {
+            self.thingField.setText(thing.name, placeholder: thing.name)
+        }
     }
     
     func toggleEdit() {
@@ -95,5 +99,15 @@ extension ThingController: ItemControllerDelegate {
     
     func moveItem(from index: Int, to newIndex: Int) {
         self.delegate?.moveItem(from: index, to: newIndex)
+    }
+}
+
+extension ThingController: TextFieldDelegate {
+    func didEndEditing(text: String?) {
+        if let text = text, !text.isEmpty {
+            self.delegate?.editThing(name: text)
+        } else { // if empty, reset
+            self.refresh()
+        }
     }
 }

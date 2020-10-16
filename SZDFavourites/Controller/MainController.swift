@@ -70,6 +70,8 @@ class MainController: UIViewController {
         thingController.delegate = self
         thingController.dataSource = self
         
+        thingController.refresh()
+        
         self.thingController = thingController
         
         self.present(thingController, animated: true, completion: nil)
