@@ -106,7 +106,7 @@ extension ThingController: ItemControllerDelegate {
 }
 
 extension ThingController: TextFieldDelegate {
-    func didEndEditing(text: String?) {
+    func didEndEditing(for textField: TextField, text: String?) {
         if let text = text, !text.isEmpty {
             self.delegate?.editThing(name: text)
         } else { // if empty, reset
@@ -125,7 +125,7 @@ extension ThingController: TextPickerDataSource {
         return self.dataSource?.numberOfGroups(for: self) ?? 0
     }
     
-    func options(for textPicker: TextPicker, in component: Int, at row: Int) -> String {
+    func option(for textPicker: TextPicker, in component: Int, at row: Int) -> String {
         // groups
         if let group = self.dataSource?.dataForGroup(for: self, at: row) {
             return group.name

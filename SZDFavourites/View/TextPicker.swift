@@ -12,7 +12,7 @@ import UIKit
 protocol TextPickerDataSource: class {
     func numberOfComponents(for textPicker: TextPicker) -> Int
     func numberOfRows(for textPicker: TextPicker, in component: Int) -> Int
-    func options(for textPicker: TextPicker, in component: Int, at row: Int) -> String
+    func option(for textPicker: TextPicker, in component: Int, at row: Int) -> String
 }
 
 protocol TextPickerDelegate: class {
@@ -83,7 +83,7 @@ class TextPicker: UIView {
     }
     
     func setSelected(in component: Int, row: Int) {
-        if let text = self.dataSource?.options(for: self, in: component, at: row) {
+        if let text = self.dataSource?.option(for: self, in: component, at: row) {
             self.textField.text = text
             self.picker.selectRow(row, inComponent: component, animated: true)
         }
@@ -109,13 +109,13 @@ extension TextPicker: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.dataSource?.options(for: self, in: component, at: row) ?? ""
+        return self.dataSource?.option(for: self, in: component, at: row) ?? ""
     }
 }
 
 extension TextPicker: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if let string = self.dataSource?.options(for: self, in: component, at: row) {
+        if let string = self.dataSource?.option(for: self, in: component, at: row) {
             self.textField.text = string
         }
     }
