@@ -238,6 +238,8 @@ final class Model: Codable {
         let model = Model(groupList: groupList, thingMap: thingMap)
         
         model.add(thing: "Poop")
+        model.add(item: "hard", to: "Poop")
+        model.add(item: "soft", to: "Poop")
         model.add(thing: "Food")
         
         return model

@@ -15,6 +15,7 @@ class ThingController: UIViewController {
     
     let groupField = TextPicker()
     let thingField = TextField()
+    let itemController = ItemController()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -30,6 +31,8 @@ class ThingController: UIViewController {
         self.thingField.delegate = self
         self.groupField.dataSource = self
         self.groupField.delegate = self
+        self.itemController.dataSource = self
+        self.itemController.delegate = self 
         
         self.view.backgroundColor = UIColor.black.alpha(0.1)
         
@@ -48,6 +51,7 @@ class ThingController: UIViewController {
         containerView.addSubviews(stackView)
         stackView.addArrangedSubview(groupField)
         stackView.addArrangedSubview(thingField)
+        stackView.addArrangedSubview(itemController.tableView)
         
         // view constraints
         containerView.constrainTo(view: self.view, on: .center)

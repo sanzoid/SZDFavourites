@@ -30,7 +30,10 @@ class ItemController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.view.addSubviews(self.tableView)
-        self.tableView.constrainTo(view: self.view, on: .all)
+//        self.tableView.constrainTo(view: self.view, on: .all)
+        self.tableView.constrainToHeight(constant: 300)
+        
+        self.tableView.backgroundColor = UIColor.yellow.alpha(0.2)
     }
     
     func refresh() {
@@ -63,6 +66,10 @@ extension ItemController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
+    }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return "Add"
     }
 }
 
