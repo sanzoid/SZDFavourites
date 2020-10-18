@@ -28,6 +28,8 @@ class ThingController: UIViewController {
     
     func setup() {
         self.thingField.delegate = self
+        self.groupField.dataSource = self
+        self.groupField.delegate = self
         
         self.view.backgroundColor = UIColor.black.alpha(0.1)
         
@@ -57,13 +59,14 @@ class ThingController: UIViewController {
         
         // view values
         containerView.backgroundColor = UIColor.white.alpha(0.6)
-        groupField.label.text = "Group"
-        thingField.textField.text = "Thing"
         groupField.backgroundColor = .cyan
         thingField.backgroundColor = .purple
     }
     
     func refresh() {
+        if let groupIndex = self.dataSource?.group(for: self) {
+            self.groupField.setSelected(in: 0, row: groupIndex)
+        }
         if let thing = self.dataSource?.dataForThing() {
             self.thingField.setText(thing.name, placeholder: thing.name)
         }
@@ -109,5 +112,32 @@ extension ThingController: TextFieldDelegate {
         } else { // if empty, reset
             self.refresh()
         }
+    }
+}
+
+extension ThingController: TextPickerDataSource {
+    func numberOfComponents(for textPicker: TextPicker) -> Int {
+        return 1
+    }
+    
+    func numberOfRows(for textPicker: TextPicker, in component: Int) -> Int {
+        // number of groups
+        return self.dataSource?.numberOfGroups(for: self) ?? 0
+    }
+    
+    func options(for textPicker: TextPicker, in component: Int, at row: Int) -> String {
+        // groups
+        if let group = self.dataSource?.dataForGroup(for: self, at: row) {
+            return group.name
+        }
+        return ""
+    }
+}
+
+extension ThingController: TextPickerDelegate {
+    func didEndEditing(for textPicker: TextPicker, oldText: String?, text: String?) {
+        guard let oldText = oldText, let text = text else { return }
+        guard oldText != text else { return }
+        self.delegate?.moveThing(from: oldText, to: text)
     }
 }

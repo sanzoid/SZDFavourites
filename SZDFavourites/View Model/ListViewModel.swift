@@ -130,6 +130,10 @@ class ListViewModel {
         return nil
     }
     
+    func indexOfThing(name: ThingName) -> ThingIndex? {
+        return self.model.indexOfThing(name: name)!
+    }
+    
     // MARK: Thing
     
     func thingCount() -> Int {
@@ -181,6 +185,11 @@ class ListViewModel {
     
     func move(thing index: ThingIndex, to newIndex: ThingIndex) {
         self.model.move(thing: index, to: newIndex)
+        self.save()
+    }
+    
+    func move(thing name: ThingName, from group: GroupName, to newGroup: ThingName) {
+        self.model.move(thing: name, from: group, to: newGroup)
         self.save()
     }
     

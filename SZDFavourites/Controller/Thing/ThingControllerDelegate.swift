@@ -9,6 +9,10 @@
 import Foundation
 
 protocol ThingControllerDelegate: class {
+    // group
+    func moveThing(from group: String, to newGroup: String)
+    
+    
     // thing
     func editThing()
     func editThing(name: String)

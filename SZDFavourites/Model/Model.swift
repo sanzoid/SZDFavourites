@@ -115,6 +115,11 @@ final class Model: Codable {
         return thing
     }
     
+    // TODO: unit tests
+    func indexOfThing(name: ThingName) -> ThingIndex? {
+        return self.groupList.indexOfThing(name: name)
+    }
+    
     func add(thing name: ThingName) -> ModelError? {
         guard !self.thingExists(name: name) else { return .thingExists }
         

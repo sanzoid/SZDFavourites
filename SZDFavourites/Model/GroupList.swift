@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias ThingIndex = (groupIndex: Int, thingIndex: Int)
+typealias ThingIndex = (group: Int, thing: Int)
 
 /**
     A **GroupList** manages a list of Groups. Groups are expected to be unique, but the class will not provide feedback if not. It is up to the managing class to provide unique groups.
@@ -119,10 +119,10 @@ final class GroupList: Codable {
     }
     
     func thingName(at index: ThingIndex) -> ThingName {
-        return self.groups[index.groupIndex].thing(at: index.thingIndex)
+        return self.groups[index.group].thing(at: index.thing)
     }
     
-    func indexOfThing(name: ThingName) -> (group: Int, thing: Int)? {
+    func indexOfThing(name: ThingName) -> ThingIndex? {
         // find the group it's in, find index in things
         var groupIndex: Int = 0
         var thingIndex: Int? = nil
@@ -136,7 +136,7 @@ final class GroupList: Codable {
         }
         
         if let thingIndex = thingIndex {
-            return (groupIndex, thingIndex)
+            return ThingIndex(groupIndex, thingIndex)
         }
         
         return nil
@@ -160,7 +160,7 @@ final class GroupList: Codable {
     
     func add(thing name: ThingName, to index: ThingIndex) {
         guard !self.thingExists(name: name) else { return }
-        self.groups[index.groupIndex].insert(thing: name, at: index.thingIndex)
+        self.groups[index.group].insert(thing: name, at: index.thing)
     }
     
     @discardableResult
@@ -172,7 +172,7 @@ final class GroupList: Codable {
     }
     
     func remove(thing index: ThingIndex) -> ThingName? {
-        return self.groups[index.groupIndex].remove(thing: index.thingIndex)
+        return self.groups[index.group].remove(thing: index.thing)
     }
     
     func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {

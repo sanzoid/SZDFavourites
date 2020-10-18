@@ -7,8 +7,23 @@
 //
 
 extension MainController: ThingControllerDataSource {
+    func numberOfGroups(for thingController: ThingController) -> Int {
+        return self.viewModel.groupCount()
+    }
+    
     var numberOfItems: Int {
         return self.viewModel.itemCount(for: self.viewModel.selectedThing!.name)
+    }
+    
+    func group(for thingController: ThingController) -> Int {
+        let thing = self.viewModel.selectedThing!
+        let index = self.viewModel.indexOfThing(name: thing.name)!
+        return index.group
+    }
+    
+    func dataForGroup(for thingController: ThingController, at index: Int) -> ViewDataGroup {
+        let group = self.viewModel.group(at: index)
+        return ViewDataGroup(group: group)
     }
     
     func dataForThing() -> ViewDataThing {
@@ -23,6 +38,12 @@ extension MainController: ThingControllerDataSource {
 }
 
 extension MainController: ThingControllerDelegate {
+    func moveThing(from group: String, to newGroup: String) {
+        guard let thing = self.viewModel.selectedThing else { return }
+        self.viewModel.move(thing: thing.name, from: group, to: newGroup)
+        self.listController.refresh()
+    }
+    
     func editThing() {
         // TODO: 
     }
