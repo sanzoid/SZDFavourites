@@ -48,8 +48,9 @@ final class Item: Codable {
         
         self.name = try container.decode(String.self, forKey: .name)
         
-        let imageData = try container.decode(Data.self, forKey: .image)
-        self.image = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(imageData) as? UIImage
+        if let imageData = try? container.decode(Data.self, forKey: .image) {
+            self.image = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(imageData) as? UIImage            
+        }
     }
     
     func encode(to encoder: Encoder) throws {

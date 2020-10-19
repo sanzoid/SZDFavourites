@@ -227,8 +227,11 @@ final class Model: Codable {
         
         if let data = defaults.object(forKey: "Model") as? Data {
             let decoder = JSONDecoder()
-            if let model = try? decoder.decode(Model.self, from: data) {
+            do {
+                let model = try decoder.decode(Model.self, from: data)
                 return model
+            } catch {
+                print(error)
             }
         }
         
@@ -241,6 +244,8 @@ final class Model: Codable {
         model.add(item: "hard", to: "Poop")
         model.add(item: "soft", to: "Poop")
         model.add(thing: "Food")
+        
+        Model.save(model: model)
         
         return model
     }
