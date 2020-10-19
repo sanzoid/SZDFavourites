@@ -100,12 +100,21 @@ extension ThingController: ItemControllerDelegate {
         // TODO:
     }
     
+    func addItem(name: String) {
+        self.delegate?.addItem(name: name)
+        self.itemController.refresh()
+    }
+    
     func removeItem(at index: Int) {
         self.delegate?.removeItem(at: index)
     }
     
     func moveItem(from index: Int, to newIndex: Int) {
         self.delegate?.moveItem(from: index, to: newIndex)
+    }
+    
+    func editItem(at index: Int, with newName: String) {
+        self.delegate?.editItem(at: index, with: newName)
     }
 }
 

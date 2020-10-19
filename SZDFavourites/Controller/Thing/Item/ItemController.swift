@@ -55,10 +55,12 @@ extension ItemController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        let cell = ItemCell(style: .default, reuseIdentifier: "ItemCell")
         
         if let data = self.dataSource?.dataForItem(at: indexPath.row) {
-            cell.textLabel?.text = data.name
+            cell.setText(data.name)
+            cell.delegate = self
+            cell.tag = indexPath.row
         }
         
         return cell
@@ -68,8 +70,12 @@ extension ItemController: UITableViewDataSource {
         return true
     }
     
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return "Add"
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = TableFooterTextField(reuseIdentifier: "ItemControllerFooter")
+        footer.delegate = self
+        footer.setText(nil, placeholder: "Add Item")
+        
+        return footer
     }
 }
 
@@ -87,5 +93,22 @@ extension ItemController: UITableViewDelegate {
             self.delegate?.removeItem(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
+    }
+}
+
+extension ItemController: TableFooterTextFieldDelegate {
+    func didFinishEditing(footer: TableFooterTextField, text: String?) {
+        guard let text = text, !text.isEmpty else { return }
+        self.delegate?.addItem(name: text)
+        footer.setText(nil, placeholder: "Add Item")
+    }
+}
+
+extension ItemController: ItemCellDelegate {
+    func didEndEditing(for itemCell: ItemCell, text: String?) {
+        // TODO: Where should we validate empty?
+        guard let text = text, !text.isEmpty else { return }
+        let index = itemCell.tag
+        self.delegate?.editItem(at: index, with: text)
     }
 }

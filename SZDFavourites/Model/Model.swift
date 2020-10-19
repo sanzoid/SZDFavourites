@@ -188,6 +188,8 @@ final class Model: Codable {
     }
     
     func edit(item index: Int, for thing: ThingName, with newName: ItemName) -> ModelError? {
+        // TODO: Unit test this case, and add this case to other calls 
+        if self.item(at: index, for: thing).name == newName { return nil } // no change
         guard !self.itemExists(name: newName, for: thing) else { return .itemExists }
         self.thingMap[thing]?.edit(item: index, with: newName)
         return nil
