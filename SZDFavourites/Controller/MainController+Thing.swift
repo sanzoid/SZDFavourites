@@ -79,6 +79,6 @@ extension MainController: ThingControllerDelegate {
     }
     
     func close() {
-        
+        self.listController.refresh()
     }
 }

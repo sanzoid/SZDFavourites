@@ -79,6 +79,11 @@ class ThingController: UIViewController {
     func toggleEdit() {
         
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.delegate?.close()
+    }
 }
 
 extension ThingController: ItemControllerDataSource {

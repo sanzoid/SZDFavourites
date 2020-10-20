@@ -34,6 +34,11 @@ class ItemController: UIViewController {
         self.tableView.constrainToHeight(constant: 300)
         
         self.tableView.backgroundColor = UIColor.yellow.alpha(0.2)
+        
+        // enable drag
+        self.tableView.dragDelegate = self
+        self.tableView.dropDelegate = self
+        self.tableView.dragInteractionEnabled = true
     }
     
     func refresh() {
@@ -44,6 +49,8 @@ class ItemController: UIViewController {
         self.tableView.setEditing(!self.isEditing, animated: true)
     }
 }
+
+// MARK: UITableView
 
 extension ItemController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -84,18 +91,38 @@ extension ItemController: UITableViewDelegate {
         self.delegate?.selectItem(index: indexPath.row)
     }
     
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        self.delegate?.moveItem(from: sourceIndexPath.row, to: destinationIndexPath.row)
-    }
-    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.delegate?.removeItem(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
+
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard sourceIndexPath != destinationIndexPath else { return }
+        self.delegate?.moveItem(from: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
 }
 
+extension ItemController: UITableViewDragDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let dragItem = UIDragItem(itemProvider: NSItemProvider())
+        return [dragItem]
+    }
+}
+
+extension ItemController: UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        if session.localDragSession != nil { // from within the app
+            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {}
+}
+
+// MARK: TableFooterTextFieldDelegate
 extension ItemController: TableFooterTextFieldDelegate {
     func didFinishEditing(footer: TableFooterTextField, text: String?) {
         guard let text = text, !text.isEmpty else { return }
@@ -104,6 +131,7 @@ extension ItemController: TableFooterTextFieldDelegate {
     }
 }
 
+// MARK: ItemCellDelegate
 extension ItemController: ItemCellDelegate {
     func didEndEditing(for itemCell: ItemCell, text: String?) {
         // TODO: Where should we validate empty?
