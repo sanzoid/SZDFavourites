@@ -14,12 +14,17 @@ class ItemController: UIViewController {
     weak var delegate: ItemControllerDelegate?
     var tableView: UITableView
     
-    init() {
+    private var mode: ViewMode
+        
+    init(mode: ViewMode = .display) {
+        self.mode = mode
         self.tableView = UITableView()
         
         super.init(nibName: nil, bundle: nil)
         
         self.setup()
+        
+        self.setMode(mode)
     }
     
     required init?(coder: NSCoder) {
@@ -34,6 +39,8 @@ class ItemController: UIViewController {
         self.tableView.constrainToHeight(constant: 300)
         
         self.tableView.backgroundColor = UIColor.yellow.alpha(0.2)
+        self.tableView.allowsSelection = false
+        self.tableView.bounces = false
         
         // enable drag
         self.tableView.dragDelegate = self
@@ -45,8 +52,12 @@ class ItemController: UIViewController {
         self.tableView.reloadData()
     }
     
-    func toggleEdit() {
-        self.tableView.setEditing(!self.isEditing, animated: true)
+    func setMode(_ mode: ViewMode) {
+        self.mode = mode
+        self.tableView.dragInteractionEnabled = mode == .edit
+        
+        // reload for cell mode
+        self.tableView.reloadData()
     }
 }
 
@@ -68,29 +79,28 @@ extension ItemController: UITableViewDataSource {
             cell.setText(data.name)
             cell.delegate = self
             cell.tag = indexPath.row
+            cell.setMode(self.mode)
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
+        return self.mode == .edit
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard self.mode == .edit else { return nil }
+        
         let footer = TableFooterTextField(reuseIdentifier: "ItemControllerFooter")
         footer.delegate = self
         footer.setText(nil, placeholder: "Add Item")
-        
+        footer.setMode(self.mode)
         return footer
     }
 }
 
 extension ItemController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.delegate?.selectItem(index: indexPath.row)
-    }
-    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.delegate?.removeItem(at: indexPath.row)
@@ -123,6 +133,7 @@ extension ItemController: UITableViewDropDelegate {
 }
 
 // MARK: TableFooterTextFieldDelegate
+
 extension ItemController: TableFooterTextFieldDelegate {
     func didFinishEditing(footer: TableFooterTextField, text: String?) {
         guard let text = text, !text.isEmpty else { return }
@@ -132,6 +143,7 @@ extension ItemController: TableFooterTextFieldDelegate {
 }
 
 // MARK: ItemCellDelegate
+
 extension ItemController: ItemCellDelegate {
     func didEndEditing(for itemCell: ItemCell, text: String?) {
         // TODO: Where should we validate empty?

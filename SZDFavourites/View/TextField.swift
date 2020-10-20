@@ -13,24 +13,21 @@ protocol TextFieldDelegate: class {
     func didEndEditing(for textField: TextField, text: String?)
 }
 
-enum TextFieldMode {
-    case display
-    case edit
-}
-
 class TextField: UIView {
     
     weak var delegate: TextFieldDelegate?
     
-    var mode: TextFieldMode
-    var textField = UITextField()
-    
-    init(mode: TextFieldMode = .display) {
+    private var mode: ViewMode
+    private var textField = UITextField()
+        
+    init(mode: ViewMode = .display) {
         self.mode = mode
         
         super.init(frame: .zero)
         
         self.setup()
+        
+        self.setMode(mode)
     }
     
     required init?(coder: NSCoder) {
@@ -48,8 +45,10 @@ class TextField: UIView {
         self.textField.returnKeyType = .done
     }
     
-    func setMode(_ mode: TextFieldMode) {
-        self.mode = mode 
+    func setMode(_ mode: ViewMode) {
+        self.mode = mode
+        
+        self.textField.isUserInteractionEnabled = mode == .edit
     }
     
     func setText(_ text: String?, placeholder: String?) {

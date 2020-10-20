@@ -19,28 +19,26 @@ protocol TextPickerDelegate: class {
     func didEndEditing(for textPicker: TextPicker, oldText: String?, text: String?)
 }
 
-enum TextPickerMode {
-    case display
-    case edit
-}
-
 class TextPicker: UIView {
     
     weak var dataSource: TextPickerDataSource?
     weak var delegate: TextPickerDelegate?
     
-    var mode: TextPickerMode
-    var textField = UITextField()
+    private var mode: ViewMode
+    private var textField = UITextField()
+    private var picker = UIPickerView()
+    private var oldText: String?
     
-    var picker = UIPickerView()
-    var oldText: String?
+    private var isEditing: Bool = false
     
-    init(mode: TextPickerMode = .display) {
+    init(mode: ViewMode = .display) {
         self.mode = mode
         
         super.init(frame: .zero)
         
         self.setup()
+        
+        self.setMode(mode)
     }
     
     required init?(coder: NSCoder) {
@@ -74,12 +72,14 @@ class TextPicker: UIView {
         self.textField.resignFirstResponder()
     }
     
-    @objc func tapLabel() {
-        self.picker.isHidden = false 
-    }
+//    func toggleEdit() {
+//        self.isEditing = !self.isEditing
+//        self.textField.isUserInteractionEnabled = self.isEditing
+//    }
     
-    func setMode(_ mode: TextPickerMode) {
+    func setMode(_ mode: ViewMode) {
         self.mode = mode
+        self.textField.isUserInteractionEnabled = mode == .edit
     }
     
     func setSelected(in component: Int, row: Int) {

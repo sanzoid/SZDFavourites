@@ -13,10 +13,11 @@ class ThingController: UIViewController {
     weak var dataSource: ThingControllerDataSource?
     weak var delegate: ThingControllerDelegate?
     
+    let editButton = UIButton()
     let groupField = TextPicker()
     let thingField = TextField()
     let itemController = ItemController()
-    
+        
     init() {
         super.init(nibName: nil, bundle: nil)
         
@@ -49,6 +50,7 @@ class ThingController: UIViewController {
         // view hierarchy
         self.view.addSubviews(containerView)
         containerView.addSubviews(stackView)
+        stackView.addArrangedSubview(editButton)
         stackView.addArrangedSubview(groupField)
         stackView.addArrangedSubview(thingField)
         stackView.addArrangedSubview(itemController.tableView)
@@ -65,6 +67,10 @@ class ThingController: UIViewController {
         containerView.backgroundColor = UIColor.white.alpha(0.6)
         groupField.backgroundColor = .cyan
         thingField.backgroundColor = .purple
+        
+        self.editButton.addTarget(self, action: #selector(toggleEdit), for: .touchUpInside)
+        
+        self.setEdit(false)
     }
     
     func refresh() {
@@ -76,8 +82,17 @@ class ThingController: UIViewController {
         }
     }
     
-    func toggleEdit() {
-        
+    func setEdit(_ isEditing: Bool) {
+        self.isEditing = isEditing
+        self.editButton.setTitle(isEditing ? "Done" : "Edit", for: .normal)
+        self.groupField.setMode(isEditing ? .edit : .display)
+        self.thingField.setMode(isEditing ? .edit : .display)
+        self.itemController.setMode(isEditing ? .edit : .display)
+    }
+    
+    @objc func toggleEdit() {
+        self.isEditing = !self.isEditing
+        self.setEdit(self.isEditing)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

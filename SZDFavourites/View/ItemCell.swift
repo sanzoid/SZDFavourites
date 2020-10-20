@@ -15,15 +15,18 @@ protocol ItemCellDelegate: class {
 class ItemCell: UITableViewCell {
     
     weak var delegate: ItemCellDelegate?
-    let textField = TextField()
+    private let textField = TextField()
+    private var mode: ViewMode = .display
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {        
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
         self.textField.delegate = self
         
         self.contentView.addSubviews(self.textField)
         self.textField.constrainTo(view: self, on: .all)
+        
+        self.setMode(.display)
     }
     
     required init?(coder: NSCoder) {
@@ -32,6 +35,11 @@ class ItemCell: UITableViewCell {
     
     func setText(_ text: String?) {
         self.textField.setText(text, placeholder: text)
+    }
+    
+    func setMode(_ mode: ViewMode) {
+        self.mode = mode
+        self.textField.setMode(mode)
     }
 }
 

@@ -15,7 +15,8 @@ protocol TableFooterTextFieldDelegate: class {
 class TableFooterTextField: UITableViewHeaderFooterView {
     
     weak var delegate: TableFooterTextFieldDelegate?
-    var textField = TextField()
+    private var textField = TextField()
+    private var mode: ViewMode = .display
     
     override init(reuseIdentifier: String?) {
         
@@ -24,10 +25,17 @@ class TableFooterTextField: UITableViewHeaderFooterView {
         self.addSubviews(self.textField)
         self.textField.constrainTo(view: self, on: .all, constant: 0)
         self.textField.delegate = self
+        
+        self.setMode(.display)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setMode(_ mode: ViewMode) {
+        self.mode = mode
+        self.textField.setMode(mode)
     }
     
     func setText(_ text: String?, placeholder: String?) {
