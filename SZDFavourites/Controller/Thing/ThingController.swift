@@ -14,6 +14,7 @@ class ThingController: UIViewController {
     weak var delegate: ThingControllerDelegate?
     
     let editButton = UIButton()
+    let deleteButton = UIButton()
     let groupField = TextPicker()
     let thingField = TextField()
     let itemController = ItemController()
@@ -36,6 +37,9 @@ class ThingController: UIViewController {
         self.itemController.delegate = self 
         
         self.view.backgroundColor = UIColor.black.alpha(0.1)
+        self.deleteButton.setTitle("Delete", for: .normal)
+        self.deleteButton.setTitleColor(.red, for: .normal)
+        self.deleteButton.backgroundColor = .red
         
         // view init
         let containerView = UIView()
@@ -54,6 +58,7 @@ class ThingController: UIViewController {
         stackView.addArrangedSubview(groupField)
         stackView.addArrangedSubview(thingField)
         stackView.addArrangedSubview(itemController.tableView)
+        stackView.addArrangedSubview(deleteButton)
         
         // view constraints
         containerView.constrainTo(view: self.view, on: .center)
@@ -69,6 +74,7 @@ class ThingController: UIViewController {
         thingField.backgroundColor = .purple
         
         self.editButton.addTarget(self, action: #selector(toggleEdit), for: .touchUpInside)
+        self.deleteButton.addTarget(self, action: #selector(pressDeleteButton), for: .touchUpInside)
         
         self.setEdit(false)
     }
@@ -93,6 +99,11 @@ class ThingController: UIViewController {
     @objc func toggleEdit() {
         self.isEditing = !self.isEditing
         self.setEdit(self.isEditing)
+    }
+    
+    @objc func pressDeleteButton() {
+        self.delegate?.removeThing()
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

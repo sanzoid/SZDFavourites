@@ -98,6 +98,10 @@ extension ItemController: UITableViewDataSource {
         footer.setMode(self.mode)
         return footer
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return self.mode == .edit
+    }
 }
 
 extension ItemController: UITableViewDelegate {

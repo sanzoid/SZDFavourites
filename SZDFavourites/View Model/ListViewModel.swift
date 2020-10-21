@@ -162,8 +162,8 @@ class ListViewModel {
         return nil
     }
     
-    func remove(thing: Thing) {
-        self.model.remove(thing: thing.name)
+    func remove(thing: ThingName) {
+        self.model.remove(thing: thing)
         self.save()
     }
     

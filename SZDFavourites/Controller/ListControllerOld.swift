@@ -213,7 +213,7 @@ extension ListControllerOld: ThingController2Delegate {
     
     func shouldDelete() {
         guard let thing = self.viewModel.selectedThing else { return }
-        self.viewModel.remove(thing: thing)
+        self.viewModel.remove(thing: thing.name)
         self.tableView.reloadData()
     }
     

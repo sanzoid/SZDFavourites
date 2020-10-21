@@ -56,6 +56,9 @@ extension MainController: ThingControllerDelegate {
     
     func removeThing() {
         // TODO:
+        guard let thing = self.viewModel.selectedThing else { return }
+        self.viewModel.remove(thing: thing.name)
+        self.listController.refresh()
     }
     
     func addItem(name: String) {
