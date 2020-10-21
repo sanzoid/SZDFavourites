@@ -117,6 +117,8 @@ class ThingController: UIViewController {
     }
 }
 
+// MARK: UI DataSource & Delegate
+
 extension ThingController: TextFieldDelegate {
     func didEndEditing(for textField: TextField, text: String?) {
         if let text = text, !text.isEmpty {
@@ -133,12 +135,10 @@ extension ThingController: TextPickerDataSource {
     }
     
     func numberOfRows(for textPicker: TextPicker, in component: Int) -> Int {
-        // number of groups
         return self.dataSource?.numberOfGroups(for: self) ?? 0
     }
     
     func option(for textPicker: TextPicker, in component: Int, at row: Int) -> String {
-        // groups
         if let group = self.dataSource?.dataForGroup(for: self, at: row) {
             return group.name
         }

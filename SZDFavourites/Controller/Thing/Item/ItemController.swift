@@ -60,7 +60,8 @@ class ItemController: UIViewController {
     }
 }
 
-// MARK: TableFooterTextFieldDelegate
+// MARK: UI Delegate
+
 extension ItemController: TableFooterTextFieldDelegate {
     func didFinishEditing(footer: TableFooterTextField, text: String?) {
         guard let text = text, !text.isEmpty else { return }
@@ -69,7 +70,6 @@ extension ItemController: TableFooterTextFieldDelegate {
     }
 }
 
-// MARK: ItemCellDelegate
 extension ItemController: ItemCellDelegate {
     func didEndEditing(for itemCell: ItemCell, text: String?) {
         // TODO: Where should we validate empty?
