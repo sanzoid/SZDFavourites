@@ -38,7 +38,7 @@ class ThingController: UIViewController {
         
         self.view.backgroundColor = UIColor.black.alpha(0.1)
         self.deleteButton.setTitle("Delete", for: .normal)
-        self.deleteButton.setTitleColor(.red, for: .normal)
+        self.deleteButton.setTitleColor(.white, for: .normal)
         self.deleteButton.backgroundColor = .red
         
         // view init
@@ -94,6 +94,7 @@ class ThingController: UIViewController {
         self.groupField.setMode(isEditing ? .edit : .display)
         self.thingField.setMode(isEditing ? .edit : .display)
         self.itemController.setMode(isEditing ? .edit : .display)
+        self.deleteButton.isHidden = !isEditing
     }
     
     @objc func toggleEdit() {
