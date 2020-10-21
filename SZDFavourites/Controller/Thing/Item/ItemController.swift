@@ -12,7 +12,7 @@ class ItemController: UIViewController {
     
     weak var dataSource: ItemControllerDataSource?
     weak var delegate: ItemControllerDelegate?
-    private(set) var tableView: UITableView
+    let tableView: UITableView
     private(set) var mode: ViewMode
         
     init(mode: ViewMode = .display) {

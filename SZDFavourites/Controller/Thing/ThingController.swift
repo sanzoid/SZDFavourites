@@ -13,10 +13,10 @@ class ThingController: UIViewController {
     weak var dataSource: ThingControllerDataSource?
     weak var delegate: ThingControllerDelegate?
     
-    let editButton = UIButton()
-    let deleteButton = UIButton()
-    let groupField = TextPicker()
-    let thingField = TextField()
+    private let editButton = UIButton()
+    private let deleteButton = UIButton()
+    private let groupField = TextPicker()
+    private let thingField = TextField()
     let itemController = ItemController()
         
     init() {
@@ -29,7 +29,7 @@ class ThingController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
+    private func setup() {
         self.thingField.delegate = self
         self.groupField.dataSource = self
         self.groupField.delegate = self
@@ -54,11 +54,11 @@ class ThingController: UIViewController {
         // view hierarchy
         self.view.addSubviews(containerView)
         containerView.addSubviews(stackView)
-        stackView.addArrangedSubview(editButton)
-        stackView.addArrangedSubview(groupField)
-        stackView.addArrangedSubview(thingField)
-        stackView.addArrangedSubview(itemController.tableView)
-        stackView.addArrangedSubview(deleteButton)
+        stackView.addArrangedSubview(self.editButton)
+        stackView.addArrangedSubview(self.groupField)
+        stackView.addArrangedSubview(self.thingField)
+        stackView.addArrangedSubview(self.itemController.tableView)
+        stackView.addArrangedSubview(self.deleteButton)
         
         // view constraints
         containerView.constrainTo(view: self.view, on: .center)
@@ -73,13 +73,13 @@ class ThingController: UIViewController {
         groupField.backgroundColor = .cyan
         thingField.backgroundColor = .purple
         
-        self.editButton.addTarget(self, action: #selector(toggleEdit), for: .touchUpInside)
+        self.editButton.addTarget(self, action: #selector(pressEditButton), for: .touchUpInside)
         self.deleteButton.addTarget(self, action: #selector(pressDeleteButton), for: .touchUpInside)
         
         self.setEdit(false)
     }
     
-    func refresh() {
+    private func refresh() {
         if let groupIndex = self.dataSource?.group(for: self) {
             self.groupField.setSelected(in: 0, row: groupIndex)
         }
@@ -97,12 +97,16 @@ class ThingController: UIViewController {
         self.deleteButton.isHidden = !isEditing
     }
     
-    @objc func toggleEdit() {
+    private func toggleEdit() {
         self.isEditing = !self.isEditing
         self.setEdit(self.isEditing)
     }
     
-    @objc func pressDeleteButton() {
+    @objc private func pressEditButton() {
+        self.toggleEdit()
+    }
+    
+    @objc private func pressDeleteButton() {
         self.delegate?.removeThing(for: self)
         self.dismiss(animated: true, completion: nil)
     }

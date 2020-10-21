@@ -12,7 +12,7 @@ class GroupController: UIViewController {
     
     weak var dataSource: GroupControllerDataSource?
     weak var delegate: GroupControllerDelegate?
-    var tableView: UITableView
+    let tableView: UITableView
     
     init() {
         self.tableView = UITableView()

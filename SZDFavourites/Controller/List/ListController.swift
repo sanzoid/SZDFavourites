@@ -12,7 +12,7 @@ class ListController: UIViewController {
     
     weak var dataSource: ListControllerDataSource?
     weak var delegate: ListControllerDelegate?
-    var tableView: UITableView
+    let tableView: UITableView
     
     init() {
         self.tableView = ListTableView()
