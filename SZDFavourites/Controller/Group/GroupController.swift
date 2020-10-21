@@ -49,13 +49,13 @@ extension GroupController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource?.numberOfGroups() ?? 0
+        return self.dataSource?.numberOfGroups(for: self) ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         
-        if let cellData = self.dataSource?.dataForGroup(at: indexPath.row) {
+        if let cellData = self.dataSource?.dataForGroup(for: self, at: indexPath.row) {
             cell.textLabel?.text = cellData.name
         }
         
@@ -65,7 +65,7 @@ extension GroupController: UITableViewDataSource {
 
 extension GroupController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.delegate?.selectGroup(at: indexPath.row)
+        self.delegate?.selectGroup(for: self, at: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -73,12 +73,12 @@ extension GroupController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        self.delegate?.moveGroup(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        self.delegate?.moveGroup(for: self, from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if self.delegate?.removeGroup(at: indexPath.row) ?? false {
+            if self.delegate?.removeGroup(for: self, at: indexPath.row) ?? false {
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         }

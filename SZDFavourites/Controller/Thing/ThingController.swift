@@ -83,7 +83,7 @@ class ThingController: UIViewController {
         if let groupIndex = self.dataSource?.group(for: self) {
             self.groupField.setSelected(in: 0, row: groupIndex)
         }
-        if let thing = self.dataSource?.dataForThing() {
+        if let thing = self.dataSource?.dataForThing(for: self) {
             self.thingField.setText(thing.name, placeholder: thing.name)
         }
     }
@@ -103,57 +103,20 @@ class ThingController: UIViewController {
     }
     
     @objc func pressDeleteButton() {
-        self.delegate?.removeThing()
+        self.delegate?.removeThing(for: self)
         self.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.delegate?.close()
-    }
-}
-
-extension ThingController: ItemControllerDataSource {
-    var numberOfItems: Int {
-        return self.dataSource?.numberOfItems ?? 0
-    }
-    
-    func dataForItem(at index: Int) -> ViewDataItem {
-        return self.dataSource!.dataForItem(at: index)
-    }
-}
-
-extension ThingController: ItemControllerDelegate {
-    func selectItem(index: Int) {
-        // TODO:
-    }
-    
-    func addItem() {
-        // TODO:
-    }
-    
-    func addItem(name: String) {
-        self.delegate?.addItem(name: name)
-        self.itemController.refresh()
-    }
-    
-    func removeItem(at index: Int) {
-        self.delegate?.removeItem(at: index)
-    }
-    
-    func moveItem(from index: Int, to newIndex: Int) {
-        self.delegate?.moveItem(from: index, to: newIndex)
-    }
-    
-    func editItem(at index: Int, with newName: String) {
-        self.delegate?.editItem(at: index, with: newName)
+        self.delegate?.close(for: self)
     }
 }
 
 extension ThingController: TextFieldDelegate {
     func didEndEditing(for textField: TextField, text: String?) {
         if let text = text, !text.isEmpty {
-            self.delegate?.editThing(name: text)
+            self.delegate?.editThing(for: self, name: text)
         } else { // if empty, reset
             self.refresh()
         }
@@ -183,6 +146,6 @@ extension ThingController: TextPickerDelegate {
     func didEndEditing(for textPicker: TextPicker, oldText: String?, text: String?) {
         guard let oldText = oldText, let text = text else { return }
         guard oldText != text else { return }
-        self.delegate?.moveThing(from: oldText, to: text)
+        self.delegate?.moveThing(for: self, from: oldText, to: text)
     }
 }

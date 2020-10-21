@@ -9,10 +9,10 @@
 import Foundation
 
 protocol ThingControllerDataSource: class {
-    var numberOfItems: Int { get }
+    func numberOfItems(for thingController: ThingController) -> Int
     func numberOfGroups(for thingController: ThingController) -> Int
     func group(for thingController: ThingController) -> Int
     func dataForGroup(for thingController: ThingController, at index: Int) -> ViewDataGroup
-    func dataForThing() -> ViewDataThing
-    func dataForItem(at index: Int) -> ViewDataItem
+    func dataForThing(for thingController: ThingController) -> ViewDataThing
+    func dataForItem(for thingController: ThingController, at index: Int) -> ViewDataItem
 }

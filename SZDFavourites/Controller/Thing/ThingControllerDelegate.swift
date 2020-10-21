@@ -10,19 +10,15 @@ import Foundation
 
 protocol ThingControllerDelegate: class {
     // group
-    func moveThing(from group: String, to newGroup: String)
-    
-    
+    func moveThing(for thingController: ThingController, from group: String, to newGroup: String)
     // thing
-    func editThing()
-    func editThing(name: String)
-    func removeThing()
-    
+    func editThing(for thingController: ThingController, name: String)
+    func removeThing(for thingController: ThingController)
     // item
-    func addItem(name: String)
-    func editItem(at index: Int, with newName: String)
-    func moveItem(from index: Int, to newIndex: Int)
-    func removeItem(at index: Int)
-    
-    func close()
+    func addItem(for thingController: ThingController, name: String)
+    func editItem(for thingController: ThingController, at index: Int, with newName: String)
+    func moveItem(for thingController: ThingController, from index: Int, to newIndex: Int)
+    func removeItem(for thingController: ThingController, at index: Int)
+    // close 
+    func close(for thingController: ThingController)
 }

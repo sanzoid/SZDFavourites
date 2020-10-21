@@ -9,8 +9,8 @@
 import Foundation
 
 protocol ListControllerDelegate: class {
-    func selectThing(at index: ThingIndex)
-    func addThing()
-    func removeThing(at index: ThingIndex)
-    func moveThing(from index: ThingIndex, to newIndex: ThingIndex)
+    func selectThing(for listController: ListController, at index: ThingIndex)
+    func addThing(for listController: ListController)
+    func removeThing(for listController: ListController, at index: ThingIndex)
+    func moveThing(for listController: ListController, from index: ThingIndex, to newIndex: ThingIndex)
 }

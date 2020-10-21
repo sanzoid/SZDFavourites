@@ -7,7 +7,11 @@
 //
 
 extension MainController: GroupControllerDataSource {
-    func dataForGroup(at index: Int) -> ViewDataGroup {
+    func numberOfGroups(for groupController: GroupController) -> Int {
+        return self.viewModel.groupCount()
+    }
+    
+    func dataForGroup(for groupController: GroupController, at index: Int) -> ViewDataGroup {
         let group = self.viewModel.group(at: index)
         let data = ViewDataGroup(group: group)
         return data
@@ -15,15 +19,15 @@ extension MainController: GroupControllerDataSource {
 }
 
 extension MainController: GroupControllerDelegate {
-    func selectGroup(at index: Int) {
+    func selectGroup(for groupController: GroupController, at index: Int) {
         // TODO:
     }
     
-    func addGroup() {
+    func addGroup(for groupController: GroupController) {
         // TODO:
     }
     
-    func removeGroup(at index: Int) -> Bool {
+    func removeGroup(for groupController: GroupController, at index: Int) -> Bool {
         if let error = self.viewModel.remove(group: index) {
             return false
         } else {
@@ -31,7 +35,7 @@ extension MainController: GroupControllerDelegate {
         }
     }
     
-    func moveGroup(from index: Int, to newIndex: Int) {
+    func moveGroup(for groupController: GroupController, from index: Int, to newIndex: Int) {
         self.viewModel.move(group: index, to: index)
     }
 }

@@ -9,6 +9,6 @@
 import Foundation
 
 protocol GroupControllerDataSource: class {
-    func numberOfGroups() -> Int
-    func dataForGroup(at index: Int) -> ViewDataGroup
+    func numberOfGroups(for groupController: GroupController) -> Int
+    func dataForGroup(for groupController: GroupController, at index: Int) -> ViewDataGroup
 }

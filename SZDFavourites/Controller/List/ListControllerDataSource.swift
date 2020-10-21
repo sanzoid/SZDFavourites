@@ -9,8 +9,8 @@
 import Foundation
 
 protocol ListControllerDataSource: class {
-    func numberOfGroups() -> Int
-    func numberOfThings(in group: Int) -> Int
-    func dataForThing(at thingIndex: Int, in groupIndex: Int) -> ViewDataThing
-    func dataForGroupHeader(at index: Int) -> ViewDataGroup
+    func numberOfGroups(for listController: ListController) -> Int
+    func numberOfThings(for listController: ListController, in group: Int) -> Int
+    func dataForThing(for listController: ListController, at thingIndex: Int, in groupIndex: Int) -> ViewDataThing
+    func dataForGroupHeader(for listController: ListController, at index: Int) -> ViewDataGroup
 }

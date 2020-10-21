@@ -7,40 +7,40 @@
 //
 
 extension MainController: ListControllerDataSource {
-    func numberOfGroups() -> Int {
+    func numberOfGroups(for listController: ListController) -> Int {
         return self.viewModel.groupCount()
     }
     
-    func numberOfThings(in group: Int) -> Int {
+    func numberOfThings(for listController: ListController, in group: Int) -> Int {
         return self.viewModel.thingCount(group: group)
     }
     
-    func dataForThing(at thingIndex: Int, in groupIndex: Int) -> ViewDataThing {
+    func dataForThing(for listController: ListController, at thingIndex: Int, in groupIndex: Int) -> ViewDataThing {
         let thing = self.viewModel.thing(at: (groupIndex, thingIndex))
         return ViewDataThing(thing: thing)
     }
     
-    func dataForGroupHeader(at index: Int) -> ViewDataGroup {
+    func dataForGroupHeader(for listController: ListController, at index: Int) -> ViewDataGroup {
         let group = self.viewModel.group(at: index)
         return ViewDataGroup(group: group)
     }
 }
 
 extension MainController: ListControllerDelegate {
-    func moveThing(from index: ThingIndex, to newIndex: ThingIndex) {
+    func moveThing(for listController: ListController, from index: ThingIndex, to newIndex: ThingIndex) {
         self.viewModel.move(thing: index, to: newIndex)
     }
     
-    func selectThing(at index: ThingIndex) {
+    func selectThing(for listController: ListController, at index: ThingIndex) {
 //        self.editThing(at: index)
         self.presentThingController(at: index)
     }
     
-    func addThing() {
+    func addThing(for listController: ListController) {
         self.presentEditThingController(isAdd: true)
     }
     
-    func removeThing(at index: ThingIndex) {
+    func removeThing(for listController: ListController, at index: ThingIndex) {
         self.viewModel.remove(thing: index)
     }
 }
