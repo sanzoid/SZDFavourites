@@ -79,7 +79,7 @@ class ThingController: UIViewController {
         self.setEdit(false)
     }
     
-    private func refresh() {
+    func refresh() {
         if let groupIndex = self.dataSource?.group(for: self) {
             self.groupField.setSelected(in: 0, row: groupIndex)
         }

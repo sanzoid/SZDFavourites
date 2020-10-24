@@ -30,6 +30,9 @@ class ListController: UIViewController {
     private func setup() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.dragDelegate = self
+        self.tableView.dropDelegate = self
+        self.tableView.dragInteractionEnabled = true
         
         self.view.addSubviews(self.tableView)
         self.tableView.constrainTo(view: self.view, on: .all)
@@ -40,7 +43,7 @@ class ListController: UIViewController {
     }
     
     func toggleEdit() {
-        self.tableView.setEditing(!self.tableView.isEditing, animated: true)
+        self.isEditing = !self.isEditing
     }
     
     // actions
@@ -69,6 +72,10 @@ extension ListController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.dataSource?.dataForGroupHeader(for: self, at: section).name
     }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
 }
 
 extension ListController: UITableViewDelegate {
@@ -78,11 +85,8 @@ extension ListController: UITableViewDelegate {
         self.delegate?.selectThing(for: self, at: index)
     }
     
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard sourceIndexPath != destinationIndexPath else { return }
         let index = ThingIndex(sourceIndexPath.section, sourceIndexPath.row)
         let newIndex = ThingIndex(destinationIndexPath.section, destinationIndexPath.row)
         self.delegate?.moveThing(for: self, from: index, to: newIndex)
@@ -96,4 +100,22 @@ extension ListController: UITableViewDelegate {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
+}
+
+extension ListController: UITableViewDragDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let dragItem = UIDragItem(itemProvider: NSItemProvider())
+        return [dragItem]
+    }
+}
+
+extension ListController: UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        if session.localDragSession != nil { // from within the app
+            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {}
 }
