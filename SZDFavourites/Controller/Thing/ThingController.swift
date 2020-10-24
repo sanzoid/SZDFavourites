@@ -121,7 +121,7 @@ class ThingController: UIViewController {
 
 extension ThingController: TextFieldDelegate {
     func didEndEditing(for textField: TextField, text: String?) {
-        if let text = text, !text.isEmpty {
+        if let text = text?.nonEmpty() {
             self.delegate?.editThing(for: self, name: text)
         } else { // if empty, reset
             self.refresh()

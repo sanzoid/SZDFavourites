@@ -26,14 +26,8 @@ class ListController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // setup
     private func setup() {
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.dragDelegate = self
-        self.tableView.dropDelegate = self
-        self.tableView.dragInteractionEnabled = true
-        
+        self.setupTable()
         self.view.addSubviews(self.tableView)
         self.tableView.constrainTo(view: self.view, on: .all)
     }

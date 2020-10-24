@@ -8,6 +8,16 @@
 
 import UIKit
 
+extension ListController {
+    func setupTable() {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.dragDelegate = self
+        self.tableView.dropDelegate = self
+        self.tableView.dragInteractionEnabled = true
+    }
+}
+
 extension ListController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.dataSource?.numberOfGroups(for: self) ?? 0
@@ -61,7 +71,7 @@ extension ListController: UITableViewDelegate {
     }
 }
 
-// MARK: Drag & Drop 
+// MARK: Drag & Drop
 
 extension ListController: UITableViewDragDelegate {
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {

@@ -12,8 +12,8 @@ class ItemController: UIViewController {
     
     weak var dataSource: ItemControllerDataSource?
     weak var delegate: ItemControllerDelegate?
-    let tableView: UITableView
     private(set) var mode: ViewMode
+    let tableView: UITableView
         
     init(mode: ViewMode = .display) {
         self.mode = mode
@@ -22,7 +22,6 @@ class ItemController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.setup()
-        
         self.setMode(mode)
     }
     
@@ -31,20 +30,11 @@ class ItemController: UIViewController {
     }
     
     private func setup() {
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
+        self.setupTable()
+        
         self.view.addSubviews(self.tableView)
 //        self.tableView.constrainTo(view: self.view, on: .all)
         self.tableView.constrainToHeight(constant: 300)
-        
-        self.tableView.backgroundColor = UIColor.yellow.alpha(0.2)
-        self.tableView.allowsSelection = false
-        self.tableView.bounces = false
-        
-        // enable drag
-        self.tableView.dragDelegate = self
-        self.tableView.dropDelegate = self
-        self.tableView.dragInteractionEnabled = true
     }
     
     func refresh() {
@@ -64,7 +54,7 @@ class ItemController: UIViewController {
 
 extension ItemController: TableFooterTextFieldDelegate {
     func didFinishEditing(footer: TableFooterTextField, text: String?) {
-        guard let text = text, !text.isEmpty else { return }
+        guard let text = text?.nonEmpty() else { return }
         self.delegate?.addItem(for: self, name: text)
         footer.setText(nil, placeholder: "Add Item")
     }
@@ -73,7 +63,7 @@ extension ItemController: TableFooterTextFieldDelegate {
 extension ItemController: ItemCellDelegate {
     func didEndEditing(for itemCell: ItemCell, text: String?) {
         // TODO: Where should we validate empty?
-        guard let text = text, !text.isEmpty else { return }
+        guard let text = text?.nonEmpty() else { return }
         let index = itemCell.tag
         self.delegate?.editItem(for: self, at: index, with: text)
     }
