@@ -13,8 +13,8 @@ class MainController: UIViewController {
     
     let viewModel: ListViewModel
     let listController: ListController
-    var groupController: GroupController?
-    var thingController: ThingController?
+    weak var groupController: GroupController?
+    weak var thingController: ThingController?
     
     init(model: Model) {
         self.viewModel = ListViewModel(model: model)
@@ -40,13 +40,20 @@ class MainController: UIViewController {
     
     func addBarButtonItems() {
         let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressAddThing))
-        let addGroupBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressAddGroup))
+        let addGroupBarButtonItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(pressAddGroup))
         let editBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(pressEdit))
         self.navigationItem.setRightBarButtonItems([addBarButtonItem, addGroupBarButtonItem, editBarButtonItem], animated: true)
     }
     
     @objc func pressAddGroup() {
-        self.presentEditGroupController(isAdd: true)
+        let groupController = GroupController()
+        groupController.delegate = self
+        groupController.dataSource = self
+        self.groupController = groupController
+
+        let navigationController = UINavigationController(rootViewController: groupController)
+        self.present(navigationController, animated: true, completion: nil)
+//        self.presentEditGroupController(isAdd: true)
     }
     
     @objc func pressAddThing() {

@@ -19,23 +19,29 @@ extension MainController: GroupControllerDataSource {
 }
 
 extension MainController: GroupControllerDelegate {
-    func selectGroup(for groupController: GroupController, at index: Int) {
-        // TODO:
-    }
-    
-    func addGroup(for groupController: GroupController) {
-        // TODO:
+    func addGroup(for groupController: GroupController, name: String) {
+        self.viewModel.add(group: name)
+        self.groupController?.refresh()
+        self.listController.refresh()
     }
     
     func removeGroup(for groupController: GroupController, at index: Int) -> Bool {
         if let error = self.viewModel.remove(group: index) {
             return false
         } else {
+            self.listController.refresh()
             return true
         }
     }
     
     func moveGroup(for groupController: GroupController, from index: Int, to newIndex: Int) {
-        self.viewModel.move(group: index, to: index)
+        self.viewModel.move(group: index, to: newIndex)
+        self.listController.refresh()
+    }
+    
+    func editGroup(for groupController: GroupController, at index: Int, with newName: String) {
+        self.viewModel.edit(group: index, with: newName)
+        self.groupController?.refresh()
+        self.listController.refresh()
     }
 }
