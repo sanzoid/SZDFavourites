@@ -77,6 +77,8 @@ extension MainController: ThingControllerDelegate {
     }
     
     func close(for thingController: ThingController) {
+        // clear selected thing
+        self.viewModel.selectedThing = nil
         self.listController.refresh()
     }
 }

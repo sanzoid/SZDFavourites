@@ -109,6 +109,10 @@ class ListViewModel {
         return self.model.thingCount(in: group)
     }
     
+    func thing(with name: ThingName) -> Thing? {
+        return self.model.thing(with: name)
+    }
+    
     func thing(at index: ThingIndex) -> Thing {
         return self.model.thing(at: index)
     }

@@ -32,12 +32,7 @@ extension MainController: ListControllerDelegate {
     }
     
     func selectThing(for listController: ListController, at index: ThingIndex) {
-//        self.editThing(at: index)
-        self.presentThingController(at: index)
-    }
-    
-    func addThing(for listController: ListController) {
-        self.presentEditThingController(isAdd: true)
+        self.presentThingController(at: index, isAdd: false)
     }
     
     func removeThing(for listController: ListController, at index: ThingIndex) {

@@ -109,6 +109,11 @@ final class Model: Codable {
         self.groupList.count(in: group)
     }
     
+    // TODO: unit tests 
+    func thing(with name: ThingName) -> Thing? {
+        return self.thingMap[name]
+    }
+    
     func thing(at index: ThingIndex) -> Thing {
         let name = self.groupList.thingName(at: index)
         let thing = self.thingMap[name]!

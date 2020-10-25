@@ -39,45 +39,52 @@ class MainController: UIViewController {
     }
     
     func addBarButtonItems() {
-        let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressAddThing))
-        let addGroupBarButtonItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(pressAddGroup))
-        let editBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(pressEdit))
-        self.navigationItem.setRightBarButtonItems([addBarButtonItem, addGroupBarButtonItem, editBarButtonItem], animated: true)
+        let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressThingButton))
+        let addGroupBarButtonItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(pressGroupButton))
+        self.navigationItem.setRightBarButtonItems([addBarButtonItem, addGroupBarButtonItem], animated: true)
     }
     
-    @objc func pressAddGroup() {
+    // MARK: Actions
+    
+    @objc func pressGroupButton() {
+        self.presentGroupController()
+    }
+    
+    @objc func pressThingButton() {
+        self.presentAddThingController()
+    }
+    
+    // MARK: Navigation
+    
+    func presentGroupController() {
         let groupController = GroupController()
         groupController.delegate = self
         groupController.dataSource = self
         self.groupController = groupController
-
+        
         let navigationController = UINavigationController(rootViewController: groupController)
         self.present(navigationController, animated: true, completion: nil)
-//        self.presentEditGroupController(isAdd: true)
     }
     
-    @objc func pressAddThing() {
-        self.presentEditThingController(isAdd: true)
+    func presentThingController(with name: ThingName, isAdd: Bool) {
+        guard let thing = self.viewModel.thing(with: name) else { return }
+        self.presentThingController(thing: thing, isAdd: isAdd)
     }
     
-    @objc func pressEdit() {
-        self.listController.toggleEdit()
-    }
-    
-    func editThing(at index: ThingIndex) {
+    func presentThingController(at index: ThingIndex, isAdd: Bool) {
         let thing = self.viewModel.thing(at: index)
-        self.presentEditThingController(isAdd: false, thing: thing)
+        self.presentThingController(thing: thing, isAdd: isAdd)
     }
     
-    func presentThingController(at index: ThingIndex) {
-        let thing = self.viewModel.thing(at: index)
+    func presentThingController(thing: Thing, isAdd: Bool) {
         self.viewModel.selectedThing = thing
         
         let thingController = ThingController()
         thingController.delegate = self
         thingController.dataSource = self
-        
         thingController.refresh()
+        // add: default to edit mode
+        thingController.setEdit(isAdd)
         
         self.thingController = thingController
         
@@ -88,64 +95,20 @@ class MainController: UIViewController {
 extension MainController {
     // TODO: These will be their own controllers
     
-    // MARK: Add Group Controller
-    
-    func presentEditGroupController(isAdd: Bool, group: Group? = nil) {
-        var title: String
-        var actionTitle: String
-        var actionBlock: (String) -> Void
-        var textFieldText: String?
-        
-        if !isAdd, let group = group {
-            title = "Edit Group"
-            actionTitle = "OK"
-            actionBlock = { groupText in
-                self.viewModel.edit(group: group.name, with: groupText)
-                self.listController.refresh()
-            }
-            textFieldText = group.name
-        } else {
-            title = "Add Group"
-            actionTitle = "Add"
-            actionBlock = { groupText in
-                self.viewModel.add(group: groupText)
-                self.listController.refresh()
-            }
-        }
-        
-        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let addAction = UIAlertAction(title: actionTitle, style: .default) { action in
-            guard let text = alertController.textFields?[0].text else { return }
-            
-            actionBlock(text)
-        }
-        alertController.addTextFields(("Group", textFieldText))
-        alertController.addActions(cancelAction, addAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
     // MARK: Add Thing Controller
     
-    func presentEditThingController(isAdd: Bool, thing: Thing? = nil) {
+    func presentAddThingController() {
         var title: String
         var actionTitle: String
         var actionBlock: (String) -> Void
-        var textFieldText: String?
-        if !isAdd, let thing = thing {
-            title = "Edit Thing"
-            actionTitle = "OK"
-            actionBlock = { thingText in
-                self.viewModel.edit(thing: thing.name, with: thingText)
+        title = "Add Thing"
+        actionTitle = "Add"
+        actionBlock = { thingText in
+            if let error = self.viewModel.add(thing: thingText) {
+                // handle error
+            } else {
                 self.listController.refresh()
-            }
-            textFieldText = thing.name
-        } else {
-            title = "Add Thing"
-            actionTitle = "Add"
-            actionBlock = { thingText in
-                self.viewModel.add(thing: thingText)
-                self.listController.refresh()
+                self.presentThingController(with: thingText, isAdd: true)
             }
         }
         
@@ -154,10 +117,9 @@ extension MainController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let addAction = UIAlertAction(title: actionTitle, style: .default) { action in
             guard let thingText = alertController.textFields?[0].text else { return }
-            
             actionBlock(thingText)
         }
-        alertController.addTextFields(("Name", textFieldText))
+        alertController.addTextFields(("Name", nil))
         alertController.addActions(cancelAction, addAction)
         self.present(alertController, animated: true, completion: nil)
     }
