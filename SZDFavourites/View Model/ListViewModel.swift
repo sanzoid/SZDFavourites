@@ -44,13 +44,13 @@ class ListViewModel {
     
     func add(group name: GroupName) -> ListError? {
         if self.groupLimitReached() {
-            return .groupMax
+            return .groupMax(value: groupMax)
         }
         if let error = self.validateGroup(name: name) {
             return error
         }
         if let error = self.model.add(group: name) {
-            return error == .groupExists ? .groupExists : nil
+            return error == .groupExists ? .groupExists(name: name) : nil
         }
         self.save()
         return nil
@@ -84,7 +84,12 @@ class ListViewModel {
             return error
         }
         if let error = self.model.edit(group: name, with: newName) {
-            return error == .groupExists ? .groupExists : nil
+            if error == .groupExists {
+                return .groupExists(name: newName)
+            } else if error == .isDefault {
+                return .isDefault
+            }
+            return nil
         }
         self.save()
         return nil
@@ -119,13 +124,13 @@ class ListViewModel {
     
     func add(thing name: ThingName) -> ListError? {
         if self.thingLimitReached() {
-            return .thingMax
+            return .thingMax(value: thingMax)
         }
         if let error = self.validateThing(name: name) {
             return error
         }
         if let error = self.model.add(thing: name) {
-            return error == .thingExists ? .thingExists : nil
+            return error == .thingExists ? .thingExists(name: name) : nil
         }
         self.save()
         return nil
@@ -146,7 +151,7 @@ class ListViewModel {
             return error
         }
         if let error = self.model.edit(thing: name, with: newName) {
-            return error == .thingExists ? .thingExists : nil
+            return error == .thingExists ? .thingExists(name: newName) : nil
         }
         self.save()
         return nil
@@ -170,13 +175,13 @@ class ListViewModel {
     
     func add(item name: ItemName, to thing: ThingName) -> ListError? {
         if self.itemLimitReached(for: thing) {
-            return .itemMax
+            return .itemMax(value: itemMax)
         }
         if let error = self.validateItem(name: name) {
             return error
         }
         if let error = self.model.add(item: name, to: thing) {
-            return error == .itemExists ? .itemExists : nil
+            return error == .itemExists ? .itemExists(name: name) : nil
         }
         self.save()
         return nil
@@ -187,7 +192,7 @@ class ListViewModel {
             return error
         }
         if let error = self.model.edit(item: index, for: thing, with: newName) {
-            return error == .itemExists ? .itemExists : nil
+            return error == .itemExists ? .itemExists(name: newName) : nil
         }
         self.save()
         return nil
@@ -211,20 +216,20 @@ class ListViewModel {
     // MARK: Validation
     
     private func validateGroup(name: String) -> ListError? {
-        guard !name.isEmpty else { return .groupNameCharMin }
-        guard name.count <= groupNameMax else { return .groupNameCharMax }
+        guard !name.isEmpty else { return .groupNameCharMin(value: 0) }
+        guard name.count <= groupNameMax else { return .groupNameCharMax(value: groupNameMax) }
         return nil
     }
     
     private func validateThing(name: String) -> ListError? {
-        guard !name.isEmpty else { return .thingNameCharMin }
-        guard name.count <= thingNameMax else { return .thingNameCharMax }
+        guard !name.isEmpty else { return .thingNameCharMin(value: 0) }
+        guard name.count <= thingNameMax else { return .thingNameCharMax(value: thingNameMax) }
         return nil
     }
     
     private func validateItem(name: String) -> ListError? {
-        guard !name.isEmpty else { return .itemNameCharMin }
-        guard name.count <= itemNameMax else { return .itemNameCharMax }
+        guard !name.isEmpty else { return .itemNameCharMin(value: 0) }
+        guard name.count <= itemNameMax else { return .itemNameCharMax(value: itemNameMax) }
         return nil
     }
     

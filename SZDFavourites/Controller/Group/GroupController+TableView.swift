@@ -63,7 +63,9 @@ extension GroupController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if self.delegate?.removeGroup(for: self, at: indexPath.row) ?? false {
+            if let error = self.delegate?.removeGroup(for: self, at: indexPath.row) {
+                error.present(on: self)
+            } else {
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         }

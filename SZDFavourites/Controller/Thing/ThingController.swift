@@ -120,12 +120,10 @@ class ThingController: UIViewController {
 // MARK: UI DataSource & Delegate
 
 extension ThingController: TextFieldDelegate {
-    func didEndEditing(for textField: TextField, text: String?) {
-        if let text = text?.nonEmpty() {
-            self.delegate?.editThing(for: self, name: text)
-        } else { // if empty, reset
-            self.refresh()
-        }
+    func didEndEditing(for textField: TextField, text: String) {
+        self.delegate?.editThing(for: self, name: text)
+//        // if empty, reset
+//        self.refresh()
     }
 }
 

@@ -19,19 +19,21 @@ extension MainController: GroupControllerDataSource {
 }
 
 extension MainController: GroupControllerDelegate {
-    func addGroup(for groupController: GroupController, name: String) {
-        self.viewModel.add(group: name)
+    func addGroup(for groupController: GroupController, name: String) -> ErrorMessage? {
+        if let error = self.viewModel.add(group: name) {
+            return ErrorMessage(title: error.title, message: error.message)
+        }
         self.groupController?.refresh()
         self.listController.refresh()
+        return nil
     }
     
-    func removeGroup(for groupController: GroupController, at index: Int) -> Bool {
+    func removeGroup(for groupController: GroupController, at index: Int) -> ErrorMessage? {
         if let error = self.viewModel.remove(group: index) {
-            return false
-        } else {
-            self.listController.refresh()
-            return true
+            return ErrorMessage(title: error.title, message: error.message)
         }
+        self.listController.refresh()
+        return nil
     }
     
     func moveGroup(for groupController: GroupController, from index: Int, to newIndex: Int) {
@@ -39,9 +41,12 @@ extension MainController: GroupControllerDelegate {
         self.listController.refresh()
     }
     
-    func editGroup(for groupController: GroupController, at index: Int, with newName: String) {
-        self.viewModel.edit(group: index, with: newName)
+    func editGroup(for groupController: GroupController, at index: Int, with newName: String) -> ErrorMessage? {
+        if let error = self.viewModel.edit(group: index, with: newName) {
+            return ErrorMessage(title: error.title, message: error.message)
+        }
         self.groupController?.refresh()
         self.listController.refresh()
+        return nil
     }
 }

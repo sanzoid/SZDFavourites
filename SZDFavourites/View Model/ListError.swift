@@ -10,43 +10,55 @@ import Foundation
 
 enum ListError {
     
-    case groupExists
-    case thingExists
-    case itemExists
+    case groupExists(name: String)
+    case thingExists(name: String)
+    case itemExists(name: String)
     case isDefault
     
-    // name character limit
-    case groupNameCharMax
-    case thingNameCharMax
-    case itemNameCharMax
-    // name must not be empty
-    case groupNameCharMin
-    case thingNameCharMin
-    case itemNameCharMin
+    // name character restrictions 
+    case groupNameCharMax(value: Int)
+    case thingNameCharMax(value: Int)
+    case itemNameCharMax(value: Int)
+    case groupNameCharMin(value: Int)
+    case thingNameCharMin(value: Int)
+    case itemNameCharMin(value: Int)
     
     /// reached max number of groups
-    case groupMax
+    case groupMax(value: Int)
     /// reached max number of things
-    case thingMax
+    case thingMax(value: Int)
     /// reached item max for thing
-    case itemMax
+    case itemMax(value: Int)
     
-    func message() -> String {
+    var title: String? {
         switch self {
-        case .groupExists:
-            return "Group already exists."
-        case .thingExists:
-            return "Thing already exists."
-        case .itemExists:
-            return "Item already exists."
-        case .groupNameCharMax, .thingNameCharMax, .itemNameCharMax:
-            return "Name is too long."
-        case .groupNameCharMin, .thingNameCharMin, .itemNameCharMin:
-            return "Name is required."
+        case .groupExists, .thingExists, .itemExists,
+             .groupNameCharMax, .thingNameCharMax, .itemNameCharMax,
+             .groupNameCharMin, .thingNameCharMin, .itemNameCharMin:
+            return "Invalid Input"
+        default:
+            return "Error"
+        }
+    }
+    
+    var message: String? {
+        switch self {
+        case .groupExists(let name),
+             .thingExists(let name),
+             .itemExists(let name):
+            return "\"\(name)\" already exists."
+        case .groupNameCharMax(let max),
+             .thingNameCharMax(let max),
+             .itemNameCharMax(let max):
+            return "Name cannot be longer than \(max)."
+        case .groupNameCharMin(let min),
+             .thingNameCharMin(let min),
+             .itemNameCharMin(let min):
+            return "Name cannot be shorter than \(min)."
         case .isDefault:
             return "Default group cannot be modified."
         default:
-            return "An error has occurred."
+            return nil
         }
     }
 }

@@ -9,8 +9,8 @@
 import Foundation
 
 protocol GroupControllerDelegate: class {
-    func addGroup(for groupController: GroupController, name: String)
-    func removeGroup(for groupController: GroupController, at index: Int) -> Bool
+    func addGroup(for groupController: GroupController, name: String) -> ErrorMessage?
+    func removeGroup(for groupController: GroupController, at index: Int) -> ErrorMessage?
     func moveGroup(for groupController: GroupController, from index: Int, to newIndex: Int)
-    func editGroup(for groupController: GroupController, at index: Int, with name: String)
+    func editGroup(for groupController: GroupController, at index: Int, with name: String) -> ErrorMessage?
 }

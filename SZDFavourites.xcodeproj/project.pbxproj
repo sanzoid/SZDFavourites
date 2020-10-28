@@ -60,6 +60,8 @@
 		5A710AD325446FDB00ECB7A2 /* ListController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A710AD225446FDB00ECB7A2 /* ListController+TableView.swift */; };
 		5A710AD52544BA5500ECB7A2 /* GroupController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A710AD42544BA5500ECB7A2 /* GroupController+TableView.swift */; };
 		5A710AD82544BB5F00ECB7A2 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A710AD72544BB5F00ECB7A2 /* String.swift */; };
+		5A710ADA2548AC5500ECB7A2 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A710AD92548AC5500ECB7A2 /* ErrorMessage.swift */; };
+		5A710ADC2548ACD000ECB7A2 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A710ADB2548ACD000ECB7A2 /* UIViewController.swift */; };
 		5AA479B1251BDE76004415DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B0251BDE76004415DC /* AppDelegate.swift */; };
 		5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA479B2251BDE76004415DC /* SceneDelegate.swift */; };
 		5AA479BA251BDE79004415DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AA479B9251BDE79004415DC /* Assets.xcassets */; };
@@ -135,6 +137,8 @@
 		5A710AD225446FDB00ECB7A2 /* ListController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListController+TableView.swift"; sourceTree = "<group>"; };
 		5A710AD42544BA5500ECB7A2 /* GroupController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupController+TableView.swift"; sourceTree = "<group>"; };
 		5A710AD72544BB5F00ECB7A2 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		5A710AD92548AC5500ECB7A2 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		5A710ADB2548ACD000ECB7A2 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		5AA479AD251BDE76004415DC /* SZDFavourites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SZDFavourites.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AA479B0251BDE76004415DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5AA479B2251BDE76004415DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -228,6 +232,7 @@
 				5A670C8D25361D5A00C769D3 /* TextField.swift */,
 				5A710AC5253E1DB600ECB7A2 /* TableFooterTextField.swift */,
 				5A710AC7253E1F8C00ECB7A2 /* ItemCell.swift */,
+				5A710AD92548AC5500ECB7A2 /* ErrorMessage.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -315,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				5A710AD72544BB5F00ECB7A2 /* String.swift */,
+				5A710ADB2548ACD000ECB7A2 /* UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -555,6 +561,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A710ADA2548AC5500ECB7A2 /* ErrorMessage.swift in Sources */,
 				5A2FC6512532053100002DBC /* MainController+List.swift in Sources */,
 				5A710ACA253F692F00ECB7A2 /* ViewMode.swift in Sources */,
 				5A2FC627251E4B4A00002DBC /* Asset.swift in Sources */,
@@ -562,6 +569,7 @@
 				5A670C7C2534CAD100C769D3 /* ThingControllerDelegate.swift in Sources */,
 				5A670C8E25361D5A00C769D3 /* TextField.swift in Sources */,
 				5A670C692534C2E500C769D3 /* ListController.swift in Sources */,
+				5A710ADC2548ACD000ECB7A2 /* UIViewController.swift in Sources */,
 				5A2FC64F2531F7B500002DBC /* MainController.swift in Sources */,
 				5A2FC65E2534C11900002DBC /* ListTableGroupHeader.swift in Sources */,
 				5A670C812534CCC200C769D3 /* ItemController.swift in Sources */,

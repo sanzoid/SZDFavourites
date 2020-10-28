@@ -41,15 +41,18 @@ class GroupController: UIViewController {
 }
 
 extension GroupController: TableFooterTextFieldDelegate {
-    func didFinishEditing(footer: TableFooterTextField, text: String?) {
-        guard let text = text?.nonEmpty() else { return }
-        self.delegate?.addGroup(for: self, name: text)
+    func didFinishEditing(footer: TableFooterTextField, text: String) {
+        if let error = self.delegate?.addGroup(for: self, name: text) {
+            error.present(on: self)
+        }
     }
 }
 
 extension GroupController: ItemCellDelegate {
-    func didEndEditing(for itemCell: ItemCell, text: String?) {
-        guard let text = text?.nonEmpty() else { return }
-        self.delegate?.editGroup(for: self, at: itemCell.tag, with: text)
+    func didEndEditing(for itemCell: ItemCell, text: String) {
+        if let error = self.delegate?.editGroup(for: self, at: itemCell.tag, with: text) {
+            error.present(on: self)
+            self.refresh()
+        }
     }
 }

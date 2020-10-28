@@ -53,17 +53,15 @@ class ItemController: UIViewController {
 // MARK: UI Delegate
 
 extension ItemController: TableFooterTextFieldDelegate {
-    func didFinishEditing(footer: TableFooterTextField, text: String?) {
-        guard let text = text?.nonEmpty() else { return }
+    func didFinishEditing(footer: TableFooterTextField, text: String) {
         self.delegate?.addItem(for: self, name: text)
         footer.setText(nil, placeholder: "Add Item")
     }
 }
 
 extension ItemController: ItemCellDelegate {
-    func didEndEditing(for itemCell: ItemCell, text: String?) {
+    func didEndEditing(for itemCell: ItemCell, text: String) {
         // TODO: Where should we validate empty?
-        guard let text = text?.nonEmpty() else { return }
         let index = itemCell.tag
         self.delegate?.editItem(for: self, at: index, with: text)
     }

@@ -10,7 +10,7 @@
 import UIKit
 
 protocol TextFieldDelegate: class {
-    func didEndEditing(for textField: TextField, text: String?)
+    func didEndEditing(for textField: TextField, text: String)
 }
 
 class TextField: UIView {
@@ -65,6 +65,6 @@ extension TextField: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.delegate?.didEndEditing(for: self, text: textField.text)
+        self.delegate?.didEndEditing(for: self, text: textField.text ?? "")
     }
 }

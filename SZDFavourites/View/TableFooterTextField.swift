@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TableFooterTextFieldDelegate: class {
-    func didFinishEditing(footer: TableFooterTextField, text: String?)
+    func didFinishEditing(footer: TableFooterTextField, text: String)
 }
 
 class TableFooterTextField: UITableViewHeaderFooterView {
@@ -44,7 +44,7 @@ class TableFooterTextField: UITableViewHeaderFooterView {
 }
 
 extension TableFooterTextField: TextFieldDelegate {
-    func didEndEditing(for textField: TextField, text: String?) {
+    func didEndEditing(for textField: TextField, text: String) {
         self.delegate?.didFinishEditing(footer: self, text: text)
     }
 }
