@@ -154,6 +154,7 @@ final class Model: Codable {
     }
     
     func edit(thing name: ThingName, with newName: ThingName) -> ModelError? {
+        guard name != newName else { return nil }
         guard !self.thingExists(name: newName) else { return .thingExists }
         
         // edit in thingMap

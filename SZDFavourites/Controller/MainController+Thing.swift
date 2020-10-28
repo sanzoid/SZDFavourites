@@ -44,10 +44,13 @@ extension MainController: ThingControllerDelegate {
         self.listController.refresh()
     }
     
-    func editThing(for thingController: ThingController, name: String) {
-        guard let thing = self.viewModel.selectedThing else { return }
-        self.viewModel.edit(thing: thing.name, with: name)
+    func editThing(for thingController: ThingController, name: String) -> ErrorMessage? {
+        guard let thing = self.viewModel.selectedThing else { return nil }
+        if let error = self.viewModel.edit(thing: thing.name, with: name) {
+            return ErrorMessage(title: error.title, message: error.message)
+        }
         self.listController.refresh()
+        return nil 
     }
     
     func removeThing(for thingController: ThingController) {
@@ -56,14 +59,20 @@ extension MainController: ThingControllerDelegate {
         self.listController.refresh()
     }
     
-    func addItem(for thingController: ThingController, name: String) {
-        guard let thing = self.viewModel.selectedThing else { return }
-        self.viewModel.add(item: name, to: thing.name)
+    func addItem(for thingController: ThingController, name: String) -> ErrorMessage? {
+        guard let thing = self.viewModel.selectedThing else { return nil }
+        if let error = self.viewModel.add(item: name, to: thing.name) {
+            return ErrorMessage(title: error.title, message: error.message)
+        }
+        return nil 
     }
     
-    func editItem(for thingController: ThingController, at index: Int, with newName: String) {
-        guard let thing = self.viewModel.selectedThing else { return }
-        self.viewModel.edit(item: index, for: thing.name, with: newName)
+    func editItem(for thingController: ThingController, at index: Int, with newName: String) -> ErrorMessage? {
+        guard let thing = self.viewModel.selectedThing else { return nil }
+        if let error = self.viewModel.edit(item: index, for: thing.name, with: newName) {
+            return ErrorMessage(title: error.title, message: error.message)
+        }
+        return nil
     }
     
     func moveItem(for thingController: ThingController, from index: Int, to newIndex: Int) {

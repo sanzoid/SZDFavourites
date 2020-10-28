@@ -121,9 +121,10 @@ class ThingController: UIViewController {
 
 extension ThingController: TextFieldDelegate {
     func didEndEditing(for textField: TextField, text: String) {
-        self.delegate?.editThing(for: self, name: text)
-//        // if empty, reset
-//        self.refresh()
+        if let error = self.delegate?.editThing(for: self, name: text) {
+            error.present(on: self)
+            self.refresh()
+        }
     }
 }
 

@@ -18,8 +18,11 @@ extension ThingController: ItemControllerDataSource {
 
 extension ThingController: ItemControllerDelegate {
     func addItem(for itemController: ItemController, name: String) {
-        self.delegate?.addItem(for: self, name: name)
-        self.itemController.refresh()
+        if let error = self.delegate?.addItem(for: self, name: name) {
+            error.present(on: self)
+        } else {
+            self.itemController.refresh()
+        }
     }
     
     func removeItem(for itemController: ItemController, at index: Int) {
@@ -31,6 +34,9 @@ extension ThingController: ItemControllerDelegate {
     }
     
     func editItem(for itemController: ItemController, at index: Int, with newName: String) {
-        self.delegate?.editItem(for: self, at: index, with: newName)
+        if let error = self.delegate?.editItem(for: self, at: index, with: newName) {
+            error.present(on: self)
+            self.itemController.refresh()
+        }
     }
 }

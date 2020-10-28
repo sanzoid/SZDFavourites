@@ -147,6 +147,7 @@ class ListViewModel {
     }
 
     func edit(thing name: ThingName, with newName: ThingName) -> ListError? {
+        guard name != newName else { return nil }
         if let error = self.validateThing(name: newName) {
             return error
         }
