@@ -78,8 +78,6 @@ class ListViewModel {
     }
     
     func edit(group name: GroupName, with newName: GroupName) -> ListError? {
-        // TODO: add more checks for no changes
-        guard name != newName else { return nil }
         if let error = self.validateGroup(name: newName) {
             return error
         }
@@ -147,7 +145,6 @@ class ListViewModel {
     }
 
     func edit(thing name: ThingName, with newName: ThingName) -> ListError? {
-        guard name != newName else { return nil }
         if let error = self.validateThing(name: newName) {
             return error
         }

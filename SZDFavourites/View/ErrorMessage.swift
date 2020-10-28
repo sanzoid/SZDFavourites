@@ -11,15 +11,19 @@ import UIKit
 class ErrorMessage {
     var title: String?
     var message: String?
+    var okHandler: (() -> Void)?
     
-    init(title: String?, message: String?) {
+    init(title: String?, message: String?, okHandler: (() -> Void)? = nil) {
         self.title = title
         self.message = message
+        self.okHandler = okHandler
     }
     
     func present(on viewController: UIViewController) {
         let alertController = UIAlertController(title: self.title, message: self.message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            self.okHandler?()
+        }
         alertController.addAction(okAction)
         
         viewController.top().present(alertController, animated: true, completion: nil)

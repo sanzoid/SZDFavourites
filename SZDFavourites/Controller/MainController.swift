@@ -106,6 +106,10 @@ extension MainController {
         actionBlock = { thingText in
             if let error = self.viewModel.add(thing: thingText) {
                 // handle error
+                let errorMessage = ErrorMessage(title: error.title, message: error.message) {
+                    self.presentAddThingController()
+                }
+                errorMessage.present(on: self)
             } else {
                 self.listController.refresh()
                 self.presentThingController(with: thingText, isAdd: true)

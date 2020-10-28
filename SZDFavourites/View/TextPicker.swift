@@ -16,7 +16,7 @@ protocol TextPickerDataSource: class {
 }
 
 protocol TextPickerDelegate: class {
-    func didEndEditing(for textPicker: TextPicker, oldText: String?, text: String?)
+    func didEndEditing(for textPicker: TextPicker, oldText: String, text: String)
 }
 
 class TextPicker: UIView {
@@ -95,7 +95,7 @@ extension TextPicker: UITextFieldDelegate {
         self.oldText = textField.text
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.delegate?.didEndEditing(for: self, oldText: self.oldText, text: textField.text)
+        self.delegate?.didEndEditing(for: self, oldText: self.oldText ?? "", text: textField.text ?? "")
     }
 }
 

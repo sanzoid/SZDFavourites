@@ -146,8 +146,7 @@ extension ThingController: TextPickerDataSource {
 }
 
 extension ThingController: TextPickerDelegate {
-    func didEndEditing(for textPicker: TextPicker, oldText: String?, text: String?) {
-        guard let oldText = oldText, let text = text else { return }
+    func didEndEditing(for textPicker: TextPicker, oldText: String, text: String) {
         guard oldText != text else { return }
         self.delegate?.moveThing(for: self, from: oldText, to: text)
     }

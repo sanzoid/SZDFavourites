@@ -10,12 +10,12 @@ import Foundation
 
 enum ListError {
     
-    case groupExists(name: String)
+    case groupExists(name: String) // TODO: lowercase to check 
     case thingExists(name: String)
     case itemExists(name: String)
     case isDefault
     
-    // name character restrictions 
+    // name character restrictions
     case groupNameCharMax(value: Int)
     case thingNameCharMax(value: Int)
     case itemNameCharMax(value: Int)

@@ -88,10 +88,12 @@ final class Model: Codable {
     }
     
     func move(group index: Int, to newIndex: Int) {
+        guard index != newIndex else { return } // TODO: unit test
         self.groupList.move(group: index, to: newIndex)
     }
     
     func edit(group name: GroupName, with newName: GroupName) -> ModelError? {
+        guard name != newName else { return nil } // TODO: unit test
         guard !self.isDefault(group: name) else { return .isDefault }
         guard !self.groupExists(name: newName) else { return .groupExists }
         self.groupList.edit(group: name, with: newName)
@@ -146,15 +148,17 @@ final class Model: Codable {
     }
     
     func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {
+        guard groupName != newGroupName else { return } // TODO: unit test
         self.groupList.move(thing: name, from: groupName, to: newGroupName)
     }
     
     func move(thing index: ThingIndex, to newIndex: ThingIndex) {
+        guard index != newIndex else { return } // TODO: unit test
         self.groupList.move(thing: index, to: newIndex)
     }
     
     func edit(thing name: ThingName, with newName: ThingName) -> ModelError? {
-        guard name != newName else { return nil }
+        guard name != newName else { return nil } // TODO: unit test
         guard !self.thingExists(name: newName) else { return .thingExists }
         
         // edit in thingMap
@@ -190,6 +194,7 @@ final class Model: Codable {
     }
     
     func move(item index: Int, for thing: ThingName, to newIndex: Int) {
+        guard index != newIndex else { return }  // TODO: unit test
         self.thingMap[thing]?.move(item: index, to: newIndex)
     }
     

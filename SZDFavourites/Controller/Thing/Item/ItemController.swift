@@ -61,7 +61,6 @@ extension ItemController: TableFooterTextFieldDelegate {
 
 extension ItemController: ItemCellDelegate {
     func didEndEditing(for itemCell: ItemCell, text: String) {
-        // TODO: Where should we validate empty?
         let index = itemCell.tag
         self.delegate?.editItem(for: self, at: index, with: text)
     }
