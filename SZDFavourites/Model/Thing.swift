@@ -41,12 +41,18 @@ final class Thing: Codable {
         return self.items[index]
     }
     
-    func indexOfItem(with name: ItemName) -> Int? {
-        return self.items.firstIndex{$0.name == name}
+    func indexOfItem(with name: ItemName, caseSensitive: Bool = true) -> Int? {
+        return self.items.firstIndex{
+            if caseSensitive {
+                return $0.name == name
+            } else {
+                return $0.name.lowercased() == name.lowercased()
+            }
+        }
     }
     
-    func exists(item name: ItemName) -> Bool {
-        return self.indexOfItem(with: name) != nil
+    func exists(item name: ItemName, caseSensitive: Bool = true) -> Bool {
+        return self.indexOfItem(with: name, caseSensitive: caseSensitive) != nil
     }
     
     func addItem(name: ItemName, image: UIImage? = nil) {

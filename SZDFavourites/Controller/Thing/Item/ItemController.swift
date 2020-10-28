@@ -55,7 +55,7 @@ class ItemController: UIViewController {
 extension ItemController: TableFooterTextFieldDelegate {
     func didFinishEditing(footer: TableFooterTextField, text: String) {
         self.delegate?.addItem(for: self, name: text)
-        footer.setText(nil, placeholder: "Add Item")
+        footer.setText(nil)
     }
 }
 

@@ -41,6 +41,10 @@ class TableFooterTextField: UITableViewHeaderFooterView {
     func setText(_ text: String?, placeholder: String?) {
         self.textField.setText(text, placeholder: placeholder)
     }
+    
+    func setText(_ text: String?) {
+        self.textField.setText(text)
+    }
 }
 
 extension TableFooterTextField: TextFieldDelegate {

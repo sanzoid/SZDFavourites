@@ -42,9 +42,11 @@ class GroupController: UIViewController {
 
 extension GroupController: TableFooterTextFieldDelegate {
     func didFinishEditing(footer: TableFooterTextField, text: String) {
+        guard !text.isEmpty else { return }
         if let error = self.delegate?.addGroup(for: self, name: text) {
             error.present(on: self)
         }
+        footer.setText(nil)
     }
 }
 

@@ -30,8 +30,12 @@ final class ThingMap: Codable {
         return self.things[name]
     }
     
-    func exists(name: ThingName) -> Bool {
-        return self.things[name] != nil
+    func exists(name: ThingName, caseSensitive: Bool = true) -> Bool {
+        if caseSensitive {
+            return self.things[name] != nil
+        } else {
+            return self.things[caseInsensitive: name] != nil
+        }
     }
     
     func add(thing name: ThingName) {

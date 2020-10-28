@@ -70,7 +70,7 @@ final class Model: Codable {
     }
     
     func add(group name: GroupName) -> ModelError? {
-        guard !self.groupExists(name: name) else { return .groupExists }
+        guard !self.groupExists(name: name, caseSensitive: false) else { return .groupExists }
         self.groupList.add(group: name)
         return nil
     }
@@ -93,9 +93,11 @@ final class Model: Codable {
     }
     
     func edit(group name: GroupName, with newName: GroupName) -> ModelError? {
-        guard name != newName else { return nil } // TODO: unit test
-        guard !self.isDefault(group: name) else { return .isDefault }
-        guard !self.groupExists(name: newName) else { return .groupExists }
+        if name == newName { return nil } // TODO: unit test
+        if self.isDefault(group: name) { return .isDefault }
+        if let error = self.validateEditGroup(group: name, with: newName) {
+            return error // TODO: unit test
+        }
         self.groupList.edit(group: name, with: newName)
         return nil
     }
@@ -128,7 +130,7 @@ final class Model: Codable {
     }
     
     func add(thing name: ThingName) -> ModelError? {
-        guard !self.thingExists(name: name) else { return .thingExists }
+        guard !self.thingExists(name: name, caseSensitive: false) else { return .thingExists }
         
         self.thingMap.add(thing: name)
         self.groupList.add(thing: name)
@@ -158,8 +160,10 @@ final class Model: Codable {
     }
     
     func edit(thing name: ThingName, with newName: ThingName) -> ModelError? {
-        guard name != newName else { return nil } // TODO: unit test
-        guard !self.thingExists(name: newName) else { return .thingExists }
+        if name == newName { return nil } // TODO: unit test
+        if let error = self.validateEditThing(thing: name, with: newName) {
+            return error // TODO: unit test
+        }
         
         // edit in thingMap
         self.thingMap.edit(thing: name, with: newName)
@@ -184,7 +188,7 @@ final class Model: Codable {
     }
     
     func add(item name: ItemName, to thing: ThingName) -> ModelError? {
-        guard !self.itemExists(name: name, for: thing) else { return .itemExists }
+        guard !self.itemExists(name: name, for: thing, caseSensitive: false) else { return .itemExists }
         self.thingMap[thing]?.addItem(name: name)
         return nil
     }
@@ -199,29 +203,54 @@ final class Model: Codable {
     }
     
     func edit(item index: Int, for thing: ThingName, with newName: ItemName) -> ModelError? {
-        // TODO: Unit test this case, and add this case to other calls 
-        if self.item(at: index, for: thing).name == newName { return nil } // no change
-        guard !self.itemExists(name: newName, for: thing) else { return .itemExists }
+        // TODO: unit tests
+        let name = self.item(at: index, for: thing).name
+        if name == newName { return nil } // no change
+        if let error = self.validateEditItem(item: name, for: thing, with: newName) {
+            return error
+        }
         self.thingMap[thing]?.edit(item: index, with: newName)
         return nil
     }
     
     func edit(item index: Int, for thing: ThingName, with newImage: UIImage?) {
+        if self.item(at: index, for: thing).image == newImage { return }
         self.thingMap[thing]?.edit(item: index, with: newImage)
     }
     
     // MARK: Helper
     
-    private func groupExists(name: GroupName) -> Bool {
-        return self.groupList.exists(group: name)
+    // TODO: unit tests
+    private func validateEditGroup(group name: GroupName, with newName: GroupName) -> ModelError? {
+        if name.lowercased() == newName.lowercased() { return nil }
+        guard !self.groupExists(name: newName, caseSensitive: false) else { return .groupExists }
+        return nil
     }
     
-    private func thingExists(name: ThingName) -> Bool {
-        return self.thingMap.exists(name: name) && self.groupList.thingExists(name: name)
+    // TODO: unit tests
+    private func validateEditThing(thing name: ThingName, with newName: ThingName) -> ModelError? {
+        if name.lowercased() == newName.lowercased() { return nil }
+        if self.thingExists(name: newName, caseSensitive: false) { return .thingExists }
+        return nil
     }
     
-    private func itemExists(name: ItemName, for thing: ThingName) -> Bool {
-        return self.thingMap[thing]!.exists(item: name)
+    // TODO: unit tests
+    private func validateEditItem(item name: ItemName, for thing: ThingName, with newName: ItemName) -> ModelError? {
+        if name.lowercased() == newName.lowercased() { return nil }
+        if self.itemExists(name: newName, for: thing, caseSensitive: false) { return .itemExists }
+        return nil
+    }
+    
+    private func groupExists(name: GroupName, caseSensitive: Bool = true) -> Bool {
+        return self.groupList.exists(group: name, caseSensitive: caseSensitive)
+    }
+    
+    private func thingExists(name: ThingName, caseSensitive: Bool = true) -> Bool {
+        return self.thingMap.exists(name: name, caseSensitive: caseSensitive) && self.groupList.thingExists(name: name, caseSensitive: caseSensitive)
+    }
+    
+    private func itemExists(name: ItemName, for thing: ThingName, caseSensitive: Bool = true) -> Bool {
+        return self.thingMap[thing]!.exists(item: name, caseSensitive: caseSensitive)
     }
     
     private func isDefault(group name: GroupName) -> Bool {

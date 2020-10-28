@@ -53,6 +53,10 @@ class TextField: UIView {
     
     func setText(_ text: String?, placeholder: String?) {
         self.textField.placeholder = placeholder
+        self.setText(text)
+    }
+    
+    func setText(_ text: String?) {
         self.textField.text = text
     }
 }

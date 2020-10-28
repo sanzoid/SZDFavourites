@@ -47,12 +47,19 @@ final class GroupList: Codable {
         return self.groups.count
     }
     
-    func indexOf(group name: GroupName) -> Int? {
-        return self.groups.firstIndex{ $0.name == name }
+    func indexOf(group name: GroupName, caseSensitive: Bool = true) -> Int? {
+        // TOOO: unit tests 
+        return self.groups.firstIndex{
+            if caseSensitive {
+                return $0.name == name
+            } else {
+                return $0.name.lowercased() == name.lowercased()
+            }
+        }
     }
     
-    func group(with name: GroupName) -> Group? {
-        guard let index = self.indexOf(group: name) else { return nil }
+    func group(with name: GroupName, caseSensitive: Bool = true) -> Group? {
+        guard let index = self.indexOf(group: name, caseSensitive: caseSensitive) else { return nil }
         return self.groups[index]
     }
     
@@ -60,8 +67,8 @@ final class GroupList: Codable {
         return self.groups[index]
     }
     
-    func exists(group name: GroupName) -> Bool {
-        return self.group(with: name) != nil
+    func exists(group name: GroupName, caseSensitive: Bool = true) -> Bool {
+        return self.group(with: name, caseSensitive: caseSensitive) != nil
     }
     
     // TODO: Default group placement - do we want it fixed at the top, at the bottom, or wherever? Do we want to insert new group based on default position?
@@ -122,13 +129,13 @@ final class GroupList: Codable {
         return self.groups[index.group].thing(at: index.thing)
     }
     
-    func indexOfThing(name: ThingName) -> ThingIndex? {
+    func indexOfThing(name: ThingName, caseSensitive: Bool = true) -> ThingIndex? {
         // find the group it's in, find index in things
         var groupIndex: Int = 0
         var thingIndex: Int? = nil
         
         for group in self.groups {
-            if let index = group.indexOf(thing: name) {
+            if let index = group.indexOf(thing: name, caseSensitive: caseSensitive) {
                 thingIndex = index
                 break
             }
@@ -142,8 +149,8 @@ final class GroupList: Codable {
         return nil
     }
     
-    func thingExists(name: ThingName) -> Bool {
-        return self.indexOfThing(name: name) != nil
+    func thingExists(name: ThingName, caseSensitive: Bool = true) -> Bool {
+        return self.indexOfThing(name: name, caseSensitive: caseSensitive) != nil
     }
     
     func add(thing: ThingName) {

@@ -40,8 +40,14 @@ final class Group: Codable {
         return self.things[index]
     }
     
-    func indexOf(thing name: ThingName) -> Int? {
-        return self.things.firstIndex{ $0 == name }
+    func indexOf(thing name: ThingName, caseSensitive: Bool = true) -> Int? {
+        return self.things.firstIndex{
+            if caseSensitive {
+                return $0 == name
+            } else {
+                return $0.lowercased() == name.lowercased()
+            }
+        }
     }
     
     func add(thing name: ThingName) {

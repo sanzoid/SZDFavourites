@@ -18,6 +18,7 @@ extension ThingController: ItemControllerDataSource {
 
 extension ThingController: ItemControllerDelegate {
     func addItem(for itemController: ItemController, name: String) {
+        guard !name.isEmpty else { return }
         if let error = self.delegate?.addItem(for: self, name: name) {
             error.present(on: self)
         } else {
