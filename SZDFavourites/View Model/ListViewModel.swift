@@ -16,20 +16,13 @@ import UIKit
 */
 class ListViewModel {
     
-    let groupNameMax = 64
-    let thingNameMax = 64
-    let itemNameMax = 128
-    
-    let groupMax = 5
-    let thingMax = 20
-    let itemMax = 10
-    
     let model: Model
-    
+    var properties: ListProperties
     var selectedThing: Thing? 
     
-    init(model: Model) {
+    init(model: Model, properties: ListProperties) {
         self.model = model
+        self.properties = properties 
     }
     
     // MARK: Group
@@ -43,8 +36,8 @@ class ListViewModel {
     }
     
     func add(group name: GroupName) -> ListError? {
-        if self.groupLimitReached() {
-            return .groupMax(value: groupMax)
+        if let error = self.groupLimitReached() {
+            return error
         }
         if let error = self.validateGroup(name: name) {
             return error
@@ -121,8 +114,8 @@ class ListViewModel {
     }
     
     func add(thing name: ThingName) -> ListError? {
-        if self.thingLimitReached() {
-            return .thingMax(value: thingMax)
+        if let error = self.thingLimitReached() {
+            return error
         }
         if let error = self.validateThing(name: name) {
             return error
@@ -172,8 +165,8 @@ class ListViewModel {
     }
     
     func add(item name: ItemName, to thing: ThingName) -> ListError? {
-        if self.itemLimitReached(for: thing) {
-            return .itemMax(value: itemMax)
+        if let error = self.itemLimitReached(for: thing) {
+            return error
         }
         if let error = self.validateItem(name: name) {
             return error
@@ -214,33 +207,42 @@ class ListViewModel {
     // MARK: Validation
     
     private func validateGroup(name: String) -> ListError? {
-        guard !name.isEmpty else { return .groupNameCharMin(value: 0) }
-        guard name.count <= groupNameMax else { return .groupNameCharMax(value: groupNameMax) }
+        let min = self.properties.groupNameMin
+        guard name.count >= min else { return .groupNameCharMin(value: min) }
+        let max = self.properties.groupNameMax
+        guard name.count <= max else { return .groupNameCharMax(value: max) }
         return nil
     }
     
     private func validateThing(name: String) -> ListError? {
-        guard !name.isEmpty else { return .thingNameCharMin(value: 0) }
-        guard name.count <= thingNameMax else { return .thingNameCharMax(value: thingNameMax) }
+        let min = self.properties.thingNameMin
+        guard name.count >= min else { return .thingNameCharMin(value: min) }
+        let max = self.properties.thingNameMax
+        guard name.count <= max else { return .thingNameCharMax(value: max) }
         return nil
     }
     
     private func validateItem(name: String) -> ListError? {
-        guard !name.isEmpty else { return .itemNameCharMin(value: 0) }
-        guard name.count <= itemNameMax else { return .itemNameCharMax(value: itemNameMax) }
+        let min = self.properties.itemNameMin
+        guard name.count >= min else { return .itemNameCharMin(value: min) }
+        let max = self.properties.itemNameMax
+        guard name.count <= max else { return .itemNameCharMax(value: max) }
         return nil
     }
     
-    private func groupLimitReached() -> Bool {
-        return self.groupCount() >= groupMax
+    private func groupLimitReached() -> ListError? {
+        let max = self.properties.groupMax
+        return self.groupCount() >= max ? .groupMax(value: max) : nil
     }
     
-    private func thingLimitReached() -> Bool {
-        return self.thingCount() >= thingMax
+    private func thingLimitReached() -> ListError? {
+        let max = self.properties.thingMax
+        return self.thingCount() >= max ? .thingMax(value: max) : nil
     }
     
-    private func itemLimitReached(for thing: ThingName) -> Bool {
-        return self.itemCount(for: thing) >= itemMax
+    private func itemLimitReached(for thing: ThingName) -> ListError? {
+        let max = self.properties.itemMax
+        return self.itemCount(for: thing) >= max ? .itemMax(value: max) : nil
     }
     
     // MARK: Save

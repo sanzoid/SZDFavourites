@@ -33,7 +33,7 @@ class ListControllerOld: UIViewController {
     
     init(model: Model) {
         self.model = model
-        self.viewModel = ListViewModel(model: model)
+        self.viewModel = ListViewModel(model: model, properties: ListProperties())
         
         self.tableView = ListTableView()
         

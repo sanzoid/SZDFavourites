@@ -17,7 +17,7 @@ class MainController: UIViewController {
     weak var thingController: ThingController?
     
     init(model: Model) {
-        self.viewModel = ListViewModel(model: model)
+        self.viewModel = ListViewModel(model: model, properties: ListProperties())
         self.listController = ListController()
         
         super.init(nibName: nil, bundle: nil)

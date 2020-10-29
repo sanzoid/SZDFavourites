@@ -36,6 +36,8 @@ enum ListError {
              .groupNameCharMax, .thingNameCharMax, .itemNameCharMax,
              .groupNameCharMin, .thingNameCharMin, .itemNameCharMin:
             return "Invalid Input"
+        case .groupMax, .thingMax, .itemMax:
+            return "Limit Reached"
         default:
             return "Error"
         }
@@ -50,11 +52,19 @@ enum ListError {
         case .groupNameCharMax(let max),
              .thingNameCharMax(let max),
              .itemNameCharMax(let max):
-            return "Name cannot be longer than \(max)."
+            return "Name cannot be longer than \(max) characters."
         case .groupNameCharMin(let min),
              .thingNameCharMin(let min),
              .itemNameCharMin(let min):
-            return "Name cannot be shorter than \(min)."
+            if min <= 1 {
+                return "Name cannot be empty."
+            } else {
+                return "Name must be at least \(min) characters."
+            }
+        case .groupMax(let value),
+             .thingMax(let value),
+             .itemMax(let value):
+            return "Only a maximum of \(value) is allowed."
         case .isDefault:
             return "Default group cannot be modified."
         default:
