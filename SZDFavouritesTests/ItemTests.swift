@@ -37,10 +37,10 @@ class ItemTests: XCTestCase {
     }
 
     func testEditName() {
-        // name -> new name
+        // name -> new name, case sensitive
         XCTAssert(self.item1.name == "Item1")
-        item1.edit(name: "ItemA")
-        XCTAssert(self.item1.name == "ItemA")
+        item1.edit(name: "ITEM1")
+        XCTAssert(self.item1.name == "ITEM1")
     }
 
     func testEditImage() {
@@ -63,6 +63,8 @@ class ItemTests: XCTestCase {
         XCTAssert(item1 != item2)
         XCTAssert(item1 == item1)
     }
+    
+    // TODO: test codable 
     
     // TODO: testPersistence 
 }

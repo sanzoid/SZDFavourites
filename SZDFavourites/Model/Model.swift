@@ -115,12 +115,12 @@ final class Model: Codable {
     
     // TODO: unit tests 
     func thing(with name: ThingName) -> Thing? {
-        return self.thingMap[name]
+        return self.thingMap.thing(with: name)
     }
     
     func thing(at index: ThingIndex) -> Thing {
         let name = self.groupList.thingName(at: index)
-        let thing = self.thingMap[name]!
+        let thing = self.thingMap.thing(with: name)!
         return thing
     }
     
@@ -179,27 +179,27 @@ final class Model: Codable {
     // MARK: Item
     
     func itemCount(for thing: ThingName) -> Int {
-        return self.thingMap[thing]!.itemCount()
+        return self.thingMap.thing(with: thing)!.itemCount()
     }
     
     // TODO: unit tests
     func item(at index: Int, for thing: ThingName) -> Item {
-        return self.thingMap[thing]!.item(at: index)
+        return self.thingMap.thing(with: thing)!.item(at: index)
     }
     
     func add(item name: ItemName, to thing: ThingName) -> ModelError? {
         guard !self.itemExists(name: name, for: thing, caseSensitive: false) else { return .itemExists }
-        self.thingMap[thing]?.addItem(name: name)
+        self.thingMap.thing(with: thing)?.addItem(name: name)
         return nil
     }
     
     func remove(item index: Int, for thing: ThingName) {
-        self.thingMap[thing]?.removeItem(at: index)
+        self.thingMap.thing(with: thing)?.removeItem(at: index)
     }
     
     func move(item index: Int, for thing: ThingName, to newIndex: Int) {
         guard index != newIndex else { return }  // TODO: unit test
-        self.thingMap[thing]?.move(item: index, to: newIndex)
+        self.thingMap.thing(with: thing)?.move(item: index, to: newIndex)
     }
     
     func edit(item index: Int, for thing: ThingName, with newName: ItemName) -> ModelError? {
@@ -209,13 +209,13 @@ final class Model: Codable {
         if let error = self.validateEditItem(item: name, for: thing, with: newName) {
             return error
         }
-        self.thingMap[thing]?.edit(item: index, with: newName)
+        self.thingMap.thing(with: thing)?.edit(item: index, with: newName)
         return nil
     }
     
     func edit(item index: Int, for thing: ThingName, with newImage: UIImage?) {
         if self.item(at: index, for: thing).image == newImage { return }
-        self.thingMap[thing]?.edit(item: index, with: newImage)
+        self.thingMap.thing(with: thing)?.edit(item: index, with: newImage)
     }
     
     // MARK: Helper
@@ -250,7 +250,7 @@ final class Model: Codable {
     }
     
     private func itemExists(name: ItemName, for thing: ThingName, caseSensitive: Bool = true) -> Bool {
-        return self.thingMap[thing]!.exists(item: name, caseSensitive: caseSensitive)
+        return self.thingMap.thing(with: thing)!.exists(item: name, caseSensitive: caseSensitive)
     }
     
     private func isDefault(group name: GroupName) -> Bool {

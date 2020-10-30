@@ -12,7 +12,9 @@ import UIKit
 typealias ThingName = String
 
 /**
-   A **Thing** has a name and an ordered list of items. Items are expected to be unique, but the class will not provide feedback if not. It is up to the managing class to provide unique items. 
+   A **Thing** has a case-sensitive name and an ordered list of items. Items are expected to be unique, but the class will not provide feedback if not - it will just ignore it. It is up to the managing class to provide unique items.
+   
+   It provides methods for getting case-insensitive objects, but the class itself is case-sensitive.
 
    - Outside: Methods to manage name and items, accessors to properties.
    - Inside: Directly manages properties.
@@ -62,6 +64,7 @@ final class Thing: Codable {
     }
     
     func insert(item: Item, at index: Int) {
+        guard !self.exists(item: item.name) else { return }
         self.items.insert(item, at: index)
     }
     

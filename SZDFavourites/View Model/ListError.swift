@@ -9,12 +9,12 @@
 import Foundation
 
 enum ListError {
-    
-    case groupExists(name: String) // TODO: lowercase to check 
+    // already exists
+    case groupExists(name: String)
     case thingExists(name: String)
     case itemExists(name: String)
+    /// attempt to modify default
     case isDefault
-    
     // name character restrictions
     case groupNameCharMax(value: Int)
     case thingNameCharMax(value: Int)
@@ -22,7 +22,6 @@ enum ListError {
     case groupNameCharMin(value: Int)
     case thingNameCharMin(value: Int)
     case itemNameCharMin(value: Int)
-    
     /// reached max number of groups
     case groupMax(value: Int)
     /// reached max number of things
@@ -36,8 +35,10 @@ enum ListError {
              .groupNameCharMax, .thingNameCharMax, .itemNameCharMax,
              .groupNameCharMin, .thingNameCharMin, .itemNameCharMin:
             return "Invalid Input"
+            
         case .groupMax, .thingMax, .itemMax:
             return "Limit Reached"
+            
         default:
             return "Error"
         }
@@ -49,10 +50,12 @@ enum ListError {
              .thingExists(let name),
              .itemExists(let name):
             return "\"\(name)\" already exists."
+            
         case .groupNameCharMax(let max),
              .thingNameCharMax(let max),
              .itemNameCharMax(let max):
             return "Name cannot be longer than \(max) characters."
+            
         case .groupNameCharMin(let min),
              .thingNameCharMin(let min),
              .itemNameCharMin(let min):
@@ -61,12 +64,15 @@ enum ListError {
             } else {
                 return "Name must be at least \(min) characters."
             }
+            
         case .groupMax(let value),
              .thingMax(let value),
              .itemMax(let value):
             return "Only a maximum of \(value) is allowed."
+            
         case .isDefault:
             return "Default group cannot be modified."
+            
         default:
             return nil
         }

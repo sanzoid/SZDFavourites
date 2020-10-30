@@ -9,7 +9,9 @@
 import Foundation
 
 /**
-   A **ThingMap** is an unordered map of things. Things are expected to be unique, but the class will not provide feedback if not. It is up to the managing class to provide unique things. 
+   A **ThingMap** is an unordered map of things with case-sensitive names. Things are expected to be unique, but the class will not provide feedback if not - it will just ignore it. It is up to the managing class to provide unique things.
+ 
+   It provides methods for getting case-insensitive things, but the class itself is case-sensitive.
 
    - Outside: Methods to manage things, accessors to properties.
    - Inside: Directly manages things and manages each Thing by calling its methods.
@@ -26,8 +28,8 @@ final class ThingMap: Codable {
         self.things = things
     }
     
-    subscript(name: String) -> Thing? {
-        return self.things[name]
+    func thing(with name: ThingName, caseSensitive: Bool = true) -> Thing? {
+        return caseSensitive ? self.things[name] : self.things[caseInsensitive: name]
     }
     
     func exists(name: ThingName, caseSensitive: Bool = true) -> Bool {

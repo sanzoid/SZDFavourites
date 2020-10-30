@@ -11,7 +11,7 @@ import UIKit
 typealias ThingIndex = (group: Int, thing: Int)
 
 /**
-    A **GroupList** manages a list of Groups. Groups are expected to be unique, but the class will not provide feedback if not. It is up to the managing class to provide unique groups.
+    A **GroupList** manages a list of Groups with case-sensitive names. Groups are expected to be unique, but the class will not provide feedback if not - it will just ignore it. It is up to the managing class to provide unique groups.
  
     There is always a default group. It is expected that there is no attempt to modify or remove the default group.
     
@@ -48,7 +48,6 @@ final class GroupList: Codable {
     }
     
     func indexOf(group name: GroupName, caseSensitive: Bool = true) -> Int? {
-        // TOOO: unit tests 
         return self.groups.firstIndex{
             if caseSensitive {
                 return $0.name == name
@@ -58,12 +57,12 @@ final class GroupList: Codable {
         }
     }
     
-    func group(with name: GroupName, caseSensitive: Bool = true) -> Group? {
-        guard let index = self.indexOf(group: name, caseSensitive: caseSensitive) else { return nil }
+    func group(at index: Int) -> Group{
         return self.groups[index]
     }
-    
-    func group(at index: Int) -> Group{
+
+    func group(with name: GroupName, caseSensitive: Bool = true) -> Group? {
+        guard let index = self.indexOf(group: name, caseSensitive: caseSensitive) else { return nil }
         return self.groups[index]
     }
     
