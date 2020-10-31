@@ -88,15 +88,15 @@ final class Model: Codable {
     }
     
     func move(group index: Int, to newIndex: Int) {
-        guard index != newIndex else { return } // TODO: unit test
+        guard index != newIndex else { return }
         self.groupList.move(group: index, to: newIndex)
     }
     
     func edit(group name: GroupName, with newName: GroupName) -> ModelError? {
-        if name == newName { return nil } // TODO: unit test
+        if name == newName { return nil }
         if self.isDefault(group: name) { return .isDefault }
         if let error = self.validateEditGroup(group: name, with: newName) {
-            return error // TODO: unit test
+            return error
         }
         self.groupList.edit(group: name, with: newName)
         return nil
@@ -104,7 +104,6 @@ final class Model: Codable {
     
     // MARK: Thing
     
-    // TODO: unit tests, may need to add the check in some other tests
     func thingCount() -> Int {
         return self.thingMap.count
     }
@@ -113,20 +112,18 @@ final class Model: Codable {
         self.groupList.count(in: group)
     }
     
-    // TODO: unit tests 
-    func thing(with name: ThingName) -> Thing? {
-        return self.thingMap.thing(with: name)
-    }
-    
     func thing(at index: ThingIndex) -> Thing {
         let name = self.groupList.thingName(at: index)
         let thing = self.thingMap.thing(with: name)!
         return thing
     }
     
-    // TODO: unit tests
+    func thing(with name: ThingName) -> Thing? {
+        return self.thingMap.thing(with: name, caseSensitive: false)
+    }
+    
     func indexOfThing(name: ThingName) -> ThingIndex? {
-        return self.groupList.indexOfThing(name: name)
+        return self.groupList.indexOfThing(name: name, caseSensitive: false)
     }
     
     func add(thing name: ThingName) -> ModelError? {
@@ -143,35 +140,32 @@ final class Model: Codable {
         self.groupList.remove(thing: name)
     }
     
-    // TODO: unit test 
     func remove(thing index: ThingIndex) {
         let name = self.thing(at: index).name
         self.remove(thing: name)
     }
     
     func move(thing name: ThingName, from groupName: GroupName, to newGroupName: GroupName) {
-        guard groupName != newGroupName else { return } // TODO: unit test
+        guard groupName != newGroupName else { return }
         self.groupList.move(thing: name, from: groupName, to: newGroupName)
     }
     
     func move(thing index: ThingIndex, to newIndex: ThingIndex) {
-        guard index != newIndex else { return } // TODO: unit test
+        guard index != newIndex else { return }
         self.groupList.move(thing: index, to: newIndex)
     }
     
     func edit(thing name: ThingName, with newName: ThingName) -> ModelError? {
-        if name == newName { return nil } // TODO: unit test
+        if name == newName { return nil }
         if let error = self.validateEditThing(thing: name, with: newName) {
-            return error // TODO: unit test
+            return error
         }
         
         // edit in thingMap
         self.thingMap.edit(thing: name, with: newName)
         
-        // edit in groupList if needed 
-        if name != newName{
-            self.groupList.edit(thing: name, with: newName)
-        }
+        // edit in groupList
+        self.groupList.edit(thing: name, with: newName)
         
         return nil
     }
@@ -182,7 +176,6 @@ final class Model: Codable {
         return self.thingMap.thing(with: thing)!.itemCount()
     }
     
-    // TODO: unit tests
     func item(at index: Int, for thing: ThingName) -> Item {
         return self.thingMap.thing(with: thing)!.item(at: index)
     }
@@ -198,14 +191,13 @@ final class Model: Codable {
     }
     
     func move(item index: Int, for thing: ThingName, to newIndex: Int) {
-        guard index != newIndex else { return }  // TODO: unit test
+        guard index != newIndex else { return }
         self.thingMap.thing(with: thing)?.move(item: index, to: newIndex)
     }
     
     func edit(item index: Int, for thing: ThingName, with newName: ItemName) -> ModelError? {
-        // TODO: unit tests
         let name = self.item(at: index, for: thing).name
-        if name == newName { return nil } // no change
+        if name == newName { return nil }
         if let error = self.validateEditItem(item: name, for: thing, with: newName) {
             return error
         }
@@ -220,21 +212,18 @@ final class Model: Codable {
     
     // MARK: Helper
     
-    // TODO: unit tests
     private func validateEditGroup(group name: GroupName, with newName: GroupName) -> ModelError? {
         if name.lowercased() == newName.lowercased() { return nil }
         guard !self.groupExists(name: newName, caseSensitive: false) else { return .groupExists }
         return nil
     }
     
-    // TODO: unit tests
     private func validateEditThing(thing name: ThingName, with newName: ThingName) -> ModelError? {
         if name.lowercased() == newName.lowercased() { return nil }
         if self.thingExists(name: newName, caseSensitive: false) { return .thingExists }
         return nil
     }
     
-    // TODO: unit tests
     private func validateEditItem(item name: ItemName, for thing: ThingName, with newName: ItemName) -> ModelError? {
         if name.lowercased() == newName.lowercased() { return nil }
         if self.itemExists(name: newName, for: thing, caseSensitive: false) { return .itemExists }

@@ -57,20 +57,27 @@ class ModelTests: XCTestCase {
     }
     
     func testGroupAdd() {
+        // success
         let add1 = model.add(group: "GroupD")
         XCTAssert(add1 == nil)
         XCTAssert(model.groupCount() == 5)
         XCTAssert(model.group(at: 4).name == "GroupD")
         
-        // group already exists
+        // error - name exists
         let add2 = model.add(group: "GroupB")
         XCTAssert(add2 == .groupExists)
+        XCTAssert(model.groupCount() == 5)
+        XCTAssert(model.group(at: 1).name == "GroupB")
+        
+        // error - name exists in different case
+        let add3 = model.add(group: "GROUPB")
+        XCTAssert(add3 == .groupExists)
         XCTAssert(model.groupCount() == 5)
         XCTAssert(model.group(at: 1).name == "GroupB")
     }
     
     func testGroupRemove() {
-        // B[1] -> default
+        // success // B[1] -> default
         XCTAssert(model.groupCount() == 4)
         XCTAssert(model.group(at: 1).name == "GroupB")
         XCTAssert(model.thingCount(in: 3) == 0)
@@ -80,12 +87,12 @@ class ModelTests: XCTestCase {
         XCTAssert(model.thingCount(in: 2) == 1)
         XCTAssert(model.group(at: 1).name != "GroupB")
         
-        // non-existent group
+        // disregard // non-existent group
         let remove2 = model.remove(group: "GroupD")
         XCTAssert(remove2 == nil)
         XCTAssert(model.groupCount() == 3)
         
-        // default
+        // error // default
         let remove3 = model.remove(group: GroupList.defaultGroupName)
         XCTAssert(remove3 == .isDefault)
         XCTAssert(model.groupCount() == 3)
@@ -93,6 +100,11 @@ class ModelTests: XCTestCase {
     }
     
     func testGroupMove() {
+        // disregard // same index
+        model.move(group: 1, to: 1)
+        XCTAssert(model.groupCount() == 4)
+        XCTAssert(model.group(at: 1).name == "GroupB")
+        
         model.move(group: 1, to: 2)
         XCTAssert(model.groupCount() == 4)
         XCTAssert(model.group(at: 2).name == "GroupB")
@@ -101,30 +113,57 @@ class ModelTests: XCTestCase {
     }
     
     func testGroupEdit() {
+        // error // default
+        let error1 = model.edit(group: GroupList.defaultGroupName, with: "GroupD")
+        XCTAssert(error1 == .isDefault)
+        XCTAssert(model.group(at: 3).name == GroupList.defaultGroupName)
+        
+        // error // new name exists
+        let error2 = model.edit(group: "GroupA", with: "GroupB")
+        XCTAssert(error2 == .groupExists)
+        XCTAssert(model.group(at: 0).name == "GroupA")
+        XCTAssert(model.group(at: 1).name == "GroupB")
+        
+        // error // new name exists in different case
+        let error3 = model.edit(group: "GroupA", with: "GROUPB")
+        XCTAssert(error3 == .groupExists)
+        XCTAssert(model.group(at: 0).name == "GroupA")
+        XCTAssert(model.group(at: 1).name == "GroupB")
+        
+        // disregard // same name
+        let disregard1 = model.edit(group: "GroupA", with: "GroupA")
+        XCTAssert(disregard1 == nil)
+        XCTAssert(model.group(at: 0).name == "GroupA")
+        
+        // success
         let edit1 = model.edit(group: "GroupB", with: "Group2")
         XCTAssert(edit1 == nil)
         XCTAssert(model.group(at: 1).name == "Group2")
-        
-        // new name already exists
-        let edit2 = model.edit(group: "GroupA", with: "Group2")
-        XCTAssert(edit2 == .groupExists)
-        XCTAssert(model.group(at: 0).name == "GroupA")
-        XCTAssert(model.group(at: 1).name == "Group2")
-        
-        // default
-        let edit3 = model.edit(group: GroupList.defaultGroupName, with: "GroupD")
-        XCTAssert(edit3 == .isDefault)
-        XCTAssert(model.group(at: 3).name == GroupList.defaultGroupName)
     }
+    
+    // MARK: Thing
     
     func testThingAccessors() {
         // thingCount
+        XCTAssert(model.thingCount() == 3)
+        
+        // thingCount in
         XCTAssert(model.thingCount(in: 0) == 0)
         XCTAssert(model.thingCount(in: 1) == 1)
         XCTAssert(model.thingCount(in: 2) == 2)
         
         // thing at
         XCTAssert(model.thing(at: (1, 0)).name == "Thing1")
+        
+        // thing with name
+        XCTAssert(model.thing(with: "Thing1")?.name == "Thing1")
+        // different case
+        XCTAssert(model.thing(with: "THING1")?.name == "Thing1")
+        
+        // index of thing
+        XCTAssert(model.indexOfThing(name: "Thing1")! == (1, 0))
+        // different case
+        XCTAssert(model.indexOfThing(name: "THING1")! == (1, 0))
     }
     
     func testThingAdd() {
@@ -133,24 +172,28 @@ class ModelTests: XCTestCase {
         XCTAssert(model.group(at: 3).thingCount == 1)
         XCTAssert(model.group(at: 3).thing(at: 0) == "Thing4")
         
-        // already exists
+        // error // exists
         let add2 = model.add(thing: "Thing2")
         XCTAssert(add2 == .thingExists)
+        XCTAssert(model.group(at: 3).thingCount == 1)
+        
+        // error // exists in different case
+        let add3 = model.add(thing: "THING2")
+        XCTAssert(add3 == .thingExists)
         XCTAssert(model.group(at: 3).thingCount == 1)
     }
     
     func testThingRemove() {
-        XCTAssert(model.add(thing: "Thing2") == .thingExists)
-        XCTAssert(model.thing(at: (2,0)).name == "Thing2")
-        XCTAssert(model.thing(at: (2,0)).itemCount() == 2)
-        
+        // by name
         model.remove(thing: "Thing2")
+        XCTAssert(model.thing(with: "Thing2") == nil)
         XCTAssert(model.thing(at: (2,0)).name == "Thing3")
-        XCTAssert(model.thing(at: (2,0)).itemCount() == 0)
+        XCTAssert(model.thingCount(in: 2) == 1)
         
-        XCTAssert(model.add(thing: "Thing2") == nil)
-        XCTAssert(model.thing(at: (3,0)).name == "Thing2")
-        XCTAssert(model.thing(at: (3,0)).itemCount() == 0)
+        // by index
+        model.remove(thing: (1, 0))
+        XCTAssert(model.thing(with: "Thing1") == nil)
+        XCTAssert(model.thingCount(in: 1) == 0)
     }
     
     func testThingMove() {
@@ -160,33 +203,74 @@ class ModelTests: XCTestCase {
         XCTAssert(model.group(at: 2).thingCount == 3)
         XCTAssert(model.group(at: 2).thing(at: 2) == "Thing1")
         
+        // disregard // same group
+        model.move(thing: "Thing2", from: "GroupC", to: "GroupC")
+        XCTAssert(model.group(at: 2).thingCount == 3)
+        XCTAssert(model.group(at: 2).thing(at: 0) == "Thing2")
+        
         // by index
         model.move(thing: (2,2), to: (2,0))
+        XCTAssert(model.group(at: 2).thingCount == 3)
+        XCTAssert(model.group(at: 2).thing(at: 0) == "Thing1")
+        
+        // disregard // same index
+        model.move(thing: (2,0), to: (2,0))
         XCTAssert(model.group(at: 2).thingCount == 3)
         XCTAssert(model.group(at: 2).thing(at: 0) == "Thing1")
     }
     
     func testThingEdit() {
-        let edit1 = model.edit(thing: "Thing2", with: "ThingB")
-        XCTAssert(edit1 == nil)
-        XCTAssert(model.thing(at: (2,0)).name == "ThingB")
+        // diregard // same name
+        let disregard1 = model.edit(thing: "Thing2", with: "Thing2")
+        XCTAssert(disregard1 == nil)
+        XCTAssert(model.thing(with: "Thing2") != nil)
         XCTAssert(model.thing(at: (2,0)).itemCount() == 2)
         
-        // already exists
-        let edit2 = model.edit(thing: "Thing1", with: "Thing3")
-        XCTAssert(edit2 == .thingExists)
-        XCTAssert(model.thing(at: (1,0)).name == "Thing1")
+        // error // exists
+        let error1 = model.edit(thing: "Thing2", with: "Thing3")
+        XCTAssert(error1 == .thingExists)
+        XCTAssert(model.thing(at: (2,0)).name == "Thing2")
+        
+        // success // same name, different case
+        let edit1 = model.edit(thing: "Thing2", with: "THING2")
+        XCTAssert(edit1 == nil)
+        XCTAssert(model.thing(at: (2,0)).name == "THING2")
+        XCTAssert(model.thing(at: (2,0)).itemCount() == 2)
+        
+        // success // different name
+        let edit2 = model.edit(thing: "THING2", with: "ThingB")
+        XCTAssert(edit2 == nil)
+        XCTAssert(model.thing(at: (2,0)).name == "ThingB")
+        XCTAssert(model.thing(at: (2,0)).itemCount() == 2)
+    }
+    
+    // MARK: Item
+    
+    func testItemAccessors() {
+        // itemCount
+        XCTAssert(model.itemCount(for: "Thing1") == 0)
+        XCTAssert(model.itemCount(for: "Thing2") == 2)
+        
+        // item at
+        XCTAssert(model.item(at: 0, for: "Thing2").name == "Item2.1")
     }
     
     func testItemAdd() {
+        // error // exists for thing
+        let error1 = model.add(item: "Item2.1", to: "Thing2")
+        XCTAssert(error1 == .itemExists)
+        XCTAssert(model.thing(at: (2,0)).itemCount() == 2)
+        XCTAssert(model.thing(at: (2,0)).item(at: 0).name == "Item2.1")
+        
+        // error // exists in different case
+        let error2 = model.add(item: "ITEM2.1", to: "Thing2")
+        XCTAssert(error2 == .itemExists)
+        XCTAssert(model.thing(at: (2,0)).itemCount() == 2)
+        XCTAssert(model.thing(at: (2,0)).item(at: 0).name == "Item2.1")
+        
+        // success
         let add1 = model.add(item: "Item1.1", to: "Thing1")
         XCTAssert(add1 == nil)
-        XCTAssert(model.thing(at: (1,0)).itemCount() == 1)
-        XCTAssert(model.thing(at: (1,0)).item(at: 0).name == "Item1.1")
-        
-        // already exists for thing
-        let add2 = model.add(item: "Item1.1", to: "Thing1")
-        XCTAssert(add2 == .itemExists)
         XCTAssert(model.thing(at: (1,0)).itemCount() == 1)
         XCTAssert(model.thing(at: (1,0)).item(at: 0).name == "Item1.1")
     }
@@ -200,8 +284,12 @@ class ModelTests: XCTestCase {
     }
     
     func testItemMove() {
+        // disregard // same index
+        model.move(item: 0, for: "Thing2", to: 0)
         XCTAssert(model.thing(at: (2,0)).item(at: 0).name == "Item2.1")
         XCTAssert(model.thing(at: (2,0)).item(at: 1).name == "Item2.2")
+        
+        // success
         model.move(item: 0, for: "Thing2", to: 1)
         XCTAssert(model.thing(at: (2,0)).item(at: 0).name == "Item2.2")
         XCTAssert(model.thing(at: (2,0)).item(at: 1).name == "Item2.1")
@@ -209,15 +297,31 @@ class ModelTests: XCTestCase {
     
     func testItemEdit() {
         // name
-        XCTAssert(model.thing(at: (2,0)).item(at: 0).name == "Item2.1")
-        let edit1 = model.edit(item: 0, for: "Thing2", with: "Item2.a")
-        XCTAssert(edit1 == nil)
-        XCTAssert(model.thing(at: (2,0)).item(at: 0).name == "Item2.a")
+        // disregard // same name
+        XCTAssert(model.thing(with: "Thing2")?.item(at: 0).name == "Item2.1")
+        let disregard1 = model.edit(item: 0, for: "Thing2", with: "Item2.1")
+        XCTAssert(disregard1 == nil)
+        XCTAssert(model.thing(with: "Thing2")?.item(at: 0).name == "Item2.1")
         
-        // name already exists
-        let edit2 = model.edit(item: 0, for: "Thing2", with: "Item2.2")
-        XCTAssert(edit2 == .itemExists)
-        XCTAssert(model.thing(at: (2,0)).item(at: 0).name == "Item2.a")
+        // error // new exists
+        let error1 = model.edit(item: 0, for: "Thing2", with: "Item2.2")
+        XCTAssert(error1 == .itemExists)
+        XCTAssert(model.thing(with: "Thing2")?.item(at: 0).name == "Item2.1")
+        
+        // error // new exists in different case
+        let error2 = model.edit(item: 0, for: "Thing2", with: "ITEM2.2")
+        XCTAssert(error2 == .itemExists)
+        XCTAssert(model.thing(with: "Thing2")?.item(at: 0).name == "Item2.1")
+        
+        // success // same name, different case
+        let edit1 = model.edit(item: 0, for: "Thing2", with: "ITEM2.1")
+        XCTAssert(edit1 == nil)
+        XCTAssert(model.thing(with: "Thing2")?.item(at: 0).name == "ITEM2.1")
+        
+        // success // different name
+        let edit2 = model.edit(item: 0, for: "Thing2", with: "ItemA")
+        XCTAssert(edit2 == nil)
+        XCTAssert(model.thing(with: "Thing2")?.item(at: 0).name == "ItemA")
         
         // image
         let image = UIImage()
