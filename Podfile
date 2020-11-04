@@ -12,6 +12,8 @@ target 'SZDFavourites' do
   pod 'SZDCommons', $commonsLocal 
   #pod 'SZDCommons', $commonsGit 
 
+  pod 'Google-Mobile-Ads-SDK'
+
   target 'SZDFavouritesTests' do
     inherit! :search_paths
     # Pods for testing

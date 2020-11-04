@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import GoogleMobileAds
 
 class MainController: UIViewController {
     
@@ -15,6 +16,11 @@ class MainController: UIViewController {
     let listController: ListController
     weak var groupController: GroupController?
     weak var thingController: ThingController?
+    
+    let adBannerUnitId = "ca-app-pub-3940256099942544/2934735716" // test
+//    let adBannerUnitId = "ca-app-pub-8602369244729374/1479129282" // prod
+    var adBanner: GADBannerView?
+    
     
     init(model: Model) {
         self.viewModel = ListViewModel(model: model, properties: ListProperties())
@@ -36,12 +42,26 @@ class MainController: UIViewController {
         self.view.backgroundColor = Color.Base.background
         
         self.addBarButtonItems()
+        
+        // ad
+        self.addAd()
+        self.loadAd()
     }
     
     func addBarButtonItems() {
         let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressThingButton))
         let addGroupBarButtonItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(pressGroupButton))
         self.navigationItem.setRightBarButtonItems([addBarButtonItem, addGroupBarButtonItem], animated: true)
+    }
+    
+    func addAd() {
+        let adBanner = self.getAdBanner()
+        
+        self.view.addSubviews(adBanner)
+        adBanner.constrainToVertical(of: self.view, axis: .bottom, constant: 0)
+        adBanner.constrainToCenter(of: self.view, axis: .x, constant: 0)
+        
+        self.adBanner = adBanner
     }
     
     // MARK: Actions
@@ -83,12 +103,26 @@ class MainController: UIViewController {
         thingController.delegate = self
         thingController.dataSource = self
         thingController.refresh()
-        // add: default to edit mode
-        thingController.setEdit(isAdd)
+        thingController.setEdit(isAdd) // add: default to edit mode
         
         self.thingController = thingController
         
         self.present(thingController, animated: true, completion: nil)
+    }
+}
+
+// MARK: AdMob
+extension MainController {
+    func getAdBanner() -> GADBannerView {
+        let adBanner = GADBannerView(adSize: kGADAdSizeBanner)
+        return adBanner
+    }
+    
+    func loadAd() {
+        guard let adBanner = self.adBanner else { return }
+        adBanner.adUnitID = self.adBannerUnitId
+        adBanner.rootViewController = self
+        adBanner.load(GADRequest())
     }
 }
 

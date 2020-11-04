@@ -408,6 +408,7 @@
 			buildConfigurationList = 5AA479CC251BDE79004415DC /* Build configuration list for PBXNativeTarget "SZDFavourites" */;
 			buildPhases = (
 				E5D5D573EA3D158D21A35F27 /* [CP] Check Pods Manifest.lock */,
+				1B5B80AF3D6A78622C6C5C3D /* [CP] Prepare Artifacts */,
 				5AA479A9251BDE76004415DC /* Sources */,
 				5AA479AA251BDE76004415DC /* Frameworks */,
 				5AA479AB251BDE76004415DC /* Resources */,
@@ -499,6 +500,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1B5B80AF3D6A78622C6C5C3D /* [CP] Prepare Artifacts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SZDFavourites/Pods-SZDFavourites-artifacts-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Prepare Artifacts";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SZDFavourites/Pods-SZDFavourites-artifacts-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SZDFavourites/Pods-SZDFavourites-artifacts.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C89EEE89A334541C07BB59B3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

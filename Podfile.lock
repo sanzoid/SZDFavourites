@@ -1,16 +1,65 @@
 PODS:
+  - Google-Mobile-Ads-SDK (7.67.1):
+    - GoogleAppMeasurement (~> 7.0)
+    - GoogleUserMessagingPlatform (~> 1.1)
+  - GoogleAppMeasurement (7.0.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30906.0)
+  - GoogleUserMessagingPlatform (1.3.0)
+  - GoogleUtilities/AppDelegateSwizzler (7.0.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.0.0):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (7.0.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (7.0.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (7.0.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.0.0)"
+  - GoogleUtilities/Reachability (7.0.0):
+    - GoogleUtilities/Logger
+  - nanopb (2.30906.0):
+    - nanopb/decode (= 2.30906.0)
+    - nanopb/encode (= 2.30906.0)
+  - nanopb/decode (2.30906.0)
+  - nanopb/encode (2.30906.0)
+  - PromisesObjC (1.2.11)
   - SZDCommons (0.0.1)
 
 DEPENDENCIES:
+  - Google-Mobile-Ads-SDK
   - SZDCommons (from `~/Documents/sanzapps/My Apps/SZDCommons`)
+
+SPEC REPOS:
+  trunk:
+    - Google-Mobile-Ads-SDK
+    - GoogleAppMeasurement
+    - GoogleUserMessagingPlatform
+    - GoogleUtilities
+    - nanopb
+    - PromisesObjC
 
 EXTERNAL SOURCES:
   SZDCommons:
     :path: "~/Documents/sanzapps/My Apps/SZDCommons"
 
 SPEC CHECKSUMS:
+  Google-Mobile-Ads-SDK: 4c11bba9a823ed16c42f14d42feebc7678fbfd6a
+  GoogleAppMeasurement: 7790ef975d1d463c8614cd949a847e612edf087a
+  GoogleUserMessagingPlatform: 1d4b6946710d18cec34742054092e2c2bddae61f
+  GoogleUtilities: ffb2f4159f2c897c6e8992bd7fbcdef8a300589c
+  nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
+  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   SZDCommons: b1dc9cbb9f09ede24246af67f3fcfa68e86efb7d
 
-PODFILE CHECKSUM: d4c102b7cc218df4fe0887525f45e1fd992af4a5
+PODFILE CHECKSUM: ea5b2e66dec7b37f3da7ff304515e953bb254b97
 
 COCOAPODS: 1.9.3
