@@ -15,6 +15,11 @@ extension ListController {
         self.tableView.dragDelegate = self
         self.tableView.dropDelegate = self
         self.tableView.dragInteractionEnabled = true
+        self.tableView.sectionFooterHeight = 30
+        self.tableView.backgroundColor = .white
+        
+        self.tableView.register(ListCell.self, forCellReuseIdentifier: "ListCell")
+        self.tableView.register(ListHeader.self, forHeaderFooterViewReuseIdentifier: "ListHeader")
     }
 }
 
@@ -28,18 +33,26 @@ extension ListController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath)
         
-        if let cellData = self.dataSource?.dataForThing(for: self, at: indexPath.row, in: indexPath.section) {
-            cell.textLabel?.text = cellData.name
-            cell.detailTextLabel?.text = cellData.top?.name ?? "-"
+        if let cell = cell as? ListCell,
+            let cellData = self.dataSource?.dataForThing(for: self, at: indexPath.row, in: indexPath.section) {
+            cell.setValues(thing: cellData.name, item: cellData.top?.name)
         }
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.dataSource?.dataForGroupHeader(for: self, at: section).name
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ListHeader")
+        
+        // if section is default, no view
+        
+        if let view = view as? ListHeader, let data = self.dataSource?.dataForGroupHeader(for: self, at: section) {
+            view.setValues(name: data.name)
+        }
+        
+        return view
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
