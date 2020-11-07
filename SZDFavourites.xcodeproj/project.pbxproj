@@ -38,6 +38,9 @@
 		5A2FC65E2534C11900002DBC /* ListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2FC65D2534C11900002DBC /* ListHeader.swift */; };
 		5A4637F12552FF3000CE8ED3 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4637F02552FF3000CE8ED3 /* UIView.swift */; };
 		5A4637F32552FF8400CE8ED3 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4637F22552FF8400CE8ED3 /* UIColor.swift */; };
+		5A4637F62556E52500CE8ED3 /* ThingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4637F52556E52500CE8ED3 /* ThingBar.swift */; };
+		5A4637F82556E58100CE8ED3 /* ThingField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4637F72556E58100CE8ED3 /* ThingField.swift */; };
+		5A4637FA2556E5CD00CE8ED3 /* ItemFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4637F92556E5CD00CE8ED3 /* ItemFooter.swift */; };
 		5A670C692534C2E500C769D3 /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C682534C2E400C769D3 /* ListController.swift */; };
 		5A670C6B2534C2ED00C769D3 /* ListControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C6A2534C2ED00C769D3 /* ListControllerOld.swift */; };
 		5A670C6E2534C34400C769D3 /* GroupControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C6D2534C34400C769D3 /* GroupControllerDataSource.swift */; };
@@ -119,6 +122,9 @@
 		5A2FC65D2534C11900002DBC /* ListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHeader.swift; sourceTree = "<group>"; };
 		5A4637F02552FF3000CE8ED3 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		5A4637F22552FF8400CE8ED3 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		5A4637F52556E52500CE8ED3 /* ThingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingBar.swift; sourceTree = "<group>"; };
+		5A4637F72556E58100CE8ED3 /* ThingField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingField.swift; sourceTree = "<group>"; };
+		5A4637F92556E5CD00CE8ED3 /* ItemFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemFooter.swift; sourceTree = "<group>"; };
 		5A670C682534C2E400C769D3 /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
 		5A670C6A2534C2ED00C769D3 /* ListControllerOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListControllerOld.swift; sourceTree = "<group>"; };
 		5A670C6D2534C34400C769D3 /* GroupControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupControllerDataSource.swift; sourceTree = "<group>"; };
@@ -269,6 +275,23 @@
 			path = List;
 			sourceTree = "<group>";
 		};
+		5A4637F42556E50500CE8ED3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5A4637F52556E52500CE8ED3 /* ThingBar.swift */,
+				5A4637F72556E58100CE8ED3 /* ThingField.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5A4637FB2556E5D100CE8ED3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5A4637F92556E5CD00CE8ED3 /* ItemFooter.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		5A670C6C2534C32200C769D3 /* Group */ = {
 			isa = PBXGroup;
 			children = (
@@ -287,6 +310,7 @@
 				5A670C792534CAC300C769D3 /* ThingControllerDataSource.swift */,
 				5A670C7B2534CAD100C769D3 /* ThingControllerDelegate.swift */,
 				5A710ACB25407AC900ECB7A2 /* ThingController+ItemController.swift */,
+				5A4637F42556E50500CE8ED3 /* View */,
 				5A670C7F2534CCB200C769D3 /* Item */,
 			);
 			path = Thing;
@@ -299,6 +323,7 @@
 				5A670C822534CCE100C769D3 /* ItemControllerDataSource.swift */,
 				5A670C842534CCEA00C769D3 /* ItemControllerDelegate.swift */,
 				5A710ACD25407B9C00ECB7A2 /* ItemController+TableView.swift */,
+				5A4637FB2556E5D100CE8ED3 /* View */,
 			);
 			path = Item;
 			sourceTree = "<group>";
@@ -618,11 +643,13 @@
 				5A670C712534C35900C769D3 /* GroupControllerDelegate.swift in Sources */,
 				5A2FC618251E432B00002DBC /* Thing.swift in Sources */,
 				5A2FC62C251E4E4800002DBC /* ListViewModel.swift in Sources */,
+				5A4637FA2556E5CD00CE8ED3 /* ItemFooter.swift in Sources */,
 				5A2FC62A251E4DBB00002DBC /* ListTableView.swift in Sources */,
 				5A710AD52544BA5500ECB7A2 /* GroupController+TableView.swift in Sources */,
 				5A4637F32552FF8400CE8ED3 /* UIColor.swift in Sources */,
 				5A710ADE2549B98E00ECB7A2 /* Dictionary.swift in Sources */,
 				5A2FC623251E4B2A00002DBC /* Color.swift in Sources */,
+				5A4637F62556E52500CE8ED3 /* ThingBar.swift in Sources */,
 				5A2FC6532534BFA700002DBC /* GroupController.swift in Sources */,
 				5AA479B1251BDE76004415DC /* AppDelegate.swift in Sources */,
 				5A2FC62E251E4E9900002DBC /* GroupList.swift in Sources */,
@@ -640,6 +667,7 @@
 				5A2FC635251E8F7800002DBC /* ThingController2.swift in Sources */,
 				5A670C6E2534C34400C769D3 /* GroupControllerDataSource.swift in Sources */,
 				5A2FC6562534C0BA00002DBC /* ListControllerDataSource.swift in Sources */,
+				5A4637F82556E58100CE8ED3 /* ThingField.swift in Sources */,
 				5AA479B3251BDE76004415DC /* SceneDelegate.swift in Sources */,
 				5A2FC625251E4B3800002DBC /* Style.swift in Sources */,
 				5A2FC6392522214A00002DBC /* Model.swift in Sources */,
