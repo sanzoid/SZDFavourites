@@ -36,13 +36,23 @@ class ThingController: UIViewController {
         self.itemController.dataSource = self
         self.itemController.delegate = self 
         
-        self.view.backgroundColor = UIColor.black.alpha(0.1)
+        self.view.backgroundColor = .clear
         self.deleteButton.setTitle("Delete", for: .normal)
         self.deleteButton.setTitleColor(.white, for: .normal)
         self.deleteButton.backgroundColor = .red
+        self.editButton.backgroundColor = .cyan
         
         // view init
-        let containerView = UIView()
+        let containerView: UIView = {
+            let view = UIView()
+            view.backgroundColor = UIColor.white.alpha(1)
+            view.layer.cornerRadius = 10
+            view.layer.shadowColor = UIColor.black.cgColor
+            view.layer.shadowOpacity = 0.7
+            view.layer.shadowOffset = .zero
+            view.layer.shadowRadius = 5
+            return view
+        }()
         let stackView: UIStackView = {
             let view = UIStackView()
             view.axis = .vertical
@@ -63,20 +73,25 @@ class ThingController: UIViewController {
         // view constraints
         containerView.constrainTo(view: self.view, on: .center)
         containerView.constrainToHeight(constant: 600)
-        containerView.constrainToHorizontal(of: self.view, axis: .both, constant: 0)
+        containerView.constrainToHorizontal(of: self.view, axis: .both, constant: 20)
         
-        stackView.constrainTo(view: containerView, on: .horizontal, constant: 50)
-        stackView.constrainToVertical(of: containerView, axis: .top, constant: 50)
+        stackView.constrainTo(view: containerView, on: .horizontal, constant: 20)
+        stackView.constrainToCenter(of: containerView, axis: .both, constant: 0)
         
-        // view values
-        containerView.backgroundColor = UIColor.white.alpha(0.6)
-        groupField.backgroundColor = .cyan
-        thingField.backgroundColor = .purple
-        
+        // actions
         self.editButton.addTarget(self, action: #selector(pressEditButton), for: .touchUpInside)
         self.deleteButton.addTarget(self, action: #selector(pressDeleteButton), for: .touchUpInside)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pressBackground))
+        tapGesture.delegate = self
+        self.view.addGestureRecognizer(tapGesture)
         
         self.setEdit(false)
+        
+//        self.view.showTestOutline()
+//        containerView.showTestOutline()
+        stackView.showTestOutline()
+        groupField.showTestOutline()
+        thingField.showTestOutline()
     }
     
     func refresh() {
@@ -108,6 +123,10 @@ class ThingController: UIViewController {
     
     @objc private func pressDeleteButton() {
         self.delegate?.removeThing(for: self)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func pressBackground() {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -149,5 +168,11 @@ extension ThingController: TextPickerDelegate {
     func didEndEditing(for textPicker: TextPicker, oldText: String, text: String) {
         guard oldText != text else { return }
         self.delegate?.moveThing(for: self, from: oldText, to: text)
+    }
+}
+
+extension ThingController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.view == self.view
     }
 }

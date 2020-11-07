@@ -16,7 +16,7 @@ extension ListController {
         self.tableView.dropDelegate = self
         self.tableView.dragInteractionEnabled = true
         self.tableView.sectionFooterHeight = 30
-        self.tableView.backgroundColor = .white
+        self.tableView.backgroundColor = .clear
         
         self.tableView.register(ListCell.self, forCellReuseIdentifier: "ListCell")
         self.tableView.register(ListHeader.self, forHeaderFooterViewReuseIdentifier: "ListHeader")
@@ -53,6 +53,10 @@ extension ListController: UITableViewDataSource {
         }
         
         return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {

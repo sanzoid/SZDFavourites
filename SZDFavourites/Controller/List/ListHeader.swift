@@ -20,14 +20,16 @@ class ListHeader: UITableViewHeaderFooterView {
         let nameLabel: UILabel = {
             let view = UILabel()
             view.textColor = .white
-            view.font = .boldSystemFont(ofSize: 20)
+            view.font = .systemFont(ofSize: 16, weight: .semibold)
             return view
         }()
         
         self.contentView.addSubviews(containerView)
-        containerView.constrainTo(view: self.contentView, on: .all, constant: 0)
         containerView.addSubviews(nameLabel)
-        nameLabel.constrainTo(view: containerView, on: .all, constant: 10)
+        
+        containerView.constrainTo(view: self.contentView, on: .all, constant: 0)
+        nameLabel.constrainToHorizontal(of: containerView, axis: .leading, constant: 10)
+        nameLabel.constrainToCenter(of: containerView, axis: .y, constant: 0)
         
         self.nameLabel = nameLabel
     }

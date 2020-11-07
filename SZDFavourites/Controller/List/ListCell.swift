@@ -29,11 +29,19 @@ class ListCell: UITableViewCell {
         }()
         let thingContainer = UIView()
         let itemContainer = UIView()
-        let thingLabel = UILabel()
+        let thingLabel: UILabel = {
+            let view = UILabel()
+            view.lineBreakMode = .byTruncatingTail
+            view.textAlignment = .left
+            view.font = .systemFont(ofSize: 14, weight: .regular)
+            view.textColor = .darkGray
+            return view
+        }()
         let itemLabel: UILabel = {
             let view = UILabel()
             view.lineBreakMode = .byTruncatingTail
             view.textAlignment = .right
+            view.font = .systemFont(ofSize: 16, weight: .light)
             return view
         }()
         
@@ -50,7 +58,7 @@ class ListCell: UITableViewCell {
         thingContainer.constrainToHeight(constant: 25)
         itemContainer.constrainToHeight(constant: 25)
         
-        thingLabel.constrainToCenter(of: thingContainer, axis: .y, constant: 0)
+        thingLabel.constrainToVertical(of: itemContainer, axis: .bottom, constant: 0)
         thingLabel.constrainToHorizontal(of: thingContainer)
         itemLabel.constrainToCenter(of: itemContainer, axis: .y, constant: 0)
         itemLabel.constrainToHorizontal(of: itemContainer)

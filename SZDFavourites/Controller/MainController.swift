@@ -37,9 +37,13 @@ class MainController: UIViewController {
     }
     
     override func viewDidLoad() {
+        self.title = "FAVLIST"
+        
         self.addChildDefault(viewController: self.listController)
-        self.listController.view.constrainTo(view: self.view, on: .all)
-        self.view.backgroundColor = Color.Base.background
+        self.listController.view.constrainTo(view: self.view, on: .horizontal, constant: 10)
+        self.listController.view.constrainToVertical(of: self.view, axis: .both, constant: 70)
+        self.listController.view.constrainToCenter(of: self.view, axis: .x, constant: 0)
+        self.view.backgroundColor = .white
         
         self.addBarButtonItems()
         
@@ -104,6 +108,8 @@ class MainController: UIViewController {
         thingController.dataSource = self
         thingController.refresh()
         thingController.setEdit(isAdd) // add: default to edit mode
+        
+        thingController.modalPresentationStyle = .overFullScreen
         
         self.thingController = thingController
         
