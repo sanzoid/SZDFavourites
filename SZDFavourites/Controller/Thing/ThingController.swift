@@ -17,6 +17,8 @@ class ThingController: UIViewController {
     private let deleteButton = UIButton()
     private let groupField = TextPicker()
     private let thingField = TextField()
+    private var thingBar = ThingBar()
+    private var thingField2 = ThingField()
     let itemController = ItemController()
         
     init() {
@@ -63,20 +65,28 @@ class ThingController: UIViewController {
         
         // view hierarchy
         self.view.addSubviews(containerView)
+        containerView.addSubviews(self.thingBar)
+        
         containerView.addSubviews(stackView)
-        stackView.addArrangedSubview(self.editButton)
-        stackView.addArrangedSubview(self.groupField)
-        stackView.addArrangedSubview(self.thingField)
-        stackView.addArrangedSubview(self.itemController.tableView)
-        stackView.addArrangedSubview(self.deleteButton)
+        stackView.addArrangedSubview(thingField2)
+//        stackView.addArrangedSubview(self.editButton)
+//        stackView.addArrangedSubview(self.groupField)
+//        stackView.addArrangedSubview(self.thingField)
+//        stackView.addArrangedSubview(self.itemController.tableView)
+//        stackView.addArrangedSubview(self.deleteButton)
         
         // view constraints
         containerView.constrainTo(view: self.view, on: .center)
         containerView.constrainToHeight(constant: 600)
         containerView.constrainToHorizontal(of: self.view, axis: .both, constant: 20)
         
+        thingBar.constrainToVertical(of: containerView, axis: .top, constant: 0)
+        thingBar.constrainToCenter(of: containerView, axis: .x, constant: 0)
+        thingBar.constrainToHorizontal(of: containerView, axis: .both, constant: 0)
+        
+        stackView.topAnchor.constraint(equalTo: thingBar.bottomAnchor, constant: 10).isActive = true
         stackView.constrainTo(view: containerView, on: .horizontal, constant: 20)
-        stackView.constrainToCenter(of: containerView, axis: .both, constant: 0)
+//        stackView.constrainToCenter(of: containerView, axis: .both, constant: 0)
         
         // actions
         self.editButton.addTarget(self, action: #selector(pressEditButton), for: .touchUpInside)
