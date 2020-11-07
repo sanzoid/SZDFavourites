@@ -1,5 +1,5 @@
 //
-//  ItemCell.swift
+//  GroupCell.swift
 //  SZDFavourites
 //
 //  Created by Sandy House on 2020-10-19.
@@ -8,17 +8,21 @@
 
 import UIKit
 
-protocol ItemCellDelegate: class {
-    func didEndEditing(for itemCell: ItemCell, text: String)
+protocol GroupCellDelegate: class {
+    func didEndEditing(for cell: GroupCell, text: String)
 }
 
-class ItemCell: UITableViewCell {
+class GroupCell: UITableViewCell {
     
-    weak var delegate: ItemCellDelegate?
+    // number label
+    // textfield
+    // image picker
+    
+    weak var delegate: GroupCellDelegate?
     private let textField = TextField()
     private var mode: ViewMode = .display
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {        
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
         self.textField.delegate = self
@@ -43,7 +47,7 @@ class ItemCell: UITableViewCell {
     }
 }
 
-extension ItemCell: TextFieldDelegate {
+extension GroupCell: TextFieldDelegate {
     func didEndEditing(for textField: TextField, text: String) {
         self.delegate?.didEndEditing(for: self, text: text)
     }

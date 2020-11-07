@@ -50,9 +50,9 @@ extension GroupController: TableFooterTextFieldDelegate {
     }
 }
 
-extension GroupController: ItemCellDelegate {
-    func didEndEditing(for itemCell: ItemCell, text: String) {
-        if let error = self.delegate?.editGroup(for: self, at: itemCell.tag, with: text) {
+extension GroupController: GroupCellDelegate {
+    func didEndEditing(for cell: GroupCell, text: String) {
+        if let error = self.delegate?.editGroup(for: self, at: cell.tag, with: text) {
             error.present(on: self)
             self.refresh()
         }

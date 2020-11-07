@@ -41,6 +41,7 @@
 		5A4637F62556E52500CE8ED3 /* ThingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4637F52556E52500CE8ED3 /* ThingBar.swift */; };
 		5A4637F82556E58100CE8ED3 /* ThingField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4637F72556E58100CE8ED3 /* ThingField.swift */; };
 		5A4637FA2556E5CD00CE8ED3 /* ItemFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4637F92556E5CD00CE8ED3 /* ItemFooter.swift */; };
+		5A4637FD2556E75000CE8ED3 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4637FC2556E75000CE8ED3 /* GroupCell.swift */; };
 		5A670C692534C2E500C769D3 /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C682534C2E400C769D3 /* ListController.swift */; };
 		5A670C6B2534C2ED00C769D3 /* ListControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C6A2534C2ED00C769D3 /* ListControllerOld.swift */; };
 		5A670C6E2534C34400C769D3 /* GroupControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A670C6D2534C34400C769D3 /* GroupControllerDataSource.swift */; };
@@ -125,6 +126,7 @@
 		5A4637F52556E52500CE8ED3 /* ThingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingBar.swift; sourceTree = "<group>"; };
 		5A4637F72556E58100CE8ED3 /* ThingField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingField.swift; sourceTree = "<group>"; };
 		5A4637F92556E5CD00CE8ED3 /* ItemFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemFooter.swift; sourceTree = "<group>"; };
+		5A4637FC2556E75000CE8ED3 /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		5A670C682534C2E400C769D3 /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
 		5A670C6A2534C2ED00C769D3 /* ListControllerOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListControllerOld.swift; sourceTree = "<group>"; };
 		5A670C6D2534C34400C769D3 /* GroupControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupControllerDataSource.swift; sourceTree = "<group>"; };
@@ -245,7 +247,6 @@
 				5A670C8B25361D2E00C769D3 /* TextPicker.swift */,
 				5A670C8D25361D5A00C769D3 /* TextField.swift */,
 				5A710AC5253E1DB600ECB7A2 /* TableFooterTextField.swift */,
-				5A710AC7253E1F8C00ECB7A2 /* ItemCell.swift */,
 				5A710AD92548AC5500ECB7A2 /* ErrorMessage.swift */,
 			);
 			path = View;
@@ -287,6 +288,7 @@
 		5A4637FB2556E5D100CE8ED3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5A710AC7253E1F8C00ECB7A2 /* ItemCell.swift */,
 				5A4637F92556E5CD00CE8ED3 /* ItemFooter.swift */,
 			);
 			path = View;
@@ -299,6 +301,7 @@
 				5A670C6D2534C34400C769D3 /* GroupControllerDataSource.swift */,
 				5A670C702534C35900C769D3 /* GroupControllerDelegate.swift */,
 				5A710AD42544BA5500ECB7A2 /* GroupController+TableView.swift */,
+				5A4637FC2556E75000CE8ED3 /* GroupCell.swift */,
 			);
 			path = Group;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				5A2FC61A251E434A00002DBC /* Group.swift in Sources */,
 				5A2FC63B2524C55700002DBC /* ListTableHeader.swift in Sources */,
 				5A2FC61C251E436C00002DBC /* Item.swift in Sources */,
+				5A4637FD2556E75000CE8ED3 /* GroupCell.swift in Sources */,
 				5A670C852534CCEA00C769D3 /* ItemControllerDelegate.swift in Sources */,
 				5A670C752534C84300C769D3 /* MainController+Group.swift in Sources */,
 				5A670C882534CD6D00C769D3 /* ViewDataModel.swift in Sources */,

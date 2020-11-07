@@ -30,7 +30,7 @@ extension GroupController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = ItemCell(style: .default, reuseIdentifier: "GroupItemCell")
+        let cell = GroupCell(style: .default, reuseIdentifier: "GroupCell")
         
         if let data = self.dataSource?.dataForGroup(for: self, at: indexPath.row) {
             cell.setText(data.name)

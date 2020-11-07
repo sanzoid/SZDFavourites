@@ -6,4 +6,9 @@
 //  Copyright © 2020 sandzapps. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class ThingField: UIView {
+    // label
+    // textfield 
+}
