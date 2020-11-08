@@ -76,17 +76,15 @@ class ThingController: UIViewController {
 //        stackView.addArrangedSubview(self.deleteButton)
         
         // view constraints
-        containerView.constrainTo(view: self.view, on: .center)
-        containerView.constrainToHeight(constant: 600)
-        containerView.constrainToHorizontal(of: self.view, axis: .both, constant: 20)
+        containerView.constrainToSize(constant: 600)
+        containerView.constrainToEdge(of: self.view, placement: .leadingAndTrailing, constant: 20)
+        containerView.constrainToCenter(of: self.view, axis: .both, constant: 0, relativity: .equal, priority: .required)
         
-        thingBar.constrainToVertical(of: containerView, axis: .top, constant: 0)
-        thingBar.constrainToCenter(of: containerView, axis: .x, constant: 0)
-        thingBar.constrainToHorizontal(of: containerView, axis: .both, constant: 0)
+        thingBar.constrainToEdge(of: containerView, placement: .topToTop, constant: 0, priority: .required)
+        thingBar.constrainToEdge(of: containerView, placement: .leadingAndTrailing, constant: 0, priority: .required)
         
-        stackView.topAnchor.constraint(equalTo: thingBar.bottomAnchor, constant: 10).isActive = true
-        stackView.constrainTo(view: containerView, on: .horizontal, constant: 20)
-//        stackView.constrainToCenter(of: containerView, axis: .both, constant: 0)
+        stackView.constrainToEdge(of: thingBar, placement: .topToBottom, constant: 10)
+        stackView.constrainToEdge(of: containerView, placement: .leadingAndTrailing, constant: 10)
         
         // actions
         self.editButton.addTarget(self, action: #selector(pressEditButton), for: .touchUpInside)

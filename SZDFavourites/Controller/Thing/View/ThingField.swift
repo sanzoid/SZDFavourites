@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SZDCommons
 
 class ThingField: UIView {
     // label
@@ -25,12 +26,12 @@ class ThingField: UIView {
     func setup() {
         self.addSubviews(label, textField)
         
-        label.constrainToHorizontal(of: self, axis: .leading, constant: 10)
-        label.constrainToVertical(of: self, axis: .top, constant: 10)
+        label.constrainToEdge(of: self, placement: .leadingToLeading, constant: 10)
+        label.constrainToEdge(of: self, placement: .topToTop, constant: 10)
         
-        textField.constrainToHorizontal(of: self, axis: .both, constant: 10)
-        textField.constrainToCenter(of: self, axis: .x, constant: 0)
-        textField.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10).isActive = true
+        textField.constrainToCenter(of: self, axis: .x)
+        textField.constrainToEdge(of: self, placement: .leadingAndTrailing, constant: 10)
+        textField.constrainToEdge(of: label, placement: .topToBottom, constant: 10)
         
         label.text = "Favourite"
         textField.setText("Thing")
