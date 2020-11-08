@@ -40,8 +40,9 @@ class MainController: UIViewController {
         self.title = "FAVLIST"
         
         self.addChildDefault(viewController: self.listController)
-        self.listController.view.constrainTo(view: self.view, on: .horizontal, constant: 10)
-        self.listController.view.constrainToVertical(of: self.view, axis: .both, constant: 70)
+        self.listController.view.constrainToEdge(of: self.view, placement: .leadingAndTrailing, constant: 10)
+        self.listController.view.constrainToEdge(of: self.view, placement: .topToTop, constant: 10, priority: .required)
+        self.listController.view.constrainToEdge(of: self.view, placement: .bottomToBottom)
         self.listController.view.constrainToCenter(of: self.view, axis: .x, constant: 0)
         self.view.backgroundColor = .white
         
@@ -62,7 +63,7 @@ class MainController: UIViewController {
         let adBanner = self.getAdBanner()
         
         self.view.addSubviews(adBanner)
-        adBanner.constrainToVertical(of: self.view, axis: .bottom, constant: 0)
+        adBanner.constrainToEdge(of: self.view, placement: .bottomToBottom, withinSafeArea: false, constant: 0)
         adBanner.constrainToCenter(of: self.view, axis: .x, constant: 0)
         
         self.adBanner = adBanner

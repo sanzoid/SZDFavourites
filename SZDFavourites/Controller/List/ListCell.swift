@@ -53,19 +53,25 @@ class ListCell: UITableViewCell {
         itemContainer.addSubviews(itemLabel)
         
         // constraint
-        stackView.constrainTo(view: self.contentView, on: .all, constant: contentMargin)
+        stackView.constrainToEdge(of: self.contentView, placement: .all, constant: contentMargin)
         
-        thingContainer.constrainToHeight(constant: 25)
-        itemContainer.constrainToHeight(constant: 25)
+        thingContainer.constrainToSize(constant: 25, dimension: .height, relativity: .greaterThanOrEqual)
+        itemContainer.constrainToSize(constant: 25, dimension: .height, relativity: .greaterThanOrEqual)
         
-        thingLabel.constrainToVertical(of: itemContainer, axis: .bottom, constant: 0)
-        thingLabel.constrainToHorizontal(of: thingContainer)
-        itemLabel.constrainToCenter(of: itemContainer, axis: .y, constant: 0)
-        itemLabel.constrainToHorizontal(of: itemContainer)
+        itemLabel.constrainToCenter(of: stackView, axis: .y)
+        thingLabel.constrainToEdge(of: itemLabel, placement: .bottomToBottom, constant: 0)
+        
+        itemLabel.constrainToEdge(of: itemContainer, placement: .leadingAndTrailing)
+        thingLabel.constrainToEdge(of: thingContainer, placement: .leadingAndTrailing)
         
         // reference
         self.thingLabel = thingLabel
         self.itemLabel = itemLabel
+        
+//        itemLabel.showTestOutline()
+//        itemContainer.showTestOutline()
+//        thingLabel.showTestOutline()
+//        thingContainer.showTestOutline()
     }
     
     required init?(coder: NSCoder) {

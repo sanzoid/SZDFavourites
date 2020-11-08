@@ -29,7 +29,8 @@ class ListController: UIViewController {
     private func setup() {
         self.setupTable()
         self.view.addSubviews(self.tableView)
-        self.tableView.constrainTo(view: self.view, on: .all)
+        
+        self.tableView.constrainToEdge(of: self.view, placement: .all)
     }
     
     func refresh() {
