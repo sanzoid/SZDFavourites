@@ -31,15 +31,18 @@ class ThingBar: UIView {
         self.editButton.setTitleColor(.white, for: .normal)
         
         self.addSubviews(groupPicker, editButton)
-        groupPicker.constrainToHorizontal(of: self, axis: .leading, constant: 10)
-        groupPicker.constrainToCenter(of: self, axis: .y, constant: 0)
-        groupPicker.constrainToVertical(of: self, axis: .both, constant: 10)
-        groupPicker.constrainToWidth(constant: 200)
         
-        editButton.constrainToHorizontal(of: self, axis: .trailing, constant: 10)
-        editButton.constrainToCenter(of: self, axis: .y, constant: 0)
-        editButton.constrainToVertical(of: self, axis: .both, constant: 10)
-        editButton.constrainToWidth(constant: 50)
+        // H:|-groupPicker-editButton-|
+        groupPicker.constrainToEdge(of: self, placement: .leadingToLeading, constant: 10)
+        groupPicker.constrainToEdge(of: editButton, placement: .trailingToLeading, constant: 10)
+        editButton.constrainToEdge(of: self, placement: .trailingToTrailing, constant: 10)
+        // V:|-groupPicker-|
+        groupPicker.constrainToEdge(of: self, placement: .topAndBottom, relativity: .lessThanOrEqual, constant: 10)
+        groupPicker.constrainToCenter(of: self, axis: .y)
+        // V:|-editButton-|
+        editButton.constrainToEdge(of: self, placement: .topAndBottom, constant: 10, priority: .required)
+        editButton.constrainToSize(constant: 50, dimension: .width)
+        editButton.constrainToCenter(of: self, axis: .y)
         
         groupPicker.showTestOutline()
         editButton.showTestOutline()

@@ -82,6 +82,7 @@ class ThingController: UIViewController {
         
         thingBar.constrainToEdge(of: containerView, placement: .topToTop, constant: 0, priority: .required)
         thingBar.constrainToEdge(of: containerView, placement: .leadingAndTrailing, constant: 0, priority: .required)
+        thingBar.constrainToSize(constant: 50, dimension: .height, priority: .defaultHigh)
         
         stackView.constrainToEdge(of: thingBar, placement: .topToBottom, constant: 10)
         stackView.constrainToEdge(of: containerView, placement: .leadingAndTrailing, constant: 10)

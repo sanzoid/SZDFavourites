@@ -48,8 +48,7 @@ class TextPicker: UIView {
     private func setup() {
         self.addSubviews(self.textField)
         
-        self.textField.constrainToHeight(constant: 50)
-        self.textField.constrainTo(view: self, on: .all)
+        self.textField.constrainToEdge(of: self, placement: .all)
         
         self.picker.dataSource = self
         self.picker.delegate = self
@@ -71,11 +70,6 @@ class TextPicker: UIView {
     @objc func pickerDone() {
         self.textField.resignFirstResponder()
     }
-    
-//    func toggleEdit() {
-//        self.isEditing = !self.isEditing
-//        self.textField.isUserInteractionEnabled = self.isEditing
-//    }
     
     func setMode(_ mode: ViewMode) {
         self.mode = mode

@@ -23,7 +23,8 @@ class TableFooterTextField: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         
         self.addSubviews(self.textField)
-        self.textField.constrainTo(view: self, on: .all, constant: 0)
+        self.textField.constrainToEdge(of: self, placement: .all)
+        
         self.textField.delegate = self
         
         self.setMode(.display)

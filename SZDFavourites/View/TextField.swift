@@ -37,9 +37,8 @@ class TextField: UIView {
     private func setup() {
         self.addSubviews(self.textField)
         
-        self.textField.constrainToHeight(constant: 50)
-        self.textField.constrainTo(view: self, on: .all)
-        
+        self.textField.constrainToEdge(of: self, placement: .all)
+                
         // textfield properties
         self.textField.delegate = self
         self.textField.returnKeyType = .done
