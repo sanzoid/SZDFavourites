@@ -33,8 +33,7 @@ class ItemController: UIViewController {
         self.setupTable()
         
         self.view.addSubviews(self.tableView)
-//        self.tableView.constrainTo(view: self.view, on: .all)
-        self.tableView.constrainToHeight(constant: 300)
+        self.tableView.constrainToSize(constant: 300, dimension: .height)
     }
     
     func refresh() {

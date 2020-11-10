@@ -28,7 +28,7 @@ class GroupCell: UITableViewCell {
         self.textField.delegate = self
         
         self.contentView.addSubviews(self.textField)
-        self.textField.constrainTo(view: self, on: .all)
+        self.textField.constrainToEdge(of: self, placement: .all)
         
         self.setMode(.display)
     }
