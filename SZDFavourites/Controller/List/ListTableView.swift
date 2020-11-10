@@ -9,9 +9,7 @@
 import UIKit
 
 class ListTableView: UITableView {
-    
-    let reuseIdentifier = "ListTableView" 
-    
+        
     init() {
         super.init(frame: .zero, style: .grouped)
         
