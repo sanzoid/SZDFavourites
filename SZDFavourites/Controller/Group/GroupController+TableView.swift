@@ -49,6 +49,14 @@ extension GroupController: UITableViewDataSource {
         footer.setMode(.edit)
         return footer
     }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
 }
 
 extension GroupController: UITableViewDelegate {

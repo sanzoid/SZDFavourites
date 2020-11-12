@@ -32,7 +32,7 @@ class GroupController: UIViewController {
         // table 
         self.setupTable()
         self.view.addSubviews(self.tableView)
-        self.tableView.constrainToEdge(of: self.view, placement: .all)
+        self.tableView.constrainToEdge(of: self.view, placement: .all, withinSafeArea: false)
     }
     
     func refresh() {

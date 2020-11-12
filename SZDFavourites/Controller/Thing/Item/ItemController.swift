@@ -33,7 +33,10 @@ class ItemController: UIViewController {
         self.setupTable()
         
         self.view.addSubviews(self.tableView)
-        self.tableView.constrainToSize(constant: 300, dimension: .height)
+        self.tableView.constrainToEdge(of: self.view, placement: .all)
+        
+        self.view.showTestOutline()
+        self.tableView.showTestOutline()
     }
     
     func refresh() {

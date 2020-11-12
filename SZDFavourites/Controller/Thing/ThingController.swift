@@ -55,25 +55,13 @@ class ThingController: UIViewController {
             view.layer.shadowRadius = 5
             return view
         }()
-        let stackView: UIStackView = {
-            let view = UIStackView()
-            view.axis = .vertical
-            view.distribution = .equalSpacing
-            view.alignment = .fill
-            return view
-        }()
+        let itemView = self.itemController.view!
         
         // view hierarchy
         self.view.addSubviews(containerView)
         containerView.addSubviews(self.thingBar)
         
-        containerView.addSubviews(stackView)
-        stackView.addArrangedSubview(thingField2)
-//        stackView.addArrangedSubview(self.editButton)
-//        stackView.addArrangedSubview(self.groupField)
-//        stackView.addArrangedSubview(self.thingField)
-//        stackView.addArrangedSubview(self.itemController.tableView)
-//        stackView.addArrangedSubview(self.deleteButton)
+        containerView.addSubviews(thingField2, itemView)
         
         // view constraints
         containerView.constrainToSize(constant: 600)
@@ -84,8 +72,15 @@ class ThingController: UIViewController {
         thingBar.constrainToEdge(of: containerView, placement: .leadingAndTrailing, constant: 0, priority: .required)
         thingBar.constrainToSize(constant: 50, dimension: .height, priority: .defaultHigh)
         
-        stackView.constrainToEdge(of: thingBar, placement: .topToBottom, constant: 10)
-        stackView.constrainToEdge(of: containerView, placement: .leadingAndTrailing, constant: 10)
+        thingField2.constrainToEdge(of: thingBar, placement: .topToBottom, constant: 10)
+        thingField2.constrainToEdge(of: containerView, placement: .leadingAndTrailing, constant: 10)
+        // TODO: height of thingfield so we don't need this
+        thingField2.constrainToSize(constant: 100, dimension: .height)
+        
+        itemView.constrainToEdge(of: thingField2, placement: .topToBottom, constant: 10)
+        itemView.constrainToEdge(of: containerView, placement: .bottomToBottom, constant: 10)
+        itemView.constrainToEdge(of: containerView, placement: .leadingAndTrailing, constant: 10)
+
         
         // actions
         self.editButton.addTarget(self, action: #selector(pressEditButton), for: .touchUpInside)
@@ -98,9 +93,9 @@ class ThingController: UIViewController {
         
 //        self.view.showTestOutline()
 //        containerView.showTestOutline()
-        stackView.showTestOutline()
         groupField.showTestOutline()
         thingField.showTestOutline()
+        itemView.showTestOutline()
     }
     
     func refresh() {

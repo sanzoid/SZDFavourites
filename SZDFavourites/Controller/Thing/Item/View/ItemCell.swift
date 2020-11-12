@@ -31,6 +31,9 @@ class ItemCell: UITableViewCell {
         self.textField.constrainToEdge(of: self, placement: .all)
         
         self.setMode(.display)
+        
+        self.showTestOutline()
+        self.textField.showTestOutline()
     }
     
     required init?(coder: NSCoder) {
