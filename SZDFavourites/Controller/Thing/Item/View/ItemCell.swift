@@ -29,6 +29,7 @@ class ItemCell: UITableViewCell {
         
         self.contentView.addSubviews(self.textField)
         self.textField.constrainToEdge(of: self, placement: .all)
+        self.textField.constrainToSize(constant: 50, dimension: .height)
         
         self.setMode(.display)
         

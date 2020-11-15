@@ -8,11 +8,22 @@
 
 import UIKit
 
+protocol ThingBarDelegate: class {
+    func didPressEdit(for thingBar: ThingBar)
+}
+
 class ThingBar: UIView {
     // group picker
     private var groupPicker: TextPicker
     // edit/done  button
     private var editButton: UIButton
+    
+    weak var delegate: ThingBarDelegate?
+    var groupPickerDelegate: TextPickerDelegate? {
+        didSet {
+            self.groupPicker.delegate = self.groupPickerDelegate
+        }
+    }
     
     init() {
         self.groupPicker = TextPicker()
@@ -44,11 +55,17 @@ class ThingBar: UIView {
         editButton.constrainToSize(constant: 50, dimension: .width)
         editButton.constrainToCenter(of: self, axis: .y)
         
+        editButton.addTarget(self, action: #selector(didPressEdit), for: .touchUpInside)
+        
         groupPicker.showTestOutline()
         editButton.showTestOutline()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func didPressEdit() {
+        self.delegate?.didPressEdit(for: self)
     }
 }

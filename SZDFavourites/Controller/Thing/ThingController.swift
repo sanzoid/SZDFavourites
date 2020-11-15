@@ -44,6 +44,9 @@ class ThingController: UIViewController {
         self.deleteButton.backgroundColor = .red
         self.editButton.backgroundColor = .cyan
         
+        self.thingBar.groupPickerDelegate = self
+        self.thingBar.delegate = self
+        
         // view init
         let containerView: UIView = {
             let view = UIView()
@@ -94,7 +97,7 @@ class ThingController: UIViewController {
 //        self.view.showTestOutline()
 //        containerView.showTestOutline()
         groupField.showTestOutline()
-        thingField.showTestOutline()
+        thingField2.showTestOutline()
         itemView.showTestOutline()
     }
     
@@ -178,5 +181,11 @@ extension ThingController: TextPickerDelegate {
 extension ThingController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return touch.view == self.view
+    }
+}
+
+extension ThingController: ThingBarDelegate {
+    func didPressEdit(for thingBar: ThingBar) {
+        self.toggleEdit()
     }
 }

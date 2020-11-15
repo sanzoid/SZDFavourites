@@ -15,6 +15,7 @@ extension ItemController {
         self.tableView.dragDelegate = self
         self.tableView.dropDelegate = self
         self.tableView.dragInteractionEnabled = true
+        self.tableView.estimatedRowHeight = 50
         
         self.tableView.allowsSelection = false
         self.tableView.backgroundColor = UIColor.yellow.alpha(0.2)
